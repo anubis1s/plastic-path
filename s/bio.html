@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Биология — финал (обновлено 18.11)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1f4; --surface:#ffffff; --ink:#172031; --muted:#5b6678; --line:#d6dce4;
+  --accent:#2f7d5b; --accent-ink:#ffffff; --bone:#b8922e; --good:#2f7d4f; --bad:#b33a3a; --new:#2c6db3;
+  --font-display:"IBM Plex Serif", Georgia, serif; --font-body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r:10px; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#10151d; --surface:#18202b; --ink:#e6ebf2; --muted:#9aa6b8; --line:#2a3443;
+  --accent:#7fcfa5; --accent-ink:#0c1a22; --bone:#d9b85a; --good:#5cbf86; --bad:#e07a7a; --new:#7fb0e8; color-scheme:dark; } }
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--font-body)}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:26px} h2{font-size:21px} h3{font-size:17px}
+i,em,.lat{font-family:var(--font-display);font-style:italic}
+button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:100%}
+nav{background:var(--surface);border-right:1px solid var(--line);padding:20px 12px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+nav .brand{padding:4px 10px 14px}
+nav .brand small{display:block;color:var(--muted);font-size:12px}
+nav a{display:flex;justify-content:space-between;align-items:center;padding:9px 10px;border-radius:8px;color:var(--ink);text-decoration:none}
+nav a:hover{background:var(--bg)}
+nav a.on{background:var(--accent);color:var(--accent-ink)}
+nav a .n{font-size:12px;opacity:.75;font-variant-numeric:tabular-nums}
+.save{margin-top:auto;font-size:12px;color:var(--muted);padding:8px 10px}
+main{padding:28px clamp(16px,4vw,44px) 60px;max-width:980px;width:100%}
+.view{display:none;flex-direction:column;gap:18px}
+.view.on{display:flex}
+.lead{color:var(--muted);max-width:68ch;margin:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.tile b{display:block;font:600 28px/1.1 var(--font-display);font-variant-numeric:tabular-nums}
+.tile span{color:var(--muted);font-size:13px}
+.bar{height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:var(--accent)}
+.today{border-left:4px solid var(--bone)}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:8px;text-decoration:none}
+.btn:hover{border-color:var(--accent)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.good{border-color:var(--good);color:var(--good)}
+.btn.bad{border-color:var(--bad);color:var(--bad)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{font-size:12px;padding:2px 8px;border-radius:20px;border:1px solid var(--line);color:var(--muted);white-space:nowrap;text-decoration:none}
+.chip.ok{border-color:var(--good);color:var(--good)} .chip.no{border-color:var(--bad);color:var(--bad)}
+.chip.new,.newtag{border-color:var(--new);color:var(--new)}
+.newtag{font:500 11px var(--font-body);border:1px solid;border-radius:20px;padding:1px 7px;margin-left:8px;vertical-align:middle}
+.week h3{margin-bottom:8px}
+.day{display:flex;gap:12px;align-items:flex-start;padding:9px 4px;border-top:1px solid var(--line)}
+.day:first-of-type{border-top:0}
+.day input{width:18px;height:18px;margin-top:3px;accent-color:var(--accent)}
+.day label{flex:1}
+.day .d{font-variant-numeric:tabular-nums;color:var(--muted);width:66px;flex:none}
+.day.done label{color:var(--muted);text-decoration:line-through}
+.day.is-today{background:color-mix(in srgb,var(--bone) 12%,transparent);border-radius:6px}
+.toc{display:flex;flex-wrap:wrap;gap:6px}
+.notes section{scroll-margin-top:16px}
+.notes ul{padding-left:20px;margin:8px 0}
+.notes li{margin:4px 0}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+pre{white-space:pre-wrap;font-family:var(--font-display);background:var(--bg);padding:12px;border-radius:8px}
+.q{font:500 18px/1.45 var(--font-display)}
+textarea{width:100%;min-height:110px;border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
+.ans{border-left:3px solid var(--good);padding:8px 12px;background:color-mix(in srgb,var(--good) 8%,transparent);border-radius:0 8px 8px 0;white-space:pre-wrap}
+.ai{border-left:3px solid var(--accent);padding:8px 12px;background:color-mix(in srgb,var(--accent) 8%,transparent);border-radius:0 8px 8px 0;white-space:pre-wrap}
+select{font:inherit;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.flash{min-height:220px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px;cursor:pointer;user-select:none}
+.flash .front{font:500 26px/1.3 var(--font-display)}
+.flash .front.it{font-style:italic}
+.flash .back{display:none;gap:4px;flex-direction:column}
+.flash.open .back{display:flex}
+.flash .back b{font-size:19px}
+.flash .back span{color:var(--muted)}
+.hint{font-size:12px;color:var(--muted)}
+@media (max-width:760px){
+  .app{grid-template-columns:1fr}
+  nav{position:sticky;top:0;height:auto;flex-direction:row;overflow-x:auto;padding:8px;z-index:2;border-right:0;border-bottom:1px solid var(--line)}
+  nav .brand,.save{display:none}
+  nav a{white-space:nowrap}
+}
+@media (prefers-reduced-motion:no-preference){ .bar i{transition:width .3s} }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../theme.css">
+</head>
+<body>
+<script type="application/json" id="state">{"days":{},"quiz":{},"cards":{}}</script>
+<div class="app">
+<nav aria-label="Разделы">
+  <div class="brand"><h2>Биология</h2><small>Medical Biology &amp; Genetics 1 · MS4-26</small></div>
+  <a href="#today" data-v="today">Сегодня</a>
+  <a href="#plan" data-v="plan">План <span class="n" id="n-plan"></span></a>
+  <a href="#notes" data-v="notes">Конспект</a>
+  <a href="#quiz" data-v="quiz">Вопросы <span class="n" id="n-quiz"></span></a>
+  <a href="#cases" data-v="cases">Задачи <span class="n" id="n-cases"></span></a>
+  <a href="#cards" data-v="cards">Карточки <span class="n" id="n-cards"></span></a>
+  <a href="https://claude.ai/artifact/2xwvVmubijirDWXwn1Ldpr" target="_blank" rel="noopener" class="ext" style="margin-top:6px;border:1px solid var(--line)">🗓 Расписание <span class="n">↗</span></a>
+  <div class="save" id="save">Прогресс сохраняется</div>
+</nav>
+<main>
+
+<section class="view" id="v-today">
+  <div><h1>До финала</h1><p class="lead">Формат и вес финала уточните у Dr. Khamidova (силлабуса нет). В прошлогоднем финале были короткие ответы, задачи на генетику и подписи к рисункам. Ориентир — после 14 декабря.</p></div>
+  <a class="card" href="https://claude.ai/artifact/2xwvVmubijirDWXwn1Ldpr" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:inherit;border-left:4px solid var(--accent)"><span><b>🗓 Что сегодня по расписанию</b><br><small style="color:var(--muted)">Экзамен по предмету: 23 декабря</small></span><span>↗</span></a>
+  <div class="card" style="border-left:4px solid var(--new)"><h3>Что добавлено</h3><ul class="lead" style="padding-left:20px;margin:8px 0 0"><li>Конспект 6 дополнен по Chapter 7 Study Guide: бесполое размножение, кинетохор, бивалент, хиазма, оогенез и сперматогенез.</li><li>Конспект 8 — лаба по культуре бактерий и окраске по Граму (обе сессии, ошибки, морфология).</li><li>Конспект 8b — pH-метрия, регуляция pH, расшифровка газов крови и 2 клинических кейса.</li><li>Конспект 8c — лаба по экстракции бета-каротина (18.11).</li><li>14 новых вопросов, 4 новые задачи, 24 новые карточки. Фильтр «★ Только новое».</li></ul></div>
+  <div class="tiles" id="tiles"></div>
+  <div class="card today" id="today-card"></div>
+  <div class="card"><h3>Как заниматься каждый день</h3>
+    <ul class="lead" style="padding-left:20px;margin:8px 0 0"><li>Прочитать раздел конспекта на сегодня.</li><li>Нарисовать схему по памяти: клетку, митоз, мейоз или решётку Пеннета.</li><li>Пройти 10–20 карточек.</li><li>Ответить письменно на 2–3 вопроса SAQ, проверить.</li></ul></div>
+</section>
+
+<section class="view" id="v-plan">
+  <div><h1>План по дням</h1><p class="lead">18 ноября — 13 декабря, блок биологии через день (60–90 минут), чтобы оставалось время на остальные предметы.</p></div>
+  <div id="plan"></div>
+</section>
+
+<section class="view notes" id="v-notes">
+  <div><h1>Конспект</h1><p class="lead">По слайдам Dr. Khamidova, study guides, лабам и вашему конспекту недель 1–6. Термины по-английски, как на экзамене. Новые разделы отмечены «новое».</p></div>
+  <div class="toc" id="toc"></div>
+  <div id="notes" style="display:flex;flex-direction:column;gap:14px"></div>
+</section>
+
+<section class="view" id="v-quiz">
+  <div><h1>Вопросы</h1><p class="lead">Напишите ответ, затем откройте ключ и отметьте, знали ли вы его. Кнопка «Проверить с Claude» оценит ваш ответ. Новые вопросы отмечены «новое».</p></div>
+  <div class="row"><label for="q-filter">Тема</label><select id="q-filter"></select>
+    <label><input type="checkbox" id="q-weak"> только «не знал»</label></div>
+  <div class="card" id="quiz-card"></div>
+</section>
+
+<section class="view" id="v-cases">
+  <div><h1>Задачи из билетов</h1><p class="lead">Помеченные «Final 2026» взяты из прошлогоднего финала по Биологии 2; остальные — клинические задачи и кейсы из лаб.</p></div>
+  <div class="card" id="case-card"></div>
+</section>
+
+<section class="view" id="v-cards">
+  <div><h1>Карточки</h1><p class="lead">Нажмите на карточку, чтобы перевернуть. «Знаю» убирает её из повторения.</p></div>
+  <div class="row"><label for="c-mode">Показывать</label>
+    <select id="c-mode"><option value="lat">English → русский</option><option value="en">русский → English</option></select>
+    <label><input type="checkbox" id="c-weak" checked> только невыученные</label>
+    <button class="btn" id="c-shuffle">Перемешать</button>
+    <button class="btn" id="c-reset">Сбросить</button></div>
+  <div class="card flash" id="flash" tabindex="0" role="button" aria-label="Перевернуть карточку"></div>
+  <div class="row" style="justify-content:center"><button class="btn bad" id="c-no">Повторить</button><button class="btn good" id="c-yes">Знаю</button></div>
+  <p class="hint" id="c-count" style="text-align:center"></p>
+</section>
+
+</main>
+</div>
+
+<script>
+const PPS=(()=>{try{return window.parent!==window&&window.parent.PP_BRIDGE||null}catch(e){return null}})();
+if(PPS&&!window.claude){try{window.claude=window.parent.claude}catch(e){}}
+if(PPS)document.addEventListener('click',e=>{const a=e.target.closest('a[href*="2xwvVmubijirDWXwn1Ldpr"]');if(a){e.preventDefault();PPS.go('plan')}});
+const TEMPLATE = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+const LSKEY = 'bio-final-v2';
+let S; try{ S = JSON.parse(document.getElementById('state').textContent) }catch(e){ S={days:{},quiz:{},cards:{}} }
+try{ const l = JSON.parse(localStorage.getItem(LSKEY)||'null'); if(l){ for(const k of ['days','quiz','cards']) S[k]=Object.assign({},l[k]||{},S[k]) } }catch(e){}
+if(PPS){const r=PPS.get(LSKEY);if(r)for(const k of ['days','quiz','cards'])S[k]=Object.assign({},S[k]||{},r[k]||{})}
+
+const PLAN = [
+ {w:'Неделя 1 — основы и химия жизни', days:[
+  ['2026-11-18','Week 1: уровни организации, свойства жизни, клеточная теория, генетика-основы','n1'],
+  ['2026-11-20','Week 1: световой микроскоп и типы микроскопии','n1'],
+  ['2026-11-22','Week 2: атомы, связи, вода, pH и буферы','n2'],
+  ['2026-11-23','Week 2: углеводы, липиды, белки, нуклеиновые кислоты','n2']]},
+ {w:'Неделя 2 — клетка и энергия', days:[
+  ['2026-11-25','Week 3: прокариоты/эукариоты, органеллы, мембрана','n3'],
+  ['2026-11-27','Week 3: транспорт через мембрану, осмос, тоничность','n3'],
+  ['2026-11-29','Week 4: ферменты, АТФ, гликолиз, цикл Кребса, ETC, брожение','n4'],
+  ['2026-11-30','Самотест по неделям 1–4','quiz']]},
+ {w:'Неделя 3 — деление и наследование', days:[
+  ['2026-12-02','Weeks 5–6: клеточный цикл, митоз, чекпоинты, рак','n5'],
+  ['2026-12-04','Ch. 7: размножение, термины, мейоз, кроссинговер, гаметогенез (study guide)','n6'],
+  ['2026-12-06','Ch. 7: нерасхождение, синдромы, перестройки','n6'],
+  ['2026-12-07','Ch. 8: Мендель, моно- и дигибридное скрещивание, решётка Пеннета','n7']]},
+ {w:'Неделя 4 — задачи и лабы', days:[
+  ['2026-12-09','Ch. 8: неполное доминирование, кодоминирование, Харди–Вайнберг — задачи','n7'],
+  ['2026-12-10','Лабы: культура бактерий и окраска по Граму; pH-метрия и кислотно-основной баланс; бета-каротин','n8'],
+  ['2026-12-11','Пробный экзамен (все темы) на время','quiz'],
+  ['2026-12-12','Задачи из прошлых билетов + слабые темы','cases'],
+  ['2026-12-13','Повторение карточек','cards']]}
+];
+
+const NOTES = [
+['n1','1. Week 1 — введение и микроскоп',`<ul>
+<li><b>Уровни организации:</b> atom → molecule → organelle → cell → tissue → organ → organ system → organism → population → community → ecosystem → biosphere. Population — один вид; community — разные виды; ecosystem — community + неживая среда.</li>
+<li><b>3 big ideas:</b> matter & energy, genetic information, interactions.</li>
+<li><b>9 признаков жизни:</b> cells, growth, reproduction, movement, adaptation/evolution, metabolism, organization, homeostasis (потоотделение), responsiveness (отдёрнуть руку).</li>
+<li><b>Cell theory:</b> все организмы из ≥1 клетки; клетка — единица строения и функции; клетки только из клеток.</li>
+<li><b>Генетика:</b> DNA → gene → chromosome → genome. Соматическая клетка 46, гамета 23, зигота 46. Central dogma: DNA →(transcription)→ mRNA →(translation)→ protein. DNA A–T, G–C; RNA — U вместо T.</li>
+<li><b>Sickle cell:</b> мутация HBB → изменённый гемоглобин → серповидные эритроциты → закупорка сосудов.</li>
+<li><b>Mitosis</b> → 2 одинаковые клетки; <b>meiosis</b> → 4 разные гаплоидные гаметы.</li>
+<li><b>Микроскоп — путь света:</b> source → iris diaphragm → condenser → specimen → objective → body tube → ocular. Увеличение = ocular × objective (10× × 40× = 400×). Разрешение ≈ 0,2 µm.</li></ul>
+<div class="tbl"><table><tr><th>Тип</th><th>Главное</th></tr>
+<tr><td>Bright-field</td><td>окрашенный объект на светлом фоне</td></tr>
+<tr><td>Phase-contrast</td><td>контраст в неокрашенных живых клетках</td></tr>
+<tr><td>Dark-field</td><td>светлый объект на тёмном фоне</td></tr>
+<tr><td>Fluorescence</td><td>флуоресцентные метки молекул</td></tr>
+<tr><td>Confocal</td><td>лазер, оптические срезы, 3D</td></tr></table></div>`],
+['n2','2. Week 2 — химия жизни',`<ul>
+<li><b>Атом:</b> атомный номер = протоны; массовое число = протоны + нейтроны; изотопы — разные нейтроны. Потеря e⁻ → катион, приобретение → анион.</li>
+<li><b>Связи:</b> ionic, covalent (polar / nonpolar), hydrogen (вода, ДНК, белки), van der Waals.</li>
+<li><b>Вода:</b> полярная → растворитель; высокая теплоёмкость; испарение охлаждает; cohesion, adhesion, capillary action.</li>
+<li><b>pH:</b> 1 единица = 10× H⁺. Кровь 7,35–7,45. Буфер крови: CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻ (лёгкие — CO₂, почки — H⁺ и HCO₃⁻).</li>
+<li><b>Dehydration synthesis</b> соединяет мономеры с выделением H₂O; <b>hydrolysis</b> расщепляет с добавлением воды.</li></ul>
+<div class="tbl"><table><tr><th>Класс</th><th>Мономер</th><th>Главное</th></tr>
+<tr><td>Carbohydrates</td><td>monosaccharide</td><td>крахмал (растения), гликоген (печень, мышцы), целлюлоза (β-глюкоза, не переваривается), хитин. Лактоза = глюкоза + галактоза (лактаза); сахароза = глюкоза + фруктоза; мальтоза = 2 глюкозы</td></tr>
+<tr><td>Lipids</td><td>glycerol + fatty acids</td><td>не настоящие полимеры; насыщенные без C=C (твёрдые), ненасыщенные с C=C (жидкие); фосфолипиды → бислой; стероиды — 4 кольца; омега-3 и омега-6 незаменимы</td></tr>
+<tr><td>Proteins</td><td>amino acid (peptide bond)</td><td>1° последовательность, 2° α-helix / β-sheet, 3° 3D-форма, 4° несколько субъединиц (гемоглобин = 4). Денатурация не рвёт пептидные связи</td></tr>
+<tr><td>Nucleic acids</td><td>nucleotide (base + sugar + phosphate)</td><td>фосфодиэфирная связь; пурины A, G; пиримидины C, T, U; цепи антипараллельны</td></tr></table></div>
+<p class="hint">Sickle cell на молекулярном уровне: Glu6Val в β-глобине → гидрофобный участок → HbS полимеризуется при низком O₂.</p>`],
+['n3','3. Week 3 — клетка',`<div class="tbl"><table><tr><th></th><th>Prokaryote</th><th>Eukaryote</th></tr>
+<tr><td>Ядро</td><td>нет, нуклеоид + плазмиды</td><td>есть</td></tr>
+<tr><td>Органеллы</td><td>без мембран; рибосомы 70S</td><td>мембранные; рибосомы 80S</td></tr>
+<tr><td>Деление</td><td>binary fission</td><td>mitosis</td></tr>
+<tr><td>Примеры</td><td>bacteria, archaea</td><td>животные, растения, грибы, протисты</td></tr></table></div>
+<p>Во всех клетках есть: plasma membrane, cytoplasm, DNA, ribosomes.</p>
+<div class="tbl"><table><tr><th>Органелла</th><th>Функция</th></tr>
+<tr><td>Nucleolus</td><td>синтез rRNA, сборка рибосом</td></tr>
+<tr><td>Rough ER</td><td>синтез и сворачивание белков</td></tr>
+<tr><td>Smooth ER</td><td>липиды, стероиды, детоксикация, запас Ca²⁺</td></tr>
+<tr><td>Golgi</td><td>модификация, сортировка, упаковка (cis → trans)</td></tr>
+<tr><td>Mitochondria</td><td>АТФ, своя ДНК, апоптоз</td></tr>
+<tr><td>Lysosome</td><td>пищеварительные ферменты (кислая среда, метка M6P)</td></tr>
+<tr><td>Peroxisome</td><td>жирные кислоты, каталаза: H₂O₂ → H₂O + O₂</td></tr>
+<tr><td>Centrosome</td><td>микротрубочки, веретено деления</td></tr></table></div>
+<ul>
+<li><b>Мембрана — fluid mosaic:</b> фосфолипидный бислой, холестерин (текучесть), интегральные и периферические белки, гликопротеины (узнавание).</li>
+<li><b>Цитоскелет:</b> microfilaments (actin), intermediate filaments (прочность), microtubules (tubulin: транспорт, реснички, веретено).</li>
+<li><b>Контакты:</b> tight (герметизация), desmosomes (сцепление), gap (каналы).</li>
+<li><b>Транспорт:</b> пассивный (диффузия, облегчённая — каналы, переносчики GLUT), осмос; активный — Na⁺/K⁺-насос; эндоцитоз (фаго-, пино-, рецептор-опосредованный — ЛПНП).</li>
+<li><b>Тоничность:</b> гипотонический раствор → клетка набухает и лопается; гипертонический → сморщивается; изотонический → без изменений.</li></ul>`],
+['n4','4. Week 4 — энергия клетки',`<ul>
+<li>Анаболизм строит (тратит энергию), катаболизм расщепляет (выделяет). Exergonic ΔG &lt; 0, endergonic ΔG &gt; 0.</li>
+<li><b>Ферменты</b> снижают энергию активации, ΔG не меняют. Competitive inhibitor — в активный центр (помогает избыток субстрата); noncompetitive — в другой участок; feedback inhibition — конечный продукт тормозит ранний этап.</li>
+<li>Cofactor — неорганический (Fe²⁺, Mg²⁺); coenzyme — органический (витамины). NADH и FADH₂ — переносчики электронов.</li></ul>
+<div class="tbl"><table><tr><th>Этап</th><th>Где</th><th>Выход на 1 глюкозу</th></tr>
+<tr><td>Glycolysis</td><td>цитоплазма</td><td>2 ATP (чистые), 2 NADH, 2 pyruvate; O₂ не нужен</td></tr>
+<tr><td>Pyruvate oxidation</td><td>матрикс</td><td>→ acetyl-CoA + CO₂ + NADH</td></tr>
+<tr><td>Krebs cycle ×2</td><td>матрикс</td><td>6 NADH, 2 FADH₂, 4 CO₂, 2 ATP</td></tr>
+<tr><td>ETC + oxidative phosphorylation</td><td>внутренняя мембрана</td><td>большая часть АТФ; всего ≈ 30–32</td></tr></table></div>
+<ul><li>Хемиосмос: H⁺ откачивается в межмембранное пространство и возвращается через ATP synthase. O₂ — конечный акцептор электронов → H₂O.</li>
+<li><b>Брожение</b> восстанавливает NAD⁺, лишнего АТФ не даёт: молочная кислота (мышцы) или спирт + CO₂ (дрожжи).</li></ul>`],
+['n5','5. Weeks 5–6 — клеточный цикл и митоз',`<ul>
+<li>Diploid 46 / haploid 23. Homologous chromosomes — пара от мамы и папы; sister chromatids — копии после репликации (держит cohesin).</li>
+<li><b>Цикл:</b> G1 (рост) → S (репликация ДНК) → G2 (подготовка) → M. G0 — не делятся (нейроны, кардиомиоциты).</li>
+<li><b>Митоз (PPMAT):</b> prophase — конденсация, веретено; prometaphase — оболочка ядра исчезает, микротрубочки к кинетохорам; metaphase — на экваторе; anaphase — separase режет cohesin, хроматиды к полюсам; telophase — ядра восстанавливаются; cytokinesis — сократительное кольцо из актина.</li>
+<li><b>Checkpoints:</b> G1 (размер, питание, ДНК), G2 (ДНК реплицирована целиком), M (прикрепление к веретену).</li>
+<li><b>Регуляция:</b> cyclins активируют Cdks. Proto-oncogene → oncogene («газ»); tumor suppressors RB1, TP53 («тормоз»). p53 → p21 → стоп в G1/S → ремонт или апоптоз.</li>
+<li><b>Binary fission</b> у прокариот: репликация от origin → удлинение → септа → 2 клетки.</li></ul>`],
+['n6','6. Ch. 7 — мейоз и хромосомные болезни (+ study guide)',`<ul>
+<li><b>★ Типы размножения (study guide):</b> бесполое — один родитель, потомки почти идентичны: binary fission (бактерии), budding (почкование, гидра), fragmentation (фрагментация). Половое — слияние гаплоидных гамет (23 + 23) → диплоидная зигота 46 → митозы; даёт генетическое разнообразие.</li>
+<li><b>★ Термины:</b> centromere — место связи сестринских хроматид; kinetochore — белковая структура на центромере, к ней крепятся микротрубочки; bivalent (tetrad) — пара гомологов в мейозе I, 4 хроматиды; chiasma — видимое место кроссинговера.</li>
+<li><b>Мейоз:</b> одна репликация (в S-фазе, до мейоза I; между делениями её нет), два деления → 4 разные гаплоидные клетки. Meiosis I разделяет гомологи (редукция), meiosis II — сестринские хроматиды.</li>
+<li><b>Prophase I:</b> synapsis, synaptonemal complex (временный белковый «замок», помогает выровнять гомологи), crossing over между несестринскими хроматидами → recombinant chromatids; chiasmata держат гомологи до анафазы I.</li>
+<li><b>Metaphase I:</b> independent assortment — 2ⁿ комбинаций (у человека 2²³).</li>
+<li><b>Гаметогенез:</b> oogenesis — первичный ооцит (2n) → мейоз I с неравным делением цитоплазмы → вторичный ооцит + первое полярное тельце; мейоз II завершается только после оплодотворения → 1 яйцеклетка. Spermatogenesis — первичный сперматоцит → 2 вторичных → 4 сперматиды → 4 сперматозоида.</li>
+<li><b>Nondisjunction:</b> в мейозе I → все 4 гаметы аномальны (2 n+1, 2 n−1); в мейозе II → 2 нормальные, 1 n+1, 1 n−1.</li></ul>
+<div class="tbl"><table><tr><th>Синдром</th><th>Кариотип</th><th>Тип</th></tr>
+<tr><td>Down</td><td>47, +21</td><td>трисомия (чаще нерасхождение)</td></tr>
+<tr><td>Klinefelter</td><td>47,XXY</td><td>лишняя X; бесплодие, мало тестостерона</td></tr>
+<tr><td>Turner</td><td>45,X</td><td>моносомия; низкий рост, крыловидная шея</td></tr>
+<tr><td>Triple X</td><td>47,XXX</td><td>часто мало симптомов</td></tr>
+<tr><td>Cri-du-chat</td><td>del(5p)</td><td>структурная: делеция короткого плеча 5</td></tr></table></div>
+<ul><li><b>Aneuploidy</b> — лишняя / недостающая хромосома (2n+1, 2n−1); <b>polyploidy</b> — лишние целые наборы.</li>
+<li><b>Barr body</b> — инактивированная X (черепаховые кошки).</li>
+<li><b>Перестройки:</b> duplication, deletion, inversion (поворот на 180°), translocation (на негомологичную; сбалансированная может быть без симптомов).</li></ul>`],
+['n7','7. Ch. 8 — закономерности наследования',`<ul>
+<li><b>Мендель, горох:</b> быстро растёт, много семян, самоопыление + контролируемое скрещивание (удалял незрелые пыльники, переносил пыльцу); 7 признаков. P → F1 → F2.</li>
+<li><b>Термины:</b> allele — вариант гена в одном локусе; genotype (AA, Aa, aa); phenotype — внешний признак (генотип + иногда среда); homozygous / heterozygous; true-breeding = гомозигота.</li>
+<li><b>Law of dominance:</b> у гетерозиготы проявляется доминантный аллель. F1 от YY × yy — все Yy, жёлтые. Доминантный ≠ более частый или «лучший».</li>
+<li><b>Law of segregation:</b> аллели расходятся в разные гаметы. F2 (Aa × Aa): генотипы 1 AA : 2 Aa : 1 aa, фенотипы 3 : 1 (705 фиолетовых : 224 белых). Отношения — вероятности, не гарантия для маленькой семьи.</li>
+<li><b>Law of independent assortment:</b> гены разных признаков расходятся независимо; дигибрид AaBb × AaBb → 9 : 3 : 3 : 1.</li>
+<li><b>Test cross:</b> неизвестный доминантный фенотип × aa. Все потомки доминантные → AA; 1 : 1 → Aa.</li>
+<li><b>Incomplete dominance:</b> красный × белый львиный зев → розовый F1; розовый × розовый → 25% красных, 50% розовых, 25% белых.</li>
+<li><b>Codominance:</b> оба аллеля видны (группа крови AB). Multiple alleles: IA, IB, i.</li>
+<li><b>X-linked recessive</b> (гемофилия, дальтонизм): чаще у мужчин, передаётся от матери-носительницы.</li>
+<li><b>Hardy–Weinberg:</b> p + q = 1; p² + 2pq + q² = 1. Пример: q = 0,8 → p = 0,2 → BB = p² = 0,04.</li></ul>
+<p class="hint">Версия главы 8 из Telegram — те же слайды 1–22 (до закона расщепления). Остальные пункты — по стандартному курсу и прошлогодним билетам; сверьте со слайдами 23–43 на лекции.</p>`],
+['n8','★ 8. Лаба: культура бактерий и окраска по Граму (2 сессии)',`<ul>
+<li><b>Agar</b> — желирующее вещество из красных водорослей, даёт твёрдую поверхность для колоний. <b>Nutrient agar</b> — универсальная среда: агар + пептоны и экстракты (источники C, N, минералов); подходит не для всех бактерий.</li>
+<li><b>Стерилизация</b> уничтожает все живые микроорганизмы, включая споры. <b>Автоклав</b> — насыщенный пар под давлением; режим зависит от загрузки; открывать после сброса давления (ожоги).</li>
+<li><b>Сессия 1:</b> подписать ДНО чашки (группа, дата, среда, культура) → дезинфекция, СИЗ → посев стерильной петлёй → закрыть, (перевернуть) → инкубация только в лаборатории.</li>
+<li><b>Наблюдение колоний</b> при закрытой чашке: рост есть/нет, цвет, размер, форма, край, высота. По колониям нельзя определить вид или Gram-реакцию.</li></ul>
+<div class="tbl"><table><tr><th>Шаг</th><th>Реагент</th><th>Роль</th></tr>
+<tr><td>1</td><td>Crystal violet</td><td>первичный краситель — всё фиолетовое</td></tr>
+<tr><td>2</td><td>Gram’s iodine</td><td>протрава (mordant): комплекс crystal violet–iodine</td></tr>
+<tr><td>3</td><td>Decolorizer (спирт / ацетон)</td><td>критический шаг: обесцвечивает Gram−</td></tr>
+<tr><td>4</td><td>Safranin</td><td>контрастный краситель: Gram− → розовые/красные</td></tr></table></div>
+<ul>
+<li><b>Gram+</b> — фиолетовые: толстый peptidoglycan удерживает комплекс. <b>Gram−</b> — розовые: тонкий peptidoglycan + липидная наружная мембрана.</li>
+<li><b>Мазок:</b> тонкий → высушить на воздухе → фиксация теплом → 4 реагента с промывкой → иммерсия.</li>
+<li><b>Морфология:</b> cocci (шарики), bacilli (палочки); staphylococci — гроздья, streptococci — цепочки, diplococci — пары, streptobacilli — цепочки палочек.</li>
+<li><b>Ошибки:</b> всё фиолетовое — мало обесцвечивания или толстый мазок; всё розовое — пересвет обесцвечивателем, старая культура.</li>
+<li>По форме и цвету нельзя сказать, патоген ли бактерия — нужны биохимические и молекулярные тесты.</li></ul>`],
+['n8b','★ 8b. Лаба: pH-метрия и кислотно-основной баланс',`<ul>
+<li><b>Шкала 0–14:</b> &lt;7 кислая (лимон, уксус, желудок), 7 нейтральная (чистая вода при 25 °C), &gt;7 щелочная (сода, мыло, аммиак).</li>
+<li><b>pH-метр:</b> дисплей + электрод (стеклянный шарик чувствует H⁺). Калибровка буферами pH 4,00 / 7,00 / 10,00; между образцами — промыть дистиллированной водой и промокнуть, не тереть; электрод не касается дна.</li>
+<li><b>Образцы лабы:</b> Coca-Cola (кислая), молоко (около нейтральной), раствор соды и мыла (щелочные).</li>
+<li><b>В организме:</b> артериальная кровь 7,35–7,45; желудок 1,5–3,5 (HCl активирует пепсин, денатурирует белки, убивает микробы); внутриклеточная жидкость ~7,0–7,2; лизосомы кислые.</li>
+<li><b>Регуляция:</b> буферы (секунды; бикарбонатный CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻) → лёгкие (минуты; выдыхают CO₂) → почки (часы–дни; реабсорбция HCO₃⁻, выведение H⁺).</li></ul>
+<div class="tbl"><table><tr><th>ABG</th><th>Норма</th></tr><tr><td>pH</td><td>7,35–7,45 (&lt; — ацидемия, &gt; — алкалемия)</td></tr><tr><td>PaCO₂ (дыхательный компонент)</td><td>35–45 mmHg</td></tr><tr><td>HCO₃⁻ (метаболический)</td><td>22–26 mmol/L</td></tr></table></div>
+<ul><li><b>Кейс 1 — respiratory acidosis:</b> ХОБЛ, поверхностное дыхание; pH 7,28, PaCO₂ 60, HCO₃⁻ 26 → задержка CO₂.</li>
+<li><b>Кейс 2 — metabolic acidosis:</b> диабетический кетоацидоз; pH 7,18, PaCO₂ 25, HCO₃⁻ 9 → кетоновые тела расходуют HCO₃⁻; дыхание Куссмауля — дыхательная компенсация. Другие причины: тяжёлая диарея, лактат-ацидоз.</li></ul>`],
+['n8c','★ 8c. Лаба: экстракция бета-каротина (18.11)',`<ul>
+<li><b>Бета-каротин</b> — красно-оранжевый пигмент, провитамин A, антиоксидант (нейтрализует ROS и синглетный кислород лучше α-токоферола). Wachenroder, 1831 — выделил из моркови.</li>
+<li><b>Цель:</b> жидкость–жидкостная экстракция из красной узбекской моркови.</li>
+<li><b>Ход:</b> 20 г моркови → паста + 50 мл этанола 98% → фильтрация через марлю → водяная баня 5 мин → 50 мл смеси гексан 75% : ацетон 25% → встряхивание 10 мин → центрифуга 5000 rpm → верхний органический слой (оранжевый) 2 мл + 1 мл конц. H₂SO₄.</li>
+<li><b>Почему так:</b> гексан неполярный — растворяет неполярный каротин («подобное в подобном»); ацетон разрушает клеточные стенки; гексан легче воды — слой сверху.</li>
+<li><b>Результат:</b> сразу сине-зелёный цвет (протонированный комплекс, нарушена система сопряжённых π-связей) → со временем коричнево-чёрный (окисление, распад).</li>
+<li>Ваш отчёт — в файле Lab_Report_Beta-Carotene_Khalikov.docx.</li></ul>`],
+['n9','9. Остальные лабы (кратко)',`<div class="tbl"><table><tr><th>Лаба</th><th>Что знать</th></tr>
+<tr><td>Light microscope, onion cells, hair fiber</td><td>путь света, увеличение, приготовление препарата; клетки лука: клеточная стенка, ядро</td></tr>
+<tr><td>Potato osmosis</td><td>в гипертоническом растворе картофель теряет массу, в гипотоническом набирает; изотоническая точка — где масса не меняется</td></tr></table></div>`]
+];
+
+const QUIZ = [
+['Week 1','List the levels of biological organization from smallest to largest.','Atom → molecule → organelle → cell → tissue → organ → organ system → organism → population → community → ecosystem → biosphere.'],
+['Week 1','State the three principles of cell theory.','All organisms are made of one or more cells; the cell is the basic unit of structure and function; cells come only from pre-existing cells.'],
+['Week 1','Describe the central dogma and name the processes.','DNA → mRNA by transcription; mRNA → protein by translation (on ribosomes).'],
+['Week 1','A microscope has a 10× ocular and a 40× objective. What is the total magnification? Trace the light path.','400×. Light source → iris diaphragm → condenser → specimen → objective → body tube → ocular → eye.'],
+['Week 2','Compare ionic, covalent and hydrogen bonds.','Ionic: attraction of oppositely charged ions. Covalent: shared electrons (polar unequal, nonpolar equal). Hydrogen: weak attraction between δ+ H and δ− atom; stabilizes water, DNA, proteins.'],
+['Week 2','Name the four classes of biomolecules and their building blocks.','Carbohydrates — monosaccharides; lipids — glycerol + fatty acids; proteins — amino acids; nucleic acids — nucleotides.'],
+['Week 2','Describe the four levels of protein structure. What happens in denaturation?','Primary — amino acid sequence; secondary — α-helix/β-sheet (H-bonds); tertiary — 3D shape; quaternary — several subunits. Denaturation = loss of shape; peptide bonds remain.'],
+['Week 2','Which disaccharides do you know, their monomers and enzymes?','Lactose = glucose + galactose (lactase); sucrose = glucose + fructose (sucrase); maltose = glucose + glucose (maltase).'],
+['Week 2','What is the normal blood pH and which buffer keeps it?','7.35–7.45; bicarbonate buffer: CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻.'],
+['Week 3','Compare prokaryotic and eukaryotic cells.','Prokaryotes: no nucleus (nucleoid), no membrane-bound organelles, 70S ribosomes, binary fission. Eukaryotes: nucleus, membrane organelles, 80S ribosomes, mitosis.'],
+['Week 3','Describe the path of a secreted protein in the cell.','Rough ER → Golgi (cis → trans) → secretory vesicle → plasma membrane (exocytosis).'],
+['Week 3','What happens to a red blood cell in hypotonic, hypertonic and isotonic solutions?','Hypotonic — swells and may burst (lysis); hypertonic — shrinks (crenation); isotonic — no change.'],
+['Week 3','Compare passive and active transport with examples.','Passive: down the gradient, no ATP — diffusion, facilitated diffusion (aquaporins, GLUT), osmosis. Active: against the gradient, uses ATP — Na⁺/K⁺ pump.'],
+['Week 4','How do enzymes work? Compare competitive and noncompetitive inhibition.','Enzymes lower activation energy, do not change ΔG. Competitive inhibitors bind the active site (overcome by more substrate); noncompetitive bind another site (not overcome by substrate).'],
+['Week 4','List the stages of cellular respiration, where they occur and the ATP yield.','Glycolysis (cytoplasm, 2 ATP net) → pyruvate oxidation (matrix) → Krebs cycle (matrix, 2 ATP) → ETC + oxidative phosphorylation (inner membrane, most ATP); total ≈ 30–32 ATP.'],
+['Week 4','What is the role of oxygen in respiration, and what happens without it?','O₂ is the final electron acceptor (forms water). Without it — fermentation: regenerates NAD⁺, lactic acid in muscle or ethanol + CO₂ in yeast; only 2 ATP.'],
+['Weeks 5–6','Describe the cell cycle phases.','G1 — growth; S — DNA replication; G2 — preparation and checking; M — mitosis + cytokinesis; G0 — non-dividing state.'],
+['Weeks 5–6','Describe the stages of mitosis.','Prophase — condensation, spindle; prometaphase — nuclear envelope breaks, kinetochore attachment; metaphase — alignment; anaphase — sister chromatids separate; telophase — nuclei reform; cytokinesis.'],
+['Weeks 5–6','How does p53 protect the cell from cancer?','DNA damage activates p53 → p21 inhibits cyclin–Cdk → arrest at G1/S → repair; if damage is irreparable → apoptosis.'],
+['Ch. 7','Compare mitosis and meiosis.','Mitosis: one division, 2 identical diploid cells, growth/repair. Meiosis: two divisions, 4 genetically different haploid cells, gametes. Meiosis I separates homologs; meiosis II and mitosis separate sister chromatids.'],
+['Ch. 7','What are the sources of genetic variation in meiosis?','Crossing over in prophase I and independent assortment in metaphase I (2²³ combinations in humans), plus random fertilization.'],
+['Ch. 7','Compare nondisjunction in meiosis I and meiosis II.','Meiosis I: homologs fail to separate → all four gametes abnormal (2 n+1, 2 n−1). Meiosis II: sister chromatids fail → 2 normal, 1 n+1, 1 n−1.'],
+['Ch. 7','Give the karyotypes of Down, Klinefelter and Turner syndromes.','Down 47,+21; Klinefelter 47,XXY; Turner 45,X.'],
+['★ Ch. 7','Name three types of asexual reproduction with examples. How does sexual reproduction differ?','Binary fission (bacteria), budding (hydra), fragmentation. Sexual reproduction fuses two haploid gametes (23 + 23) into a diploid zygote (46) and creates genetic variation; asexual offspring are nearly identical to the parent.'],
+['★ Ch. 7','Define centromere, kinetochore, bivalent (tetrad) and chiasma.','Centromere — region joining sister chromatids; kinetochore — protein structure on the centromere where spindle microtubules attach; bivalent — paired homologs in meiosis I (4 chromatids); chiasma — visible crossover site.'],
+['★ Ch. 7','When is DNA replicated in meiosis, and what happens in prophase I?','Once, in S phase before meiosis I (not between meiosis I and II). Prophase I: synapsis, synaptonemal complex forms, crossing over between non-sister chromatids → recombinant chromatids; chiasmata hold homologs until anaphase I.'],
+['★ Ch. 7','Compare oogenesis and spermatogenesis.','Oogenesis: primary oocyte → unequal meiosis I → secondary oocyte + first polar body; meiosis II completes only after fertilization → 1 egg. Spermatogenesis: primary spermatocyte → 2 secondary → 4 sperm.'],
+['Ch. 8','State Mendel’s laws.','Dominance — dominant allele masks recessive in heterozygote; segregation — two alleles separate into different gametes; independent assortment — alleles of different genes assort independently.'],
+['Ch. 8','What are the genotype and phenotype ratios in F2 of a monohybrid cross?','Aa × Aa → genotypes 1 AA : 2 Aa : 1 aa; phenotypes 3 dominant : 1 recessive.'],
+['Ch. 8','What is a test cross and how do you interpret it?','Cross with a homozygous recessive (aa). All offspring dominant → parent AA; 1:1 → parent Aa.'],
+['Ch. 8','Red snapdragon × white snapdragon gives pink F1. Name the pattern and give the result of pink × pink.','Incomplete dominance; 25% red, 50% pink, 25% white.'],
+['Ch. 8','The recessive allele b has a frequency of 0.8 in a population in Hardy–Weinberg equilibrium. What is the frequency of homozygous dominant individuals?','p = 1 − 0.8 = 0.2; BB = p² = 0.04 (4%).'],
+['★ Ch. 8','Why were pea plants good for Mendel, and how did he control pollination?','They grow quickly, give many seeds and can self-fertilize. He removed immature anthers to prevent self-pollination and transferred pollen from a chosen donor to the stigma.'],
+['Лабы','Describe the Gram stain steps and explain the result.','Crystal violet → iodine (mordant) → decolorizer (alcohol/acetone) → safranin. Gram-positive stay purple (thick peptidoglycan); Gram-negative turn pink (thin peptidoglycan + outer membrane).'],
+['★ Лабы','What is agar and nutrient agar? What is an autoclave used for?','Agar — gelling agent from red algae that gives a solid surface for colonies. Nutrient agar — agar + peptones and extracts supplying C, N and minerals. Autoclave — sterilization with saturated steam under pressure, kills all microbes including spores.'],
+['★ Лабы','What can go wrong in a Gram stain and how does it look?','Both groups purple — insufficient decolorization or thick smear; both pink — over-decolorization or old/damaged culture. The decolorizer step is the critical one.'],
+['★ Лабы','Describe bacterial shapes and arrangements seen after Gram staining.','Cocci (spheres), bacilli (rods); staphylococci — grape-like clusters, streptococci — chains, diplococci — pairs, streptobacilli — chains of rods.'],
+['★ Лабы','How do you calibrate and use a pH meter?','Calibrate with standard buffers pH 4, 7, 10; rinse the electrode with distilled water and blot (do not rub) between samples; immerse the bulb without touching the beaker; wait for a stable reading.'],
+['★ Лабы','Name the normal pH of arterial blood, stomach and intracellular fluid, and the three systems that regulate blood pH.','Blood 7.35–7.45; stomach 1.5–3.5; intracellular ~7.0–7.2. Chemical buffers (seconds, bicarbonate), lungs (minutes, CO₂), kidneys (hours–days, HCO₃⁻ and H⁺).'],
+['★ Лабы','Give the normal ABG values and define acidemia and alkalemia.','pH 7.35–7.45, PaCO₂ 35–45 mmHg, HCO₃⁻ 22–26 mmol/L. Acidemia — pH below 7.35; alkalemia — above 7.45.'],
+['★ Лабы','Why is hexane used to extract beta-carotene, and what does sulfuric acid show?','Beta-carotene is nonpolar and dissolves in nonpolar hexane (acetone breaks cell walls); hexane forms the upper layer. Conc. H₂SO₄ gives a blue-green colour (protonated complex) that turns brown-black as carotene oxidizes — confirms beta-carotene.']
+];
+
+const CASES = [
+['(Final 2026) What is the process where DNA instructs the formation of mRNA? And mRNA → protein? Where does RNA polymerase bind?','Transcription; translation; the promoter.'],
+['(Final 2026) In a transcription diagram, the top strand runs 5′→3′ with the same sequence as the RNA, the bottom strand is read 3′→5′. Name them.','Top — coding (non-template, sense) strand; bottom — template (antisense) strand.'],
+['(Final 2026) Name the processing steps of eukaryotic mRNA.','5′ capping, splicing (removal of introns), 3′ poly-A tail (polyadenylation).'],
+['(Final 2026) Label the translation figure: a) carries the amino acid, b) its 3 bases, c) the long strand, d) its 3 bases (AUG).','a) tRNA; b) anticodon (UAC); c) mRNA; d) codon AUG.'],
+['(Final 2026) The template strand is 3′-AGTGTGCGCGTA-5′. Give the mRNA and the amino acids.','mRNA 5′-UCA CAC GCG CAU-3′ → Ser–His–Ala–His.'],
+['(Final 2026) How do you read a Sanger sequencing gel?','From the bottom (shortest fragments) to the top; each band shows the last nucleotide of that fragment. Read 5′→3′ of the synthesized strand; the template is complementary.'],
+['(Final 2026) Prokaryotes change their genes in three ways. Name them.','Transformation (uptake of DNA from the environment), transduction (transfer by bacteriophages), conjugation (transfer through a pilus).'],
+['(Final 2026) In a figure of two bacterial envelopes, A has a thick outer layer and no outer membrane; B has a thin layer and an outer membrane. Identify them and structure X.','A — Gram-positive; B — Gram-negative. X — cell wall; main component peptidoglycan.'],
+['A karyogram shows three copies of chromosome 21. Diagnosis and most common mechanism?','Down syndrome (trisomy 21, 47 chromosomes); nondisjunction during meiosis.'],
+['An infant has a high-pitched cry; the karyogram shows a missing segment of the short arm of chromosome 5. Diagnosis and type of abnormality?','Cri-du-chat syndrome — structural (deletion of 5p), not numerical.'],
+['A tall man is infertile and has low testosterone. Karyotype?','Klinefelter syndrome, 47,XXY.'],
+['A child with sickle cell disease: explain the chain from gene to symptoms.','HBB mutation (Glu6Val) → HbS polymerizes at low O₂ → sickle-shaped red cells → block small vessels → pain and organ damage.'],
+['A patient gets IV fluid by mistake made with pure water. What happens to the red blood cells?','Water is hypotonic → water enters the cells → they swell and lyse (hemolysis).'],
+['A man has lactose intolerance. Which enzyme is missing and why does he get diarrhea?','Lactase; undigested lactose stays in the gut and draws water (osmotic diarrhea), bacteria ferment it → gas, bloating.'],
+['★ (pH lab case 1) A patient with a severe COPD exacerbation is drowsy and breathes shallowly. ABG: pH 7.28, PaCO₂ 60 mmHg, HCO₃⁻ 26 mmol/L. Interpret.','Acidemia with high CO₂ and normal bicarbonate → primary respiratory acidosis from inadequate ventilation and CO₂ retention (CO₂ + H₂O → H₂CO₃ → H⁺). Lungs are the organ at fault.'],
+['★ (pH lab case 2) A young adult with type 1 diabetes has nausea, abdominal pain and deep rapid breathing. ABG: pH 7.18, PaCO₂ 25, HCO₃⁻ 9. Interpret.','Acidemia with low HCO₃⁻ → metabolic acidosis (diabetic ketoacidosis: ketone bodies consume bicarbonate). Low PaCO₂ = respiratory compensation (Kussmaul breathing).'],
+['★ A Gram stain of a known Gram-negative control shows purple rods. What went wrong?','Insufficient decolorization (too short or weak decolorizer) or a smear that is too thick — the crystal violet–iodine complex was not removed.'],
+['★ A student sees purple round cells in grape-like clusters. Describe the result. Can he say the bacterium is a pathogen?','Gram-positive cocci in clusters (staphylococci). No — shape and Gram reaction cannot show pathogenicity; biochemical and molecular tests are needed.']
+];
+
+const CARDS = [
+['homeostasis','поддержание постоянства внутренней среды','homeostasis'],['prokaryote','клетка без ядра (бактерии, археи)','prokaryote'],['eukaryote','клетка с ядром и мембранными органеллами','eukaryote'],['nucleolus','ядрышко — синтез rRNA, сборка рибосом','nucleolus'],['rough endoplasmic reticulum','шероховатый ЭПР — синтез белков','rough ER'],['smooth endoplasmic reticulum','гладкий ЭПР — липиды, детоксикация','smooth ER'],['Golgi apparatus','аппарат Гольджи — модификация и сортировка','Golgi'],['mitochondrion','митохондрия — синтез АТФ','mitochondria'],['lysosome','лизосома — пищеварительные ферменты','lysosome'],['peroxisome','пероксисома — каталаза, жирные кислоты','peroxisome'],['cytoskeleton','цитоскелет','cytoskeleton'],['osmosis','осмос — движение воды к большей концентрации растворённого','osmosis'],['hypotonic solution','гипотонический раствор — клетка набухает','hypotonic'],['hypertonic solution','гипертонический раствор — клетка сморщивается','hypertonic'],['facilitated diffusion','облегчённая диффузия через белки','facilitated diffusion'],['active transport','активный транспорт против градиента (АТФ)','active transport'],['endocytosis','эндоцитоз — захват веществ мембраной','endocytosis'],['enzyme','фермент — снижает энергию активации','enzyme'],['activation energy','энергия активации','activation energy'],['competitive inhibitor','конкурентный ингибитор — в активный центр','competitive inhibitor'],['glycolysis','гликолиз — глюкоза → 2 пирувата, 2 АТФ','glycolysis'],['Krebs cycle','цикл Кребса — в матриксе митохондрий','citric acid cycle'],['electron transport chain','дыхательная цепь — внутренняя мембрана','ETC'],['fermentation','брожение — без кислорода','fermentation'],['chromatin','хроматин — ДНК + белки','chromatin'],['sister chromatids','сестринские хроматиды','sister chromatids'],['homologous chromosomes','гомологичные хромосомы','homologs'],['diploid (2n)','диплоидный — два набора (46)','diploid'],['haploid (n)','гаплоидный — один набор (23)','haploid'],['cell cycle','клеточный цикл: G1, S, G2, M','cell cycle'],['cytokinesis','цитокинез — деление цитоплазмы','cytokinesis'],['tumor suppressor','опухолевый супрессор (TP53, RB1)','tumor suppressor'],['oncogene','онкоген — гиперактивный протоонкоген','oncogene'],['crossing over','кроссинговер — обмен участками хромосом','crossing over'],['synapsis','синапсис — конъюгация гомологов','synapsis'],['nondisjunction','нерасхождение хромосом','nondisjunction'],['aneuploidy','анеуплоидия — лишняя/недостающая хромосома','aneuploidy'],['karyotype','кариотип','karyotype'],['allele','аллель — вариант гена','allele'],['genotype','генотип','genotype'],['phenotype','фенотип','phenotype'],['homozygous','гомозиготный','homozygous'],['heterozygous','гетерозиготный','heterozygous'],['incomplete dominance','неполное доминирование','incomplete dominance'],['codominance','кодоминирование','codominance'],['test cross','анализирующее скрещивание','test cross'],['transcription','транскрипция — ДНК → мРНК','transcription'],['translation','трансляция — мРНК → белок','translation'],['promoter','промотор — место посадки РНК-полимеразы','promoter'],['codon / anticodon','кодон (мРНК) / антикодон (тРНК)','codon'],['peptidoglycan','пептидогликан — клеточная стенка бактерий','peptidoglycan'],['transformation / transduction / conjugation','трансформация / трансдукция / конъюгация','gene transfer'],
+['budding','почкование (гидра)','budding'],['fragmentation','фрагментация — новая особь из фрагмента','fragmentation'],['kinetochore','кинетохор — место крепления микротрубочек','kinetochore'],['bivalent (tetrad)','бивалент — пара гомологов, 4 хроматиды','bivalent'],['chiasma','хиазма — место перекреста','chiasma'],['synaptonemal complex','синаптонемальный комплекс','synaptonemal complex'],['polar body','полярное тельце','polar body'],['true-breeding','чистая линия (гомозигота)','true-breeding'],['agar','агар — желирующее вещество из красных водорослей','agar'],['nutrient agar','питательный агар','nutrient agar'],['autoclave','автоклав — стерилизация паром под давлением','autoclave'],['mordant','протрава (йод в окраске по Граму)','mordant'],['counterstain','контрастный краситель (сафранин)','counterstain'],['decolorizer','обесцвечиватель (спирт / ацетон)','decolorizer'],['cocci / bacilli','кокки / палочки','cocci / bacilli'],['staphylococci','стафилококки — гроздья','staphylococci'],['streptococci','стрептококки — цепочки','streptococci'],['acidemia / alkalemia','ацидемия (pH < 7,35) / алкалемия (> 7,45)','acidemia'],['respiratory acidosis','дыхательный ацидоз — задержка CO₂','respiratory acidosis'],['metabolic acidosis','метаболический ацидоз — потеря HCO₃⁻','metabolic acidosis'],['Kussmaul breathing','дыхание Куссмауля — глубокое и частое','Kussmaul breathing'],['calibration buffer','калибровочный буфер (pH 4, 7, 10)','calibration buffer'],['beta-carotene','бета-каротин — провитамин A','beta-carotene'],['liquid–liquid extraction','жидкость–жидкостная экстракция','extraction']
+];
+
+
+const NEW_PREFIX = '★ ';
+const isNew = s => String(s).startsWith(NEW_PREFIX);
+const strip = s => String(s).replace(/^★ /,'');
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const todayISO = (()=>{ const d=new Date(); return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10) })();
+
+let artifactNS = null, saveTimer = null;
+function persist(){
+  try{ localStorage.setItem(LSKEY, JSON.stringify(S)) }catch(e){}
+  if(PPS){PPS.save(LSKEY,S);$('#save').textContent='Синхронизировано с Plastic Path';return}
+  if(!artifactNS) return;
+  clearTimeout(saveTimer);
+  $('#save').textContent = 'Сохраняю…';
+  saveTimer = setTimeout(async ()=>{
+    const json = JSON.stringify(S).replace(/</g,'\\u003c');
+    const html = TEMPLATE.replace(/(<script type="application\/json" id="state">)[\s\S]*?(<\/script>)/, (m,a,b)=>a+json+b);
+    try{ await artifactNS.publish(html); $('#save').textContent='Сохранено'; }
+    catch(e){ $('#save').textContent = (e && (e.code==='not_granted'||e.code==='not_writer')) ? 'Только просмотр' : 'Сохранено на этом устройстве'; }
+  }, 2500);
+}
+
+const VIEWS=['today','plan','notes','quiz','cases','cards'];
+function route(){
+  const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'today';
+  document.querySelectorAll('.view').forEach(e=>e.classList.toggle('on', e.id==='v-'+v));
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on', a.dataset.v===v));
+}
+addEventListener('hashchange', route);
+
+function allDays(){ return PLAN.flatMap(w=>w.days) }
+function counts(){
+  const d=allDays(), dd=d.filter(x=>S.days[x[0]]).length;
+  const qk=QUIZ.filter((q,i)=>S.quiz['q'+i]==='y').length + CASES.filter((q,i)=>S.quiz['c'+i]==='y').length;
+  const ck=CARDS.filter(c=>S.cards[c[0]]==='y').length;
+  return {dd, dt:d.length, qk, qt:QUIZ.length+CASES.length, ck, ct:CARDS.length};
+}
+function renderToday(){
+  const c=counts();
+  const target=new Date('2026-12-23T00:00:00'), now=new Date(todayISO+'T00:00:00');
+  const left=Math.max(0, Math.round((target-now)/864e5));
+  const tile=(n,t,p)=>`<div class="tile"><b>${n}</b><span>${t}</span>${p!=null?`<div class="bar"><i style="width:${p}%"></i></div>`:''}</div>`;
+  $('#tiles').innerHTML = tile(left,'дней до экзамена (23 декабря)') + tile(`${c.dd}/${c.dt}`,'дней плана выполнено',Math.round(c.dd/c.dt*100)) + tile(`${c.qk}/${c.qt}`,'вопросов и заданий знаю',Math.round(c.qk/c.qt*100)) + tile(`${c.ck}/${c.ct}`,'карточек выучено',Math.round(c.ck/c.ct*100));
+  const all=allDays();
+  let t = all.find(x=>x[0]===todayISO) || all.find(x=>!S.days[x[0]]) || all[all.length-1];
+  const isToday = t[0]===todayISO;
+  const link = t[2].startsWith('n') ? `#notes` : '#'+t[2];
+  $('#today-card').innerHTML = `<span class="chip">${isToday?'Сегодня':'Следующее по плану'} · ${fmt(t[0])}</span>
+    <h2 style="margin:8px 0">${esc(t[1])}</h2>
+    <div class="row"><a class="btn pri" href="${link}" data-jump="${t[2]}">Открыть материал</a>
+    <button class="btn" data-done="${t[0]}">${S.days[t[0]]?'Отметить как не сделано':'Отметить как сделано'}</button></div>`;
+  $('#n-plan').textContent=`${c.dd}/${c.dt}`; $('#n-quiz').textContent=`${QUIZ.filter((q,i)=>S.quiz['q'+i]==='y').length}/${QUIZ.length}`;
+  $('#n-cases').textContent=`${CASES.filter((q,i)=>S.quiz['c'+i]==='y').length}/${CASES.length}`; $('#n-cards').textContent=`${c.ck}/${c.ct}`;
+}
+function fmt(iso){ const d=new Date(iso+'T00:00:00'); return d.toLocaleDateString('ru-RU',{weekday:'short',day:'numeric',month:'short'}) }
+
+function renderPlan(){
+  $('#plan').innerHTML = PLAN.map(w=>`<div class="card week"><h3>${esc(w.w)}</h3>${w.days.map(d=>`
+    <div class="day ${S.days[d[0]]?'done':''} ${d[0]===todayISO?'is-today':''}"><input type="checkbox" id="d-${d[0]}" data-day="${d[0]}" ${S.days[d[0]]?'checked':''}>
+    <span class="d">${fmt(d[0])}</span><label for="d-${d[0]}">${esc(d[1])}</label></div>`).join('')}</div>`).join('');
+}
+document.addEventListener('change', e=>{
+  if(e.target.dataset.day){ const k=e.target.dataset.day; if(e.target.checked) S.days[k]=1; else delete S.days[k]; renderPlan(); renderToday(); persist(); }
+});
+document.addEventListener('click', e=>{
+  const d=e.target.closest('[data-done]'); if(d){ const k=d.dataset.done; S.days[k]?delete S.days[k]:S.days[k]=1; renderPlan(); renderToday(); persist(); }
+  const j=e.target.closest('[data-jump]'); if(j && j.dataset.jump.startsWith('n')){ setTimeout(()=>{ const el=document.getElementById('note-'+j.dataset.jump); el&&el.scrollIntoView() },50) }
+});
+
+function renderNotes(){
+  $('#toc').innerHTML = NOTES.map(n=>`<a class="chip ${isNew(n[1])?'new':''}" href="#notes" data-sec="${n[0]}">${esc(strip(n[1]))}</a>`).join('');
+  $('#notes').innerHTML = NOTES.map(n=>`<section class="card" id="note-${n[0]}"><h2>${esc(strip(n[1]))}${isNew(n[1])?'<span class="newtag">новое</span>':''}</h2>${n[2]}</section>`).join('');
+  $('#toc').addEventListener('click', e=>{ const a=e.target.closest('[data-sec]'); if(a){ e.preventDefault(); document.getElementById('note-'+a.dataset.sec).scrollIntoView({behavior:'smooth'}) } });
+}
+
+let sampleNS=null;
+function makeTrainer(kind){
+  const list = kind==='q' ? QUIZ.map((q,i)=>({id:'q'+i, topic:strip(q[0]), nw:isNew(q[0]), q:q[1], a:q[2]})) : CASES.map((q,i)=>({id:'c'+i, topic:'Задачи', nw:isNew(q[0]), q:strip(q[0]), a:q[1]}));
+  let idx=0;
+  const box = kind==='q' ? $('#quiz-card') : $('#case-card');
+  function pool(){
+    if(kind!=='q') return list;
+    const t=$('#q-filter').value, weak=$('#q-weak').checked;
+    return list.filter(x=>(t==='all'||(t==='__new'?x.nw:x.topic===t)) && (!weak || S.quiz[x.id]!=='y'));
+  }
+  function render(){
+    const p=pool(); if(!p.length){ box.innerHTML='<p class="lead">В этом наборе вопросов не осталось. Снимите фильтр или выберите другую тему.</p>'; return }
+    if(idx>=p.length) idx=0;
+    const it=p[idx], st=S.quiz[it.id];
+    box.innerHTML = `<div class="row" style="justify-content:space-between"><span class="chip">${esc(it.topic)} · ${idx+1} из ${p.length}</span>
+      <span class="row">${it.nw?'<span class="chip new">новое</span>':''}${st?`<span class="chip ${st==='y'?'ok':'no'}">${st==='y'?'знал':'не знал'}</span>`:''}</span></div>
+      <p class="q">${esc(it.q)}</p>
+      <label for="ta-${kind}" class="hint">Ваш ответ</label><textarea id="ta-${kind}" placeholder="Write your answer in English…"></textarea>
+      <div class="row" style="margin-top:10px"><button class="btn pri" data-a="show">Показать ответ</button>
+        ${sampleNS?'<button class="btn" data-a="ai">Проверить с Claude</button>':''}
+        <button class="btn" data-a="prev">Назад</button><button class="btn" data-a="next">Дальше</button></div>
+      <div id="out-${kind}" style="margin-top:12px;display:flex;flex-direction:column;gap:10px"></div>`;
+  }
+  box.addEventListener('click', async e=>{
+    const b=e.target.closest('[data-a]'); if(!b) return;
+    const p=pool(), it=p[idx], out=$('#out-'+kind);
+    if(b.dataset.a==='next'){ idx=(idx+1)%p.length; render() }
+    if(b.dataset.a==='prev'){ idx=(idx-1+p.length)%p.length; render() }
+    if(b.dataset.a==='show'){
+      if(!out.querySelector('.ans')) out.insertAdjacentHTML('afterbegin', `<div class="ans"><b>Ключ:</b> ${esc(it.a)}</div><div class="row"><button class="btn bad" data-a="no">Не знал</button><button class="btn good" data-a="yes">Знал</button></div>`);
+    }
+    if(b.dataset.a==='yes'||b.dataset.a==='no'){ S.quiz[it.id]= b.dataset.a==='yes'?'y':'n'; persist(); renderToday(); idx=(b.dataset.a==='yes' && $('#q-weak') && $('#q-weak').checked && kind==='q')?idx:(idx+1)%p.length; render() }
+    if(b.dataset.a==='ai'){
+      const txt=$('#ta-'+kind).value.trim(); if(!txt){ out.insertAdjacentHTML('afterbegin','<p class="hint">Сначала напишите ответ.</p>'); return }
+      const div=document.createElement('div'); div.className='ai'; div.textContent='Claude читает ваш ответ…'; out.prepend(div); b.disabled=true;
+      try{
+        const r = await sampleNS(`You are an examiner in Medical Biology and General Genetics for first-year medical students (short written answers, genetics problems, labs). Check scientific accuracy. The student's English is B1, so judge content, not grammar.\nQuestion: ${it.q}\nModel answer: ${it.a}\nStudent answer: ${txt}\n\nReply in Russian, max 6 short lines: 1) оценка из 10; 2) что верно; 3) чего не хватает или что неверно; 4) одна строка — как улучшить ответ по-английски.`, {modelTier:'quick', onText:({text})=>{ div.textContent=text }});
+        div.textContent=r.text;
+      }catch(err){ div.textContent = err&&err.code==='rate_limited' ? 'Слишком много запросов, попробуйте через минуту.' : 'Проверка недоступна. Сверьтесь с ключом.'; if(err&&err.code==='not_granted'){ sampleNS=null } }
+      b.disabled=false;
+    }
+  });
+  if(kind==='q'){
+    const topics=[...new Set(QUIZ.map(q=>strip(q[0])))];
+    $('#q-filter').innerHTML = '<option value="all">Все темы</option><option value="__new">★ Только новое</option>' + topics.map(t=>`<option>${esc(t)}</option>`).join('');
+    $('#q-filter').addEventListener('change',()=>{idx=0;render()}); $('#q-weak').addEventListener('change',()=>{idx=0;render()});
+  }
+  render(); return render;
+}
+let renderQuiz, renderCases;
+
+let deck=[], ci=0;
+function buildDeck(shuffle){
+  deck = CARDS.filter(c=>!$('#c-weak').checked || S.cards[c[0]]!=='y');
+  if(shuffle) for(let i=deck.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [deck[i],deck[j]]=[deck[j],deck[i]] }
+  ci=0; renderCard();
+}
+function renderCard(){
+  const f=$('#flash'); f.classList.remove('open');
+  const learned=CARDS.filter(c=>S.cards[c[0]]==='y').length;
+  $('#c-count').textContent = `Выучено ${learned} из ${CARDS.length}` + (deck.length?` · карточка ${ci+1} из ${deck.length}`:'');
+  if(!deck.length){ f.innerHTML='<p class="lead">Все карточки выучены. Снимите галочку «только невыученные», чтобы повторить всё.</p>'; return }
+  const c=deck[ci], m=$('#c-mode').value;
+  const front = m==='lat'?c[0]: m==='en'?c[1]:c[2];
+  const back = m==='lat'?[c[1],c[2]]: m==='en'?[c[0],c[2]]:[c[0],c[1]];
+  f.innerHTML = `<div class="front ${m==='lat'&&false?'it':''}">${esc(front)}</div>
+    <div class="back"><b class="${m!=='lat'&&false?'lat':''}">${esc(back[0])}</b><span>${esc(back[1])}</span></div><span class="hint">нажмите, чтобы перевернуть</span>`;
+}
+function markCard(v){ if(!deck.length) return; S.cards[deck[ci][0]]=v; persist(); renderToday();
+  if(v==='y' && $('#c-weak').checked){ deck.splice(ci,1); if(ci>=deck.length) ci=0 } else ci=(ci+1)%deck.length; renderCard() }
+$('#flash').addEventListener('click',()=>$('#flash').classList.toggle('open'));
+$('#flash').addEventListener('keydown',e=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); $('#flash').classList.toggle('open') } });
+$('#c-yes').addEventListener('click',()=>markCard('y'));
+$('#c-no').addEventListener('click',()=>markCard('n'));
+$('#c-shuffle').addEventListener('click',()=>buildDeck(true));
+$('#c-weak').addEventListener('change',()=>buildDeck(false));
+$('#c-mode').addEventListener('change',renderCard);
+$('#c-reset').addEventListener('click',()=>{ S.cards={}; persist(); renderToday(); buildDeck(false) });
+
+renderToday(); renderPlan(); renderNotes(); renderQuiz=makeTrainer('q'); renderCases=makeTrainer('c'); buildDeck(false); route();
+if(window.claude && claude.use){
+  (PPS?Promise.resolve(null):claude.use('artifact')).then(ns=>{ artifactNS=ns; if(PPS){$('#save').textContent='Синхронизировано с Plastic Path';return} if(!ns) $('#save').textContent='Прогресс хранится на этом устройстве' });
+  claude.use('sample').then(ns=>{ if(ns){ sampleNS=ns; renderQuiz(); renderCases() } });
+} else { $('#save').textContent=PPS?'Синхронизировано с Plastic Path':'Прогресс хранится на этом устройстве' }
+</script>
+</body>
+</html>

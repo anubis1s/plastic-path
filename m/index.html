@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Мышцы конечностей — Oral quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f5f8;--card:#fff;--ink:#1f2430;--muted:#687083;--line:#dfe4ec;--acc:#2f5aa0;--acc-soft:#e6eefa;--good:#2f7d5b;--good-soft:#e4f3ec;--bad:#b5503f;--bad-soft:#f9e8e4;--warn:#8a6a12;--warn-soft:#fbf3dc;--r:16px}
+@media (prefers-color-scheme:dark){:root{--bg:#15171c;--card:#1e2128;--ink:#e9ebf0;--muted:#a0a6b4;--line:#30343e;--acc:#8fb0ec;--acc-soft:#1f2a3d;--good:#6cc49a;--good-soft:#1d3229;--bad:#e28b7b;--bad-soft:#3a2420;--warn:#e3c56d;--warn-soft:#352e1a}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 80px}
+h1{font-size:1.4rem;margin:6px 0 2px;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:.9rem;margin:0}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:8px}.seg button{border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:600;font-size:.85rem;padding:7px;border-radius:10px;cursor:pointer}.seg button.on{border-color:var(--acc);background:var(--acc-soft);color:var(--acc)}
+.wl td{font-size:.86rem}.wl td:first-child{min-width:150px}.wl tr.k td{color:var(--muted)}.wl input{width:18px;height:18px;accent-color:var(--good)}
+@media (max-width:620px){.wl thead{display:none}.wl tr{display:block;border-bottom:1px solid var(--line);padding:8px 0}.wl td{display:block;border:0;padding:2px 0}.wl td[data-l]:before{content:attr(data-l)": ";font-weight:700;color:var(--acc)}}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px}
+.tabs button{border:0;background:transparent;color:var(--muted);font:inherit;font-weight:600;font-size:.78rem;padding:8px 2px;border-radius:10px;cursor:pointer}
+.tabs button.on{background:var(--acc);color:#fff}
+@media (prefers-color-scheme:dark){.tabs button.on,.btn.p,.num{color:#15171c!important}}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:6px 12px;font:inherit;font-size:.82rem;cursor:pointer}
+.chip.on{border-color:var(--acc);background:var(--acc-soft);color:var(--acc);font-weight:600}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:12px 0}
+.gh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:18px 0 4px}
+.gh h2{font-size:1.1rem;margin:0}
+.gh span{color:var(--muted);font-size:.85rem}
+.m h3{margin:0 0 2px;font-size:1.02rem}
+.m .ru{color:var(--muted);font-size:.85rem;margin-bottom:10px}
+.row{display:grid;grid-template-columns:28px 1fr;gap:8px;padding:6px 0;border-top:1px solid var(--line);font-size:.95rem}
+.k{font-weight:700;color:var(--acc)}
+.note{background:var(--warn-soft);color:var(--warn);border-radius:10px;padding:8px 12px;font-size:.88rem;margin-top:10px}
+.tip{background:var(--acc-soft);border-left:4px solid var(--acc);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.93rem}
+.flash{min-height:270px;display:flex;flex-direction:column;justify-content:center;text-align:center;cursor:pointer;user-select:none}
+.flash .front h3{font-size:1.45rem;margin:0}
+.flash .front .ru{color:var(--muted);margin-top:4px}
+.flash .hint{color:var(--muted);font-size:.8rem;margin-top:18px}
+.flash .back{text-align:left}
+.flash .back h3{margin:0 0 6px;font-size:1.1rem}
+.fbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{border:0;font:inherit;font-weight:600;font-size:.95rem;border-radius:12px;padding:12px 14px;cursor:pointer}
+.btn.p{background:var(--acc);color:#fff}
+.btn.g{background:var(--good-soft);color:var(--good)}
+.btn.b{background:var(--bad-soft);color:var(--bad)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
+.btn:disabled{opacity:.4;cursor:default}
+.prog{color:var(--muted);font-size:.85rem;display:flex;justify-content:space-between;margin:8px 2px}
+.track{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;background:var(--good);width:0;transition:width .3s}
+.q{font-size:1.05rem;font-weight:600;margin:0 0 12px}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;padding:11px 13px;font:inherit;font-size:.95rem;cursor:pointer}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt:disabled{cursor:default}
+.fb{margin-top:12px;font-size:.92rem;border-radius:10px;padding:10px 12px}
+.fb.ok{background:var(--good-soft);color:var(--good)}
+.fb.no{background:var(--bad-soft);color:var(--bad)}
+.big{font-size:2.2rem;font-weight:700;margin:0}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+td,th{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-size:.78rem;text-transform:uppercase}
+.mist li{margin:6px 0}
+.pic{display:block;width:100%;max-height:260px;object-fit:contain;background:#fff;border-radius:12px;border:1px solid var(--line);margin:4px 0 10px}
+.pic.big{max-height:420px}
+.cap{color:var(--muted);font-size:.78rem;margin:-6px 0 10px}
+.steplist{display:flex;gap:6px;margin:0 0 12px;flex-wrap:wrap}
+.st{flex:1;min-width:60px;text-align:center;font-size:.75rem;font-weight:600;padding:6px 4px;border-radius:8px;background:var(--line);color:var(--muted)}
+.st.cur{background:var(--acc-soft);color:var(--acc)}
+.st.ok{background:var(--good-soft);color:var(--good)}
+.st.no{background:var(--bad-soft);color:var(--bad)}
+.lab{display:grid;grid-template-columns:34px 1fr 44px;gap:8px;align-items:center;margin:8px 0}
+.num{width:30px;height:30px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;font-weight:700;font-size:.9rem}
+.lab input{font:inherit;font-size:16px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);width:100%}
+.lab input.ok{border-color:var(--good);background:var(--good-soft)}
+.lab input.no{border-color:var(--bad);background:var(--bad-soft)}
+.lab button{height:42px;border:0;border-radius:10px;background:var(--acc-soft);color:var(--acc);font-weight:700;font-size:1rem;cursor:pointer}
+.ans{grid-column:2/4;font-size:.85rem;margin:-4px 0 4px}
+.ans.ok{color:var(--good)} .ans.no{color:var(--bad)}
+.mov{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:10px}.mov figure{margin:0;background:var(--acc-soft);border-radius:12px;padding:6px 6px 8px}.mov figcaption{font-size:.8rem;font-weight:600;color:var(--acc);text-align:center}.vid{display:block;margin-top:8px;text-align:center;padding:10px;border-radius:10px;border:1px solid var(--line);color:var(--acc);font-weight:600;font-size:.9rem;text-decoration:none}
+.hintbox{background:var(--warn-soft);color:var(--warn);border-radius:10px;padding:8px 12px;font-size:.88rem;margin-top:10px}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../theme.css">
+<script>document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'){t.style.display='none';if(!t.dataset.n){t.dataset.n=1;const d=document.createElement('div');d.className='cap';d.textContent='Картинка доступна в версии Claude';t.after(d)}}},true);</script>
+</head>
+<body>
+<div class="wrap">
+  <h1>Мышцы конечностей — Oral quiz</h1>
+  <p class="sub">Верхняя (43) + нижняя (42) • O = origin, I = insertion, A = action, N = nerve</p>
+  <div class="bar">
+    <div class="seg" id="seg"></div>
+    <div class="tabs" id="tabs">
+      <button data-v="what">📋 Что учить</button>
+      <button data-v="saq">🏷 SAQ</button>
+      <button data-v="id">🔍 Узнай</button>
+      <button data-v="learn">📖 Учить</button>
+      <button data-v="steps">🪜 Пошагово</button>
+      <button data-v="cards">🃏 Карточки</button>
+      <button data-v="quiz">✏️ Тест</button>
+      <button data-v="nerves">⚡ Нервы</button>
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+  <main id="view"></main>
+</div>
+<script src="motion.js"></script>
+<script>
+const UGROUPS = {
+  back:{en:"Posterior thorax",ru:"Спина"},
+  scap:{en:"Scapular",ru:"Лопаточная"},
+  arm:{en:"Anterior arm",ru:"Плечо"},
+  aff:{en:"Anterior forearm",ru:"Предплечье передн."},
+  pff:{en:"Posterior forearm",ru:"Предплечье задн."},
+  hand:{en:"Hand",ru:"Кисть"}
+};
+const UM = [
+ {g:"back",img:"u_trapezius",n:"m. trapezius",ru:"трапециевидная",o:"Occipital bone, spinous processes C7–T12",i:"Clavicle, acromion, spine of scapula",a:"Elevates, retracts, rotates scapula upward",nv:"Accessory nerve (CN XI)"},
+ {g:"back",img:"u_latissimus",n:"m. latissimus dorsi",ru:"широчайшая мышца спины",o:"T7–T12, lumbar vertebrae, iliac crest, ribs 9–12",i:"Intertubercular groove of humerus",a:"Extends, adducts, medially rotates arm",nv:"Thoracodorsal nerve",note:"Двигает плечо, а не лопатку."},
+ {g:"back",img:"u_levator",n:"m. levator scapulae",ru:"поднимающая лопатку",o:"Transverse processes C1–C4",i:"Medial border of scapula (superior part)",a:"Elevates scapula",nv:"Dorsal scapular nerve (+ C3–C4)"},
+ {g:"back",img:"u_rhomb_minor",n:"m. rhomboideus minor",ru:"малая ромбовидная",o:"Nuchal ligament, spinous processes C7–T1",i:"Medial border (root of the spine)",a:"Retracts scapula",nv:"Dorsal scapular nerve"},
+ {g:"back",img:"u_rhomb_major",n:"m. rhomboideus major",ru:"большая ромбовидная",o:"Spinous processes T2–T5",i:"Medial border (spine → inferior angle)",a:"Retracts scapula",nv:"Dorsal scapular nerve"},
+ {g:"scap",img:"u_supraspinatus",n:"m. supraspinatus",ru:"надостная",o:"Supraspinous fossa",i:"Greater tubercle (superior facet)",a:"Abduction (starts it, 0–15°)",nv:"Suprascapular nerve"},
+ {g:"scap",img:"u_infraspinatus",n:"m. infraspinatus",ru:"подостная",o:"Infraspinous fossa",i:"Greater tubercle (middle facet)",a:"External rotation",nv:"Suprascapular nerve"},
+ {g:"scap",img:"u_teres_minor",n:"m. teres minor",ru:"малая круглая",o:"Lateral border of scapula",i:"Greater tubercle (inferior facet)",a:"Adduction + external rotation",nv:"Axillary nerve",note:"Таблица преподавателя: adduction + external rotation."},
+ {g:"scap",img:"u_subscapularis",n:"m. subscapularis",ru:"подлопаточная",o:"Subscapular fossa",i:"Lesser tubercle",a:"Adduction + internal rotation",nv:"Upper + lower subscapular nerves",note:"Единственная из манжеты — к малому бугорку."},
+ {g:"scap",img:"u_teres_major",n:"m. teres major",ru:"большая круглая",o:"Inferior angle of scapula",i:"Medial lip of intertubercular groove",a:"Adduction, extension, medial rotation",nv:"Lower subscapular nerve",note:"НЕ входит в вращательную манжету."},
+ {g:"arm",img:"u_biceps",n:"m. biceps brachii",ru:"двуглавая мышца плеча",o:"Long head: supraglenoid tubercle; short head: coracoid process",i:"Radial tuberosity",a:"Flexes + supinates forearm",nv:"Musculocutaneous nerve",note:"Бицепс → лучевая кость."},
+ {g:"arm",img:"u_brachialis",n:"m. brachialis",ru:"плечевая",o:"Anterior distal half of humerus",i:"Ulnar tuberosity, coronoid process",a:"Main flexor of forearm",nv:"Musculocutaneous nerve",note:"Brachialis → локтевая кость."},
+ {g:"arm",img:"u_coracobrachialis",n:"m. coracobrachialis",ru:"клювовидно-плечевая",o:"Coracoid process",i:"Middle third of medial humerus",a:"Flexes + adducts arm",nv:"Musculocutaneous nerve"},
+ {img:"u_pt",g:"aff",n:"m. pronator teres",ru:"круглый пронатор",o:"Medial epicondyle + coronoid process",i:"Lateral surface of radius (middle)",a:"Pronation, weak elbow flexion",nv:"Median nerve"},
+ {img:"u_fcr",g:"aff",n:"m. flexor carpi radialis",ru:"лучевой сгибатель запястья",o:"Medial epicondyle",i:"Base of 2nd metacarpal",a:"Wrist flexion + abduction",nv:"Median nerve"},
+ {img:"u_pl",g:"aff",n:"m. palmaris longus",ru:"длинная ладонная",o:"Medial epicondyle",i:"Palmar aponeurosis",a:"Tenses palmar aponeurosis, weak wrist flexion",nv:"Median nerve",note:"Может отсутствовать."},
+ {img:"u_fcu",g:"aff",n:"m. flexor carpi ulnaris",ru:"локтевой сгибатель запястья",o:"Medial epicondyle + olecranon",i:"Pisiform, hook of hamate, base of 5th metacarpal",a:"Wrist flexion + adduction",nv:"Ulnar nerve",note:"Единственная в списке передней группы — от локтевого нерва."},
+ {img:"u_fds",g:"aff",n:"m. flexor digitorum superficialis",ru:"поверхностный сгибатель пальцев",o:"Medial epicondyle, coronoid, upper radius",i:"Middle phalanges 2–5",a:"Flexes PIP joints + wrist",nv:"Median nerve"},
+ {img:"u_fdp",g:"aff",n:"m. flexor digitorum profundus",ru:"глубокий сгибатель пальцев",o:"Anterior and medial surface of ulna, interosseous membrane",i:"Bases of distal phalanges 2–5",a:"Flexes DIP joints (only muscle that flexes DIP) + all finger joints + wrist",nv:"Digits 2–3: median (anterior interosseous); digits 4–5: ulnar",note:"Сверх таблицы преподавателя. Двойная иннервация — частый вопрос."},
+ {img:"u_fpl",g:"aff",n:"m. flexor pollicis longus",ru:"длинный сгибатель большого пальца",o:"Anterior surface of radius, interosseous membrane",i:"Base of distal phalanx of thumb",a:"Flexes thumb (IP joint)",nv:"Anterior interosseous nerve (median)",note:"Сверх таблицы преподавателя."},
+ {img:"u_pq",g:"aff",n:"m. pronator quadratus",ru:"квадратный пронатор",o:"Distal quarter of anterior ulna",i:"Distal quarter of anterior radius",a:"Main pronator of forearm",nv:"Anterior interosseous nerve (median)",note:"Сверх таблицы преподавателя."},
+ {img:"u_br",g:"pff",n:"m. brachioradialis",ru:"плечелучевая",o:"Lateral supracondylar ridge",i:"Styloid process of radius",a:"Flexes elbow (weak)",nv:"Radial nerve",note:"В задней группе, но СГИБАЕТ локоть."},
+ {img:"u_ecrl",g:"pff",n:"m. extensor carpi radialis longus",ru:"длинный лучевой разгибатель запястья",o:"Lateral supracondylar ridge",i:"Base of 2nd metacarpal",a:"Extends + abducts wrist",nv:"Radial nerve"},
+ {img:"u_ecrb",g:"pff",n:"m. extensor carpi radialis brevis",ru:"короткий лучевой разгибатель запястья",o:"Lateral epicondyle",i:"Base of 3rd metacarpal",a:"Extends + abducts wrist",nv:"Deep branch of radial nerve"},
+ {img:"u_ed",g:"pff",n:"m. extensor digitorum",ru:"разгибатель пальцев",o:"Lateral epicondyle",i:"Extensor expansions of digits 2–5",a:"Extends fingers 2–5",nv:"Deep branch of radial nerve"},
+ {img:"u_ecu",g:"pff",n:"m. extensor carpi ulnaris",ru:"локтевой разгибатель запястья",o:"Lateral epicondyle + ulna",i:"Base of 5th metacarpal",a:"Extends + adducts wrist",nv:"Deep branch of radial nerve"},
+ {img:"u_apl",g:"pff",n:"m. abductor pollicis longus",ru:"длинная мышца, отводящая большой палец",o:"Posterior radius + ulna",i:"Base of 1st metacarpal",a:"Abducts thumb",nv:"Posterior interosseous nerve"},
+ {img:"u_pff_layers",g:"pff",n:"m. extensor pollicis brevis",ru:"короткий разгибатель большого пальца",o:"Posterior radius",i:"Proximal phalanx of thumb",a:"Extends thumb (MCP)",nv:"Posterior interosseous nerve"},
+ {img:"u_epl",g:"pff",n:"m. extensor pollicis longus",ru:"длинный разгибатель большого пальца",o:"Posterior ulna",i:"Distal phalanx of thumb",a:"Extends thumb (IP)",nv:"Posterior interosseous nerve"},
+ {img:"u_sup",g:"pff",n:"m. supinator",ru:"супинатор",o:"Lateral epicondyle, radial collateral + annular ligaments, supinator crest of ulna",i:"Proximal third of radius (lateral)",a:"Supination of forearm",nv:"Deep branch of radial nerve",note:"Сверх таблицы преподавателя. Deep branch радиального нерва проходит сквозь него."},
+ {img:"u_pff_layers",g:"pff",n:"m. extensor digiti minimi",ru:"разгибатель мизинца",o:"Lateral epicondyle",i:"Extensor expansion of little finger",a:"Extends little finger",nv:"Posterior interosseous nerve",note:"Сверх таблицы преподавателя."},
+ {img:"u_pff_layers",g:"pff",n:"m. extensor indicis",ru:"разгибатель указательного пальца",o:"Posterior ulna, interosseous membrane",i:"Extensor expansion of index finger",a:"Extends index finger",nv:"Posterior interosseous nerve",note:"Сверх таблицы преподавателя."},
+ {img:"u_thenar",g:"hand",n:"m. abductor pollicis brevis",ru:"короткая мышца, отводящая большой палец (тенар)",o:"Flexor retinaculum, tubercles of scaphoid and trapezium",i:"Base of proximal phalanx of thumb (lateral)",a:"Abducts thumb",nv:"Median nerve",note:"O/I — по стандартному курсу (в таблице преподавателя и на слайдах их нет)."},
+ {img:"u_thenar",g:"hand",n:"m. flexor pollicis brevis",ru:"короткий сгибатель большого пальца (тенар)",o:"Flexor retinaculum, tubercle of trapezium",i:"Base of proximal phalanx of thumb",a:"Flexes thumb (MCP)",nv:"Median nerve",note:"O/I — по стандартному курсу (в таблице преподавателя и на слайдах их нет)."},
+ {img:"u_thenar",g:"hand",n:"m. opponens pollicis",ru:"противопоставляющая большой палец (тенар)",o:"Flexor retinaculum, tubercle of trapezium",i:"Lateral border of 1st metacarpal",a:"Opposes thumb",nv:"Median nerve",note:"O/I — по стандартному курсу (в таблице преподавателя и на слайдах их нет)."},
+ {img:"u_thenar",g:"hand",n:"m. adductor pollicis",ru:"приводящая большой палец",o:"Oblique head: capitate + bases of 2nd–3rd metacarpals; transverse head: shaft of 3rd metacarpal",i:"Base of proximal phalanx of thumb (medial)",a:"Adducts thumb",nv:"Ulnar nerve",note:"O/I — по стандартному курсу. Единственная мышца большого пальца от локтевого нерва."},
+ {img:"u_thenar",g:"hand",n:"m. abductor digiti minimi",ru:"отводящая мизинец (гипотенар)",o:"Pisiform",i:"Base of proximal phalanx of little finger (medial)",a:"Abducts little finger",nv:"Ulnar nerve",note:"O/I — по стандартному курсу (в таблице преподавателя и на слайдах их нет)."},
+ {img:"u_thenar",g:"hand",n:"m. flexor digiti minimi brevis",ru:"короткий сгибатель мизинца (гипотенар)",o:"Hook of hamate, flexor retinaculum",i:"Base of proximal phalanx of little finger",a:"Flexes little finger",nv:"Ulnar nerve",note:"O/I — по стандартному курсу (в таблице преподавателя и на слайдах их нет)."},
+ {img:"u_thenar",g:"hand",n:"m. opponens digiti minimi",ru:"противопоставляющая мизинец (гипотенар)",o:"Hook of hamate, flexor retinaculum",i:"Medial border of 5th metacarpal",a:"Opposes little finger",nv:"Ulnar nerve",note:"O/I — по стандартному курсу (в таблице преподавателя и на слайдах их нет)."},
+ {img:"u_eminence",g:"hand",n:"m. palmaris brevis",ru:"короткая ладонная",o:"Palmar aponeurosis, flexor retinaculum",i:"Skin of medial (ulnar) palm",a:"Wrinkles skin of hypothenar, deepens the palm (grip)",nv:"Ulnar nerve (superficial branch)",note:"Сверх таблицы преподавателя. Единственная мышца кисти от superficial branch ulnar nerve."},
+ {g:"hand",img:"u_lumbricals",n:"mm. lumbricales",ru:"червеобразные (4)",o:"Tendons of flexor digitorum profundus",i:"Extensor expansions of digits 2–5 (lateral side)",a:"Flex MCP, extend IP",nv:"Median (1–2) + ulnar (3–4)",note:"O/I — по стандартному курсу (в таблице преподавателя и на слайдах их нет)."},
+ {g:"hand",img:"u_palmar_int",n:"mm. interossei palmares",ru:"ладонные межкостные (3)",o:"Palmar surfaces of metacarpals 2, 4, 5",i:"Extensor expansions / proximal phalanges of digits 2, 4, 5",a:"Adduct fingers (PAD)",nv:"Ulnar nerve",note:"O/I — по стандартному курсу (в таблице преподавателя и на слайдах их нет)."},
+ {g:"hand",img:"u_dorsal_int",n:"mm. interossei dorsales",ru:"тыльные межкостные (4)",o:"Adjacent sides of metacarpals 1–5 (two heads each)",i:"Extensor expansions / proximal phalanges of digits 2–4",a:"Abduct fingers (DAB)",nv:"Ulnar nerve",note:"O/I — по стандартному курсу (в таблице преподавателя и на слайдах их нет)."}
+];
+const UGIMG={scap:"u_scap_overview",back:"u_back_overview",arm:"u_arm_overview",aff:"u_aff_overview",pff:"u_pff_overview",hand:"u_hand_overview"};
+const UOWN=new Set(["u_trapezius","u_latissimus","u_levator","u_rhomb_minor","u_rhomb_major","u_supraspinatus","u_infraspinatus","u_teres_minor","u_subscapularis","u_teres_major","u_biceps","u_brachialis","u_coracobrachialis","u_pt","u_pq","u_fcr","u_fcu","u_fds","u_fdp","u_pl","u_fpl","u_br","u_sup","u_ed","u_ecu","u_ecrl","u_ecrb","u_epl","u_apl","u_lumbricals","u_palmar_int","u_dorsal_int"]);
+const UTIPS={
+ nv:{scap:"Supra/infra → suprascapular; teres minor → axillary; teres major → lower subscapular; subscapularis → upper + lower subscapular.",back:"Trapezius → CN XI; latissimus → thoracodorsal; levator + rhomboids → dorsal scapular.",arm:"Вся передняя группа плеча → musculocutaneous.",aff:"Передняя группа предплечья → median, кроме FCU → ulnar.",pff:"Задняя группа → radial; группа большого пальца (APL, EPB, EPL) → posterior interosseous.",hand:"Кисть → ulnar, кроме LOAF → median."},
+ o:{scap:"Мышца называется по ямке, где начинается: supra-/infraspinous, subscapular fossa.",aff:"Вся передняя группа начинается от medial epicondyle.",pff:"Задняя группа — от lateral epicondyle (или supracondylar ridge); группа большого пальца — от задней поверхности radius/ulna.",back:"Ромбовидные: minor выше (C7–T1), major ниже (T2–T5).",arm:"Бицепс: long head — supraglenoid tubercle, short head — coracoid."},
+ i:{scap:"SITS: к большому бугорку сверху вниз S → I → T; subscapularis — к малому.",arm:"Бицепс → radius, brachialis → ulna.",aff:"FCR → 2-я пястная, FCU → pisiform/hamate/5-я, FDS → средние фаланги.",pff:"ECRL → 2-я, ECRB → 3-я, ECU → 5-я пястная; brevis → проксимальная фаланга, longus → дистальная.",back:"Трапеция → ключица, акромион, ость; latissimus → межбугорковая борозда."},
+ a:{scap:"Supraspinatus начинает отведение; infra + teres minor — наружная ротация; subscapularis + teres major — внутренняя.",back:"Трапеция, levator, ромбовидные двигают лопатку; latissimus — плечо.",arm:"Biceps Supinates; brachialis — главный сгибатель.",aff:"Сгибатели запястья/пальцев + пронатор.",pff:"Разгибатели; исключение — brachioradialis сгибает локоть.",hand:"PAD — palmar adduct, DAB — dorsal abduct."}
+};
+const UGTIP={
+ back:"Трапеция, levator, ромбовидные двигают лопатку; latissimus — плечо («lady between two majors»).",
+ scap:"Rotator cuff = <b>SITS</b>: Supraspinatus, Infraspinatus, Teres minor, Subscapularis. К большому бугорку сверху вниз S → I → T, subscapularis — к малому.",
+ arm:"Вся группа → <b>musculocutaneous</b>. Бицепс → radius, brachialis → ulna.",
+ aff:"Все от <b>medial epicondyle</b>, все median, кроме FCU → ulnar. Порядок латерально → медиально: <b>P</b>lease <b>F</b>lex <b>P</b>alms <b>F</b>or <b>F</b>ingers.",
+ pff:"Большинство от <b>lateral epicondyle</b>, все radial. ECRL → 2-я, ECRB → 3-я, ECU → 5-я пястная. Brevis → проксимальная фаланга, longus → дистальная.",
+ hand:"<b>Всего 20 мышц кисти</b> в 3 группах:<br>• <b>Thenar</b> (большой палец, 4): abductor pollicis brevis, flexor pollicis brevis, opponens pollicis + adductor pollicis.<br>• <b>Hypothenar</b> (мизинец, 4): palmaris brevis, abductor digiti minimi, flexor digiti minimi brevis, opponens digiti minimi.<br>• <b>Central</b> (12): 4 lumbricals, 3 palmar + 4 dorsal interossei (+ adductor pollicis).<br><b>Нервы:</b> всё ulnar, кроме <b>LOAF</b> → median (Lumbricals 1–2, Opponens pollicis, Abductor pollicis brevis, Flexor pollicis brevis).<br><b>PAD</b> — Palmar ADduct, <b>DAB</b> — Dorsal ABduct (ось — 3-й палец).<br><b>Lumbricals</b>: сгибают MCP + разгибают IP («поза официанта»).<br>Клиника: «обезьянья кисть» — median (нет противопоставления); «когтистая кисть» — ulnar; carpal tunnel — сдавление median."
+};
+const UNERVES=[
+ ["Trapezius","Accessory (CN XI)"],["Latissimus dorsi","Thoracodorsal"],["Levator scapulae + rhomboids","Dorsal scapular"],
+ ["Supra- + infraspinatus","Suprascapular"],["Teres minor","Axillary"],["Teres major","Lower subscapular"],["Subscapularis","Upper + lower subscapular"],
+ ["Передняя группа плеча (3)","Musculocutaneous"],["Передняя группа предплечья","Median (FDP 2–3, FPL, pronator quadratus — anterior interosseous) — кроме FCU и FDP 4–5 → Ulnar"],
+ ["Задняя группа предплечья","Radial; APL, EPB, EPL → Posterior interosseous"],["Кисть","Ulnar — кроме LOAF → Median (Lumbricals 1–2, Opponens, Abductor & Flexor pollicis brevis)"],["Supinator","Deep branch of radial"]
+];
+const USAQ={
+ u_back:{title:"Posterior thorax (posterior view)",ans:[["Trapezius"],["Levator scapulae"],["Rhomboid minor","rhomboideus minor"],["Rhomboid major","rhomboideus major"],["Latissimus dorsi"]]},
+ u_scap:{title:"Scapular group (posterior view)",ans:[["Supraspinatus"],["Infraspinatus"],["Teres minor"],["Teres major"],["Subscapularis"]]},
+ u_arm:{title:"Anterior arm (anterior view)",ans:[["Coracobrachialis"],["Biceps brachii","biceps"],["Brachialis"]]},
+ u_aff:{title:"Anterior forearm (anterior view)",ans:[["Pronator teres"],["Flexor carpi radialis","fcr"],["Palmaris longus"],["Flexor carpi ulnaris","fcu"],["Flexor digitorum superficialis","fds"]]},
+ u_pff:{title:"Posterior forearm (posterior view)",ans:[["Brachioradialis"],["Extensor carpi radialis longus","ecrl"],["Extensor carpi radialis brevis","ecrb"],["Extensor digitorum","extensor digitorum communis","ed"],["Extensor carpi ulnaris","ecu"],["Extensor pollicis brevis","epb"],["Abductor pollicis longus","apl"],["Extensor pollicis longus","epl"]]},
+ u_hand:{title:"Hand (palmar view) — groups",ans:[["Lumbricals","lumbricales","lumbrical muscles","lumbrical"],["Hypothenar muscles","hypothenar"],["Thenar muscles","thenar"],["Interossei","interosseous","interossei muscles","interosseous muscles"]]}
+};
+const LGROUPS = {
+  glut:{en:"Gluteal region",ru:"Ягодичная"},
+  ant:{en:"Anterior thigh",ru:"Бедро передн."},
+  med:{en:"Medial thigh",ru:"Бедро медиальн."},
+  post:{en:"Posterior thigh",ru:"Бедро задн."},
+  aleg:{en:"Anterior leg",ru:"Голень передн."},
+  lleg:{en:"Lateral leg",ru:"Голень латер."},
+  pleg:{en:"Posterior leg — superficial",ru:"Голень задн. поверхн."},
+  dleg:{en:"Posterior leg — deep",ru:"Голень задн. глуб."},
+  foot:{en:"Foot",ru:"Стопа"}
+};
+const LM = [
+ {g:"glut",img:"gmax",n:"m. gluteus maximus",ru:"большая ягодичная",o:"Sacrum and coccyx, gluteal surface of ilium (behind posterior gluteal line), thoracolumbar fascia, sacrotuberous ligament",i:"Iliotibial tract, gluteal tuberosity of femur",a:"Extension + external rotation of thigh",nv:"Inferior gluteal nerve",note:"Самая тяжёлая мышца тела. Единственная ягодичная от INFERIOR gluteal nerve."},
+ {g:"glut",img:"gmed",n:"m. gluteus medius",ru:"средняя ягодичная",o:"Gluteal surface of ilium (between anterior and posterior gluteal lines)",i:"Lateral aspect of greater trochanter",a:"Abduction + internal rotation of thigh; stabilizes pelvis",nv:"Superior gluteal nerve"},
+ {g:"glut",img:"gmin",n:"m. gluteus minimus",ru:"малая ягодичная",o:"Gluteal surface of ilium (between anterior and inferior gluteal lines)",i:"Anterior aspect of greater trochanter",a:"Abduction + internal rotation of thigh; stabilizes pelvis",nv:"Superior gluteal nerve",note:"Medius → латеральная сторона вертела, minimus → передняя."},
+ {g:"glut",img:"tfl",n:"m. tensor fasciae latae",ru:"напрягатель широкой фасции",o:"ASIS, outer lip of iliac crest",i:"Iliotibial tract",a:"Internal rotation of thigh; stabilizes hip and knee",nv:"Superior gluteal nerve",note:"Клиника: iliotibial band syndrome — боль снаружи колена."},
+ {g:"glut",n:"m. piriformis",ru:"грушевидная",o:"Anterior surface of sacrum",i:"Greater trochanter (superior border)",a:"External rotation of thigh",nv:"Nerve to piriformis (S1–S2)",note:"Слайды: вся глубокая группа — наружные ротаторы, начало от таза/крестца, прикрепление у большого вертела. O/I/N — по стандартному курсу."},
+ {g:"glut",n:"m. obturator internus",ru:"внутренняя запирательная",o:"Inner surface of obturator membrane and margin",i:"Greater trochanter (medial surface)",a:"External rotation of thigh",nv:"Nerve to obturator internus",note:"Детали — по стандартному курсу."},
+ {g:"glut",n:"m. gemellus superior",ru:"верхняя близнецовая",o:"Ischial spine",i:"With obturator internus tendon → greater trochanter",a:"External rotation of thigh",nv:"Nerve to obturator internus",note:"Детали — по стандартному курсу."},
+ {g:"glut",n:"m. gemellus inferior",ru:"нижняя близнецовая",o:"Ischial tuberosity",i:"With obturator internus tendon → greater trochanter",a:"External rotation of thigh",nv:"Nerve to quadratus femoris",note:"Детали — по стандартному курсу."},
+ {g:"glut",n:"m. quadratus femoris",ru:"квадратная мышца бедра",o:"Ischial tuberosity (lateral border)",i:"Intertrochanteric crest",a:"External rotation of thigh",nv:"Nerve to quadratus femoris",note:"Детали — по стандартному курсу."},
+ {g:"glut",n:"m. obturator externus",ru:"наружная запирательная",o:"Outer surface of obturator membrane",i:"Trochanteric fossa",a:"External rotation of thigh",nv:"Obturator nerve",note:"Детали — по стандартному курсу."},
+ {g:"ant",n:"m. rectus femoris",ru:"прямая мышца бедра",o:"AIIS, supraacetabular groove",i:"Patella → tibial tuberosity (via patellar ligament)",a:"Knee extension + thigh flexion",nv:"Femoral nerve (L2–L4)",note:"Единственная головка квадрицепса через тазобедренный сустав → сгибает бедро."},
+ {g:"ant",n:"m. vastus lateralis",ru:"латеральная широкая",o:"Intertrochanteric line, greater trochanter, gluteal tuberosity, linea aspera",i:"Patella → tibial tuberosity (via patellar ligament)",a:"Knee extension",nv:"Femoral nerve (L2–L4)"},
+ {g:"ant",n:"m. vastus medialis",ru:"медиальная широкая",o:"Intertrochanteric line, pectineal line, linea aspera, medial supracondylar line",i:"Patella → tibial tuberosity (via patellar ligament)",a:"Knee extension",nv:"Femoral nerve (L2–L4)"},
+ {g:"ant",n:"m. vastus intermedius",ru:"промежуточная широкая",o:"Anterior surface of femoral shaft",i:"Patella → tibial tuberosity (via patellar ligament)",a:"Knee extension",nv:"Femoral nerve (L2–L4)"},
+ {g:"ant",img:"ilio",n:"m. iliacus",ru:"подвздошная",o:"Iliac fossa",i:"Lesser trochanter",a:"Thigh flexion (+ external rotation)",nv:"Femoral nerve (L2–L4)",note:"Iliacus + psoas major = iliopsoas — самый сильный сгибатель бедра."},
+ {g:"ant",img:"ilio",n:"m. psoas major",ru:"большая поясничная",o:"Lumbar vertebrae (bodies, transverse processes T12–L4)",i:"Lesser trochanter",a:"Thigh flexion; flexion + lateral flexion of trunk",nv:"Anterior rami L1–L3",note:"Не femoral! Ветви прямо из L1–L3."},
+ {g:"ant",img:"sart",n:"m. sartorius",ru:"портняжная",o:"ASIS",i:"Medial proximal tibia (pes anserinus)",a:"Thigh flexion, abduction, external rotation; knee flexion",nv:"Femoral nerve (L2–L3)",note:"Самая длинная мышца тела. Поза «портного»: нога на ногу."},
+ {g:"med",img:"ilio",n:"m. pectineus",ru:"гребенчатая",o:"Pectineal line of pubis",i:"Pectineal line of femur",a:"Thigh flexion + adduction",nv:"Femoral nerve (± obturator)",note:"Слайд 27: вместе с iliopsoas — только сгибание бедра. Детали — по стандартному курсу."},
+ {g:"med",img:"al",n:"m. adductor longus",ru:"длинная приводящая",o:"Body of pubis (below pubic crest)",i:"Middle third of linea aspera (medial lip)",a:"Thigh adduction, flexion, external rotation",nv:"Obturator nerve (L2–L4)"},
+ {g:"med",img:"ab",n:"m. adductor brevis",ru:"короткая приводящая",o:"Body of pubis, inferior pubic ramus",i:"Linea aspera (medial lip, upper part)",a:"Thigh adduction, flexion, external rotation",nv:"Obturator nerve (L2–L4)"},
+ {g:"med",img:"am",n:"m. adductor magnus",ru:"большая приводящая",o:"Adductor part: inferior pubic + ischial ramus; hamstring part: ischial tuberosity",i:"Adductor part: gluteal tuberosity, linea aspera; hamstring part: adductor tubercle",a:"Adductor part: adduction + flexion; hamstring part: extension + internal rotation",nv:"Obturator nerve + tibial part of sciatic nerve",note:"Двойная иннервация: African Mouse Sneaks Out = Adductor Magnus — Sciatic + Obturator."},
+ {g:"med",n:"m. gracilis",ru:"тонкая",o:"Body of pubis, inferior pubic ramus, ischial ramus",i:"Medial proximal tibia (pes anserinus)",a:"Thigh adduction + flexion; knee flexion + internal rotation",nv:"Obturator nerve (L2–L3)",note:"Единственная приводящая, проходящая через колено."},
+ {g:"post",img:"bf",n:"m. biceps femoris",ru:"двуглавая мышца бедра",o:"Long head: ischial tuberosity, sacrotuberous ligament; short head: linea aspera (lateral lip)",i:"Head of fibula",a:"Thigh extension; knee flexion + external rotation",nv:"Long head: tibial part of sciatic; short head: common fibular part (L5–S2)",note:"Единственная hamstring латерально → малоберцовая кость."},
+ {g:"post",img:"st",n:"m. semitendinosus",ru:"полусухожильная",o:"Ischial tuberosity",i:"Medial proximal tibia (pes anserinus)",a:"Thigh extension + internal rotation; knee flexion + internal rotation",nv:"Tibial part of sciatic nerve (L5–S2)"},
+ {g:"post",img:"sm",n:"m. semimembranosus",ru:"полуперепончатая",o:"Ischial tuberosity",i:"Medial condyle of tibia",a:"Thigh extension + internal rotation; knee flexion + internal rotation",nv:"Tibial part of sciatic nerve (L5–S2)",note:"Semitendinosus → pes anserinus, semimembranosus → медиальный мыщелок."},
+ {g:"aleg",img:"ta",n:"m. tibialis anterior",ru:"передняя большеберцовая",o:"Lateral surface of tibia, interosseous membrane",i:"Medial cuneiform, base of 1st metatarsal",a:"Dorsiflexion + inversion of foot",nv:"Deep fibular nerve (L4–L5)"},
+ {g:"aleg",img:"ehl",n:"m. extensor hallucis longus",ru:"длинный разгибатель большого пальца стопы",o:"Middle third of medial surface of fibula, interosseous membrane",i:"Base of distal phalanx of great toe",a:"Extension of great toe; dorsiflexion",nv:"Deep fibular nerve (L5–S1)"},
+ {g:"aleg",img:"edl",n:"m. extensor digitorum longus",ru:"длинный разгибатель пальцев",o:"Lateral tibial condyle, medial surface of fibula, interosseous membrane",i:"Middle and distal phalanges 2–5",a:"Extension of toes 2–5; dorsiflexion + eversion",nv:"Deep fibular nerve (L5–S1)"},
+ {g:"lleg",img:"fl",n:"m. fibularis longus",ru:"длинная малоберцовая",o:"Head and proximal 2/3 of lateral fibula",i:"Medial cuneiform, base of 1st metatarsal",a:"Eversion + plantar flexion; supports arches",nv:"Superficial fibular nerve (L5–S1)",note:"Сухожилие идёт под стопой к медиальной стороне."},
+ {g:"lleg",img:"fb",n:"m. fibularis brevis",ru:"короткая малоберцовая",o:"Distal 2/3 of lateral fibula",i:"Tuberosity of 5th metatarsal",a:"Eversion + plantar flexion",nv:"Superficial fibular nerve (L5–S1)"},
+ {g:"pleg",img:"gas",n:"m. gastrocnemius",ru:"икроножная",o:"Lateral head: lateral femoral condyle; medial head: medial femoral condyle",i:"Calcaneus via calcaneal (Achilles) tendon",a:"Plantar flexion; knee flexion",nv:"Tibial nerve (S1–S2)"},
+ {g:"pleg",img:"sol",n:"m. soleus",ru:"камбаловидная",o:"Soleal line + medial border of tibia, head + posterior border of fibula",i:"Calcaneus via calcaneal tendon",a:"Plantar flexion",nv:"Tibial nerve (S1–S2)",note:"Gastrocnemius + soleus = triceps surae."},
+ {g:"pleg",img:"pla",n:"m. plantaris",ru:"подошвенная",o:"Lateral supracondylar line of femur",i:"Calcaneus via calcaneal tendon",a:"Weak plantar flexion + knee flexion",nv:"Tibial nerve (S1–S2)"},
+ {g:"dleg",n:"m. popliteus",ru:"подколенная",o:"Lateral femoral condyle",i:"Posterior tibia above soleal line",a:"Unlocks the knee (internal rotation of tibia); knee flexion",nv:"Tibial nerve",note:"На слайде — только картинка. Детали — по стандартному курсу."},
+ {g:"dleg",img:"tp",n:"m. tibialis posterior",ru:"задняя большеберцовая",o:"Posterior tibia, posterior fibula, interosseous membrane",i:"Navicular tuberosity, cuneiforms, cuboid, bases of metatarsals 2–4",a:"Plantar flexion + inversion; supports medial arch",nv:"Tibial nerve (L4–L5)"},
+ {g:"dleg",img:"fhl",n:"m. flexor hallucis longus",ru:"длинный сгибатель большого пальца стопы",o:"Distal 2/3 of posterior fibula, interosseous membrane",i:"Base of distal phalanx of great toe",a:"Flexion of great toe; plantar flexion + inversion",nv:"Tibial nerve (S2–S3)"},
+ {g:"dleg",img:"fdl",n:"m. flexor digitorum longus",ru:"длинный сгибатель пальцев",o:"Posterior tibia (below soleal line)",i:"Bases of distal phalanges 2–5",a:"Flexion of toes 2–5; plantar flexion + inversion",nv:"Tibial nerve (L5–S2)"},
+ {g:"foot",img:"foot",n:"m. extensor hallucis brevis",ru:"короткий разгибатель большого пальца",o:"Dorsal surface of calcaneus",i:"Base of proximal phalanx of great toe",a:"Extends great toe",nv:"Deep fibular nerve",note:"O/I — по стандартному курсу (в таблице преподавателя и на слайдах их нет)."},
+ {g:"foot",img:"foot",n:"m. extensor digitorum brevis",ru:"короткий разгибатель пальцев",o:"Dorsal surface of calcaneus",i:"Long extensor tendons of toes 2–4",a:"Extends toes 2–4",nv:"Deep fibular nerve",note:"O/I — по стандартному курсу. Тыл стопы — только 2 мышцы."},
+ {g:"foot",img:"plantar",n:"m. abductor hallucis",ru:"отводящая большой палец стопы",o:"Medial tubercle of calcaneus, flexor retinaculum, plantar aponeurosis",i:"Base of proximal phalanx of great toe (medial)",a:"Abducts great toe",nv:"Medial plantar nerve",note:"O/I — по стандартному курсу (в таблице преподавателя и на слайдах их нет)."},
+ {g:"foot",img:"plantar",n:"m. flexor digitorum brevis",ru:"короткий сгибатель пальцев",o:"Medial tubercle of calcaneus, plantar aponeurosis",i:"Middle phalanges of toes 2–5",a:"Flexes toes 2–5",nv:"Medial plantar nerve",note:"O/I — по стандартному курсу (в таблице преподавателя и на слайдах их нет)."},
+ {g:"foot",img:"plantar",n:"m. abductor digiti minimi",ru:"отводящая мизинец стопы",o:"Medial and lateral tubercles of calcaneus",i:"Base of proximal phalanx of little toe (lateral)",a:"Abducts little toe",nv:"Lateral plantar nerve",note:"O/I — по стандартному курсу. Нервы подошвы — по стандартному курсу (на слайде только картинка)."}
+];
+const OWN=new Set(["gmax","gmed","gmin","tfl","sart","bf","st","sm","al","ab","am","ta","ehl","edl","fl","fb","gas","sol","pla","tp","fhl","fdl"]);
+const LGIMG={glut:"glut",ant:"ant",med:"med",post:"post",aleg:"aleg",lleg:"lleg",pleg:"pleg",dleg:"dleg",foot:"foot"};
+LM.forEach(m=>{m.own=!!m.img&&OWN.has(m.img); if(!m.img) m.img=LGIMG[m.g];});
+const LTIPS={
+ nv:{glut:"Maximus → inferior gluteal; medius, minimus, TFL → superior gluteal; глубокие ротаторы → свои маленькие нервы (obturator externus → obturator).",ant:"Передняя группа бедра → femoral; исключение psoas major → прямо L1–L3.",med:"Медиальная группа → obturator; pectineus → femoral; adductor magnus → obturator + sciatic.",post:"Hamstrings → tibial part of sciatic; короткая головка biceps → common fibular.",aleg:"Передняя голень → deep fibular.",lleg:"Латеральная голень → superficial fibular.",pleg:"Задняя голень → tibial.",dleg:"Задняя голень → tibial.",foot:"Тыл стопы → deep fibular; подошва → plantar nerves."},
+ o:{glut:"Medius — между anterior и posterior gluteal lines, minimus — между anterior и inferior.",ant:"Rectus femoris — AIIS; vasti — бедренная кость.",med:"Все приводящие — от лобковой/седалищной кости.",post:"Все hamstrings — от ischial tuberosity (кроме короткой головки biceps).",aleg:"Передняя голень — от tibia/fibula + interosseous membrane.",lleg:"Longus — верхние 2/3 fibula, brevis — нижние 2/3.",pleg:"Gastrocnemius — мыщелки бедра; soleus — soleal line.",dleg:"FDL — tibia, FHL — fibula (крест-накрест)."},
+ i:{glut:"Maximus → iliotibial tract + gluteal tuberosity; medius/minimus → greater trochanter.",ant:"Весь квадрицепс → patella → tibial tuberosity; iliopsoas → lesser trochanter.",med:"Adductors → linea aspera; gracilis → pes anserinus.",post:"Biceps → head of fibula; semitendinosus → pes anserinus; semimembranosus → medial condyle of tibia.",aleg:"TA → medial cuneiform + 1st metatarsal.",lleg:"FL → medial cuneiform + 1st metatarsal; FB → 5th metatarsal.",pleg:"Все три → calcaneus via calcaneal tendon.",dleg:"TP → navicular + cuneiforms; FHL → great toe; FDL → toes 2–5."},
+ a:{glut:"Maximus — extension; medius/minimus/TFL — abduction + internal rotation; глубокие — external rotation.",ant:"Квадрицепс разгибает колено; iliopsoas сгибает бедро.",med:"Adduction (+ flexion).",post:"Thigh extension + knee flexion.",aleg:"Dorsiflexion (TA + inversion).",lleg:"Eversion + plantar flexion.",pleg:"Plantar flexion.",dleg:"Plantar flexion + inversion."}
+};
+const LNERVES = [
+ ["Gluteus maximus","Inferior gluteal"],
+ ["Gluteus medius, minimus, TFL","Superior gluteal"],
+ ["Передняя группа бедра (quadriceps, sartorius, iliacus)","Femoral (L2–L4)"],
+ ["Psoas major","Anterior rami L1–L3"],
+ ["Медиальная группа (adductors, gracilis)","Obturator (L2–L4)"],
+ ["Adductor magnus","Obturator + tibial part of sciatic"],
+ ["Hamstrings","Tibial part of sciatic (L5–S2)"],
+ ["Biceps femoris, short head","Common fibular part of sciatic"],
+ ["Передняя голень (TA, EHL, EDL)","Deep fibular"],
+ ["Латеральная голень (FL, FB)","Superficial fibular"],
+ ["Задняя голень (все 7)","Tibial"],
+ ["Тыл стопы (EHB, EDB)","Deep fibular"]
+];
+const LSAQ_ANS={"glut": [["Gluteus maximus"], ["Gluteus medius"], ["Gluteus minimus"], ["Piriformis"], ["Superior gemellus", "gemellus superior"], ["Inferior gemellus", "gemellus inferior"], ["Quadratus femoris"], ["Obturator externus"], ["Obturator internus"], ["Iliotibial tract", "iliotibial band", "it band"]], "ant": [["Rectus femoris"], ["Vastus intermedius"], ["Vastus lateralis"], ["Vastus medialis"], ["Tensor fasciae latae", "tfl", "tensor fascia latae"]], "med": [["Adductor brevis"], ["Adductor longus"], ["Adductor magnus"], ["Gracilis"]], "post": [["Semitendinosus"], ["Semimembranosus"], ["Biceps femoris"]], "aleg": [["Extensor digitorum longus", "edl"], ["Tibialis anterior"], ["Extensor hallucis longus", "ehl"]], "lleg": [["Fibularis longus", "peroneus longus"], ["Fibularis brevis", "peroneus brevis"]], "pleg": [["Gastrocnemius"], ["Plantaris"], ["Soleus"], ["Calcaneal tendon", "achilles tendon", "tendo calcaneus"]], "dleg": [["Popliteus"], ["Tibialis posterior"], ["Flexor digitorum longus", "fdl"], ["Flexor hallucis longus", "fhl"]], "foot": [["Extensor hallucis brevis"], ["Extensor digitorum brevis"]], "plantar": [["Abductor hallucis"], ["Abductor digiti minimi"], ["Flexor digitorum brevis"]], "ilio": [["Psoas major"], ["Iliacus"], ["Pectineus"], ["Sartorius"]]};
+const LSAQ={
+ glut:{title:"Gluteal region (posterior view)"},ant:{title:"Anterior thigh (anterior view)"},ilio:{title:"Iliopsoas, pectineus, sartorius"},
+ med:{title:"Medial thigh (anterior view)"},post:{title:"Posterior thigh (posterior view)"},aleg:{title:"Anterior leg"},lleg:{title:"Lateral leg"},
+ pleg:{title:"Posterior leg — superficial"},dleg:{title:"Posterior leg — deep"},foot:{title:"Foot — dorsal view"},plantar:{title:"Foot — plantar view"}};
+Object.keys(LSAQ).forEach(k=>LSAQ[k].ans=LSAQ_ANS[k]);
+const LSAQ_ORDER=["glut","ant","ilio","med","post","aleg","lleg","pleg","dleg","foot","plantar"];
+const LGSAQ={glut:["glut"],ant:["ant","ilio"],med:["med","ilio"],post:["post"],aleg:["aleg"],lleg:["lleg"],pleg:["pleg"],dleg:["dleg"],foot:["foot","plantar"]};
+const LGTIP={
+ glut:`Maximus → <b>inferior</b> gluteal nerve; medius, minimus, TFL → <b>superior</b> gluteal. Глубокие 6 (piriformis, obturator int/ext, 2 gemelli, quadratus femoris) — <b>наружные ротаторы</b>.`,
+ ant:`Quadriceps: все 4 головки → patella → tibial tuberosity, femoral nerve. Только rectus femoris (от AIIS) ещё сгибает бедро. Iliopsoas → lesser trochanter.`,
+ med:`Приводящие → <b>obturator</b> nerve, крепятся к <b>linea aspera</b>. Magnus — двойная иннервация (<b>A</b>frican <b>M</b>ouse <b>S</b>neaks <b>O</b>ut).`,
+ post:`Hamstrings: от ischial tuberosity, tibial part of sciatic. <b>Pes anserinus</b> = «Say Grace before Tea»: Sartorius, Gracilis, semiTendinosus.`,
+ aleg:`Передняя голень: dorsiflexion, <b>deep fibular</b> nerve. «Tom, Harry, Dick» — TA, EHL, EDL с медиальной стороны к латеральной.`,
+ lleg:`Латеральная голень: <b>eversion</b>, <b>superficial fibular</b> nerve. Brevis → 5-я плюсневая, longus → под стопой к 1-й.`,
+ pleg:`Поверхностные: gastrocnemius, soleus, plantaris → calcaneal (Achilles) tendon, <b>tibial</b> nerve, plantar flexion.`,
+ dleg:`Глубокие: «Tom, Dick and Harry» за медиальной лодыжкой — Tibialis posterior, flexor Digitorum longus, flexor Hallucis longus. Все — tibial nerve, plantar flexion + inversion.`,
+ foot:`Тыл стопы — только EHB и EDB (deep fibular). Подошва: abductor hallucis, FDB, abductor digiti minimi.`
+};
+
+const GROUPS={};Object.entries(UGROUPS).forEach(([k,v])=>GROUPS[k]=Object.assign({r:"ul"},v));Object.entries(LGROUPS).forEach(([k,v])=>GROUPS[k]=Object.assign({r:"le"},v));
+UM.forEach(m=>{m.own=!!m.img&&UOWN.has(m.img); if(!m.img) m.img=UGIMG[m.g];});
+const M=[...UM,...LM]; M.forEach((m,i)=>{m.id=i;m.r=GROUPS[m.g].r;});
+const GIMG=Object.assign({},UGIMG,LGIMG);
+const TIPS={};["nv","o","i","a"].forEach(f=>TIPS[f]=Object.assign({},UTIPS[f],LTIPS[f]));
+const GTIP=Object.assign({},UGTIP,LGTIP);
+const SAQ=Object.assign({},USAQ,LSAQ);
+const SAQ_R={ul:["u_back","u_scap","u_arm","u_aff","u_pff","u_hand"],le:LSAQ_ORDER};
+const GSAQ=Object.assign({back:["u_back"],scap:["u_scap"],arm:["u_arm"],aff:["u_aff"],pff:["u_pff"],hand:["u_hand"]},LGSAQ);
+const IDQ=M.filter(m=>m.own&&!["gmax","gas","sol","fhl","al","u_biceps","u_lumbricals"].includes(m.img));
+const REG={ul:"Верхняя",le:"Нижняя",all:"Обе"};
+
+const pic=(m,cls="")=>`<img class="pic ${cls}" src="img/${m.img}.jpg" alt="${m.n}" loading="lazy">`+(m.own?"":`<div class="cap">Найди мышцу на рисунке</div>`);
+const tipFor=(f,m)=>(TIPS[f]&&TIPS[f][m.g])||"";
+let view="what", group="all", region="all";
+const PPS=(()=>{try{return window.parent!==window&&window.parent.PP_BRIDGE||null}catch(e){return null}})();
+const store={get(k,d){if(PPS){const r=PPS.get(k);if(r&&r.v)return r.v}try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}if(PPS)PPS.save(k,{v})}};
+let known=new Set(store.get("allm-known",[]));
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const inReg=m=>region==="all"||m.r===region;
+const pool=()=>group==="all"?M.filter(inReg):M.filter(m=>m.g===group);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function rows(m){
+  return (m.o?`<div class="row"><span class="k">O</span><span>${esc(m.o)}</span></div>`:"")+
+         (m.i?`<div class="row"><span class="k">I</span><span>${esc(m.i)}</span></div>`:"")+
+         `<div class="row"><span class="k">A</span><span>${esc(m.a)}</span></div>`+
+         `<div class="row"><span class="k">N</span><span>${esc(m.nv)}</span></div>`+
+         (m.note?`<div class="note">💡 ${esc(m.note)}</div>`:"")+(typeof MV!=="undefined"?MV.html(m):"");
+}
+function chips(){
+  $("#seg").innerHTML=["ul","le","all"].map(r=>`<button class="${region===r?"on":""}" data-r="${r}">${REG[r]} (${r==="all"?M.length:M.filter(m=>m.r===r).length})</button>`).join("");
+  document.querySelectorAll("#seg button").forEach(b=>b.onclick=()=>{region=b.dataset.r;group="all";saqKey=null;render();});
+  const show = view!=="nerves";
+  $("#chips").style.display = show?"flex":"none";
+  const list=[["all",{ru:"Все группы"}],...Object.entries(GROUPS).filter(([k,v])=>region==="all"||v.r===region)];
+  $("#chips").innerHTML=list.map(([k,v])=>`<button class="chip ${group===k?'on':''}" data-g="${k}">${v.ru}</button>`).join("");
+  document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{group=b.dataset.g;chips();render();});
+}
+/* LEARN */
+function learn(){
+  const gs = group==="all"?Object.keys(GROUPS).filter(g=>region==="all"||GROUPS[g].r===region):[group];
+  let h=`<div class="tip">Прочитай мышцу → посмотри анимацию движения → закрой глаза → скажи вслух O, I, A, N → проверь. «▶ Видео» открывает YouTube.</div>`;
+  gs.forEach(g=>{
+    const ms=M.filter(m=>m.g===g);
+    h+=`<div class="gh"><h2>${GROUPS[g].en} / ${GROUPS[g].ru}</h2><span>${ms.length}</span></div><img class="pic big" src="img/${GIMG[g]}.jpg" alt="${GROUPS[g].en}" loading="lazy">`;
+    if(g==="ant") h+=`<img class="pic big" src="img/ilio.jpg" alt="iliopsoas" loading="lazy">`;
+    if(g==="aff") h+=`<img class="pic big" src="img/u_aff_layers.jpg" alt="layers" loading="lazy">`;
+    if(g==="pff") h+=`<img class="pic big" src="img/u_pff_layers.jpg" alt="layers" loading="lazy">`;
+    if(g==="hand") h+=`<img class="pic big" src="img/u_thenar.jpg" alt="thenar" loading="lazy">`;
+    if(g==="hand") h+=`<img class="pic big" src="img/u_hand_diagram.jpg" alt="hand" loading="lazy">`;
+    if(g==="pff") h+=`<div class="cap">На картинке опечатка «Abtensor» = Extensor pollicis longus.</div>`;
+    if(g==="foot") h+=`<img class="pic big" src="img/plantar.jpg" alt="plantar" loading="lazy">`;
+    h+=`<div class="tip">${GTIP[g]}</div>`;
+    ms.forEach(m=>{h+=`<div class="card m"><h3>${esc(m.n)}</h3><div class="ru">${esc(m.ru)}</div>${m.own?pic(m):""}${rows(m)}</div>`});
+  });
+  $("#view").innerHTML=h;
+}
+/* FLASHCARDS */
+let deck=[],pos=0,flipped=false,onlyUnknown=false;
+function newDeck(){let p=pool(); if(onlyUnknown) p=p.filter(m=>!known.has(m.id)); deck=shuffle(p); deck._g=group+region; pos=0; flipped=false;}
+function cards(){
+  const total=pool().length, k=pool().filter(m=>known.has(m.id)).length;
+  let h=`<div class="prog"><span>Знаю: ${k} из ${total}</span><span>${Math.min(pos+1,deck.length)} / ${deck.length}</span></div><div class="track"><div class="fill" style="width:${total?k/total*100:0}%"></div></div>`;
+  if(!deck.length){
+    h+=`<div class="card" style="text-align:center"><p class="big">🎉</p><p>Все мышцы в этой группе отмечены как выученные.</p><button class="btn ghost" id="resetK">Сбросить отметки группы</button></div>`;
+  } else if(pos>=deck.length){
+    h+=`<div class="card" style="text-align:center"><p class="big">✓</p><p>Колода пройдена.</p><div class="fbtns"><button class="btn p" id="again">Ещё раз</button><button class="btn ghost" id="unk">Только «не знаю»</button></div></div>`;
+  } else {
+    const m=deck[pos];
+    h+=`<div class="card flash" id="fc">${flipped?`<div class="back"><h3>${esc(m.n)}</h3>${pic(m)}${rows(m)}</div>`:`<div class="front"><h3>${esc(m.n)}</h3><div class="ru">${esc(m.ru)}</div><div class="hint">Вспомни O, I, A, N → нажми, чтобы перевернуть</div></div>`}</div>
+    <div class="fbtns"><button class="btn b" id="no">✗ Не знаю</button><button class="btn g" id="yes">✓ Знаю</button></div>`;
+  }
+  h+=`<p style="margin-top:14px"><label style="font-size:.9rem;color:var(--muted)"><input type="checkbox" id="ou" ${onlyUnknown?'checked':''}> Показывать только невыученные</label></p>`;
+  $("#view").innerHTML=h;
+  const fc=$("#fc"); if(fc) fc.onclick=()=>{flipped=!flipped;cards();};
+  const mark=v=>{const m=deck[pos]; if(v) known.add(m.id); else known.delete(m.id); store.set("allm-known",[...known]); pos++; flipped=false; cards();};
+  if($("#yes")) $("#yes").onclick=()=>mark(true);
+  if($("#no")) $("#no").onclick=()=>mark(false);
+  if($("#again")) $("#again").onclick=()=>{onlyUnknown=false;newDeck();cards();};
+  if($("#unk")) $("#unk").onclick=()=>{onlyUnknown=true;newDeck();cards();};
+  if($("#resetK")) $("#resetK").onclick=()=>{pool().forEach(m=>known.delete(m.id));store.set("allm-known",[...known]);onlyUnknown=false;newDeck();cards();};
+  $("#ou").onchange=e=>{onlyUnknown=e.target.checked;newDeck();cards();};
+}
+/* QUIZ */
+const QT=[
+ {f:"nv",q:m=>`Nerve of <b>${m.n}</b>?`},
+ {f:"a",q:m=>`Action of <b>${m.n}</b>?`},
+ {f:"i",q:m=>`Insertion of <b>${m.n}</b>?`},
+ {f:"o",q:m=>`Origin of <b>${m.n}</b>?`},
+ {f:"rev",q:m=>`Which muscle: <b>${esc(m.a)}</b> · ${esc(m.nv)}?`}
+];
+let quiz=null;
+function makeQ(m){
+  const types=QT.filter(t=>t.f==="rev"||m[t.f]);
+  const t=types[Math.floor(Math.random()*types.length)];
+  let correct,others;
+  if(t.f==="rev"){
+    correct=m.n;
+    const same=M.filter(x=>x.id!==m.id&&!(x.a===m.a&&x.nv===m.nv));
+    others=shuffle(same.filter(x=>x.g===m.g)).concat(shuffle(same.filter(x=>x.g!==m.g))).map(x=>x.n);
+  } else {
+    correct=m[t.f];
+    const vals=M.filter(x=>x[t.f]&&x[t.f]!==correct);
+    others=shuffle(vals.filter(x=>x.g===m.g)).concat(shuffle(vals.filter(x=>x.g!==m.g))).map(x=>x[t.f]);
+  }
+  const uniq=[...new Set(others)].slice(0,3);
+  return {m,t,text:t.q(m),correct,opts:shuffle([correct,...uniq]),picked:null};
+}
+function newQuiz(){const p=shuffle(pool()); const n=Math.min(12,p.length); quiz={qs:p.slice(0,n).map(makeQ),i:0,score:0};}
+function quizV(){
+  if(!quiz||quiz.g!==group+region){newQuiz();quiz.g=group+region;}
+  const {qs,i}=quiz;
+  if(i>=qs.length){
+    const wrong=qs.filter(q=>q.picked!==q.correct);
+    let h=`<div class="card" style="text-align:center"><p class="big">${quiz.score} / ${qs.length}</p><p>${quiz.score===qs.length?"Отлично!":quiz.score>=qs.length*0.75?"Хорошо, повтори ошибки ниже.":"Повтори группу в «Учить» и попробуй ещё раз."}</p><button class="btn p" id="nq">Новый тест</button></div>`;
+    if(wrong.length) h+=`<div class="card"><h3 style="margin-top:0">Ошибки</h3><ul class="mist">${wrong.map(q=>`<li><b>${esc(q.m.n)}</b>: ${q.t.f==="rev"?esc(q.m.a):esc(q.correct)}</li>`).join("")}</ul></div>`;
+    $("#view").innerHTML=h; $("#nq").onclick=()=>{newQuiz();quiz.g=group+region;quizV();}; return;
+  }
+  const q=qs[i];
+  let h=`<div class="prog"><span>Вопрос ${i+1} из ${qs.length}</span><span>Верно: ${quiz.score}</span></div><div class="track"><div class="fill" style="width:${i/qs.length*100}%"></div></div>
+  <div class="card"><p class="q">${q.text}</p><div class="opts">${q.opts.map((o,j)=>{let c="opt";if(q.picked!==null){if(o===q.correct)c+=" right";else if(o===q.picked)c+=" wrong";}return `<button class="${c}" data-j="${j}" ${q.picked!==null?'disabled':''}>${esc(o)}</button>`}).join("")}</div>`;
+  if(q.picked!==null){
+    const ok=q.picked===q.correct;
+    h+=`<div class="fb ${ok?'ok':'no'}">${ok?"Верно!":"Неверно."} ${pic(q.m)}<b>${esc(q.m.n)}</b> — ${esc(q.m.ru)}<br>${q.m.o?"O: "+esc(q.m.o)+"<br>":""}${q.m.i?"I: "+esc(q.m.i)+"<br>":""}A: ${esc(q.m.a)}<br>N: ${esc(q.m.nv)}</div>
+    <div style="margin-top:12px"><button class="btn p" id="nx" style="width:100%">Дальше →</button></div>`;
+  }
+  h+=`</div>`;
+  $("#view").innerHTML=h;
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{q.picked=q.opts[+b.dataset.j]; if(q.picked===q.correct) quiz.score++; quizV();});
+  if($("#nx")) $("#nx").onclick=()=>{quiz.i++;quizV();};
+}
+/* SAQ */
+const norm=t=>t.toLowerCase().replace(/\b(mm?|musculus|musculi|muscles?)\b\.?/g," ").replace(/[^a-z]/g," ").replace(/\s+/g," ").trim();
+function lev(a,b){const d=Array.from({length:a.length+1},(_,i)=>[i]);for(let j=1;j<=b.length;j++)d[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[a.length][b.length]}
+function judge(input,alts){const x=norm(input);if(!x)return 0;for(const a of alts){const y=norm(a);if(x===y)return 2;}for(const a of alts){const y=norm(a);if(y.length>=7&&lev(x,y)<=2)return 1;}return 0;}
+let saqKey=null, saqRes={};
+function saq(){
+  const order = group==="all" ? (region==="all"?[...SAQ_R.ul,...SAQ_R.le]:SAQ_R[region]) : GSAQ[group];
+  const key = saqKey&&order.includes(saqKey)?saqKey:order[0];
+  saqKey=key; const S=SAQ[key]; const R=saqRes[key]||(saqRes[key]={});
+  const done=Object.keys(R).length, right=Object.values(R).filter(r=>r.v>0).length;
+  let h=`<div class="tip">Формат SAQ: подпиши каждую цифру (по-английски или на латыни). Enter или ✓ — мгновенная проверка.</div>
+  <div class="card"><h3 style="margin:0 0 8px">${S.title}</h3><img class="pic big" src="saq/${key}.jpg" alt="${S.title}">
+  <div class="prog"><span>Проверено: ${done} / ${S.ans.length}</span><span>Верно: ${right}</span></div>`;
+  S.ans.forEach((alts,i)=>{const r=R[i];
+    h+=`<div class="lab"><div class="num">${i+1}</div><input id="in${i}" autocomplete="off" autocapitalize="off" spellcheck="false" value="${r?esc(r.t):""}" class="${r?(r.v>0?'ok':'no'):''}" placeholder="Название мышцы"><button data-i="${i}">✓</button>
+    ${r?`<div class="ans ${r.v>0?'ok':'no'}">${r.v===2?"✓ Верно":r.v===1?"✓ Почти — правильно пишется: <b>"+alts[0]+"</b>":"✗ Правильно: <b>"+alts[0]+"</b>"}</div>`:""}</div>`;});
+  h+=`<div class="fbtns" style="margin-top:12px"><button class="btn ghost" id="sh">Показать все ответы</button><button class="btn ghost" id="rs">Заново</button></div>`;
+  if(order.length>1){const ix=order.indexOf(key);h+=`<div class="fbtns" style="margin-top:10px"><button class="btn ghost" id="pv" ${ix===0?"disabled":""}>← Предыдущая</button><button class="btn p" id="nxp" ${ix===order.length-1?"disabled":""}>Следующая картинка →</button></div>`;}
+  h+=`</div>`;
+  $("#view").innerHTML=h;
+  const check=i=>{const v=$("#in"+i).value;if(!v.trim())return;R[i]={t:v,v:judge(v,S.ans[i])};saq();const nx=$("#in"+(i+1));if(nx&&!R[i+1])nx.focus();};
+  S.ans.forEach((_,i)=>{const el=$("#in"+i);el.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();check(i);}};});
+  document.querySelectorAll(".lab button").forEach(b=>b.onclick=()=>check(+b.dataset.i));
+  $("#sh").onclick=()=>{S.ans.forEach((a,i)=>{if(!R[i])R[i]={t:"",v:0};});saq();};
+  $("#rs").onclick=()=>{saqRes[key]={};saq();};
+  if($("#pv"))$("#pv").onclick=()=>{saqKey=order[order.indexOf(key)-1];saq();window.scrollTo({top:0});};
+  if($("#nxp"))$("#nxp").onclick=()=>{saqKey=order[order.indexOf(key)+1];saq();window.scrollTo({top:0});};
+}
+/* IDENTIFY: highlighted muscle */
+let idq=null;
+function newId(){const p=shuffle(group==="all"?IDQ.filter(inReg):IDQ.filter(m=>m.g===group));idq={list:p,i:0,score:0,picked:null,g:group+region,opts:null};}
+function idV(){
+  if(!idq||idq.g!==group+region) newId();
+  if(!idq.list.length){$("#view").innerHTML=`<div class="card"><p>В этой группе нет отдельных картинок — выбери другую группу или «Все».</p></div>`;return;}
+  if(idq.i>=idq.list.length){$("#view").innerHTML=`<div class="card" style="text-align:center"><p class="big">${idq.score} / ${idq.list.length}</p><button class="btn p" id="ir">Ещё раз</button></div>`;$("#ir").onclick=()=>{newId();idV();};return;}
+  const m=idq.list[idq.i];
+  if(!idq.opts){const same=M.filter(x=>x.id!==m.id);idq.opts=shuffle([m.n,...shuffle(same.filter(x=>x.g===m.g)).concat(shuffle(same.filter(x=>x.g!==m.g))).slice(0,3).map(x=>x.n)]);}
+  const pk=idq.picked;
+  let h=`<div class="prog"><span>Картинка ${idq.i+1} из ${idq.list.length}</span><span>Верно: ${idq.score}</span></div>
+  <div class="card"><p class="q">Какая мышца на картинке (выделена цветом)?</p><img class="pic big" src="img/${m.img}.jpg" alt="?"><div class="opts">${idq.opts.map((o,j)=>{let c="opt";if(pk!==null){if(o===m.n)c+=" right";else if(o===pk)c+=" wrong";}return `<button class="${c}" data-j="${j}" ${pk!==null?'disabled':''}>${esc(o)}</button>`}).join("")}</div>`;
+  if(pk!==null) h+=`<div class="fb ${pk===m.n?'ok':'no'}">${pk===m.n?"Верно!":"Это <b>"+esc(m.n)+"</b>"}</div>${rows(m)}<div style="margin-top:12px"><button class="btn p" id="inx" style="width:100%">Дальше →</button></div>`;
+  h+=`</div>`;
+  $("#view").innerHTML=h;
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{idq.picked=idq.opts[+b.dataset.j];if(idq.picked===m.n)idq.score++;idV();});
+  if($("#inx"))$("#inx").onclick=()=>{idq.i++;idq.picked=null;idq.opts=null;idV();window.scrollTo({top:0});};
+}
+/* STEPS */
+const SF=[["o","Origin","Начало"],["i","Insertion","Прикрепление"],["a","Action","Функция"],["nv","Nerve","Нерв"]];
+let sd=null;
+function optsFor(m,f){const vals=M.filter(x=>x[f]&&x[f]!==m[f]);const o=[...new Set(shuffle(vals.filter(x=>x.g===m.g)).concat(shuffle(vals.filter(x=>x.g!==m.g))).map(x=>x[f]))].slice(0,3);return shuffle([m[f],...o]);}
+function newSteps(){ sd={list:shuffle(pool()),k:0,score:0,total:0,g:group+region}; startMuscle(); }
+function startMuscle(){const m=sd.list[sd.k]; if(!m) return; sd.fields=SF.filter(f=>m[f[0]]); sd.s=0; sd.res=[]; sd.opts=sd.fields.map(f=>optsFor(m,f[0])); sd.picked=null;}
+function steps(){
+  if(!sd||sd.g!==group+region) newSteps();
+  if(sd.k>=sd.list.length){
+    $("#view").innerHTML=`<div class="card" style="text-align:center"><p class="big">${sd.score} / ${sd.total}</p><p>шагов верно</p><button class="btn p" id="sr">Начать заново</button></div>`;
+    $("#sr").onclick=()=>{newSteps();steps();}; return;
+  }
+  const m=sd.list[sd.k], done=sd.s>=sd.fields.length;
+  let h=`<div class="prog"><span>Мышца ${sd.k+1} из ${sd.list.length}</span><span>Верно шагов: ${sd.score} / ${sd.total}</span></div>
+  <div class="card"><h3 style="margin:0">${esc(m.n)}</h3><div class="ru" style="color:var(--muted);font-size:.85rem;margin-bottom:8px">${esc(m.ru)}</div>${pic(m)}
+  <div class="steplist">${sd.fields.map((f,j)=>`<div class="st ${j<sd.s?(sd.res[j]?'ok':'no'):j===sd.s?'cur':''}">${j+1}. ${f[1]}</div>`).join("")}</div>`;
+  if(!done){
+    const [f,en,ru]=sd.fields[sd.s], opts=sd.opts[sd.s], pk=sd.picked;
+    h+=`<p class="q">Шаг ${sd.s+1}: ${en} / ${ru}?</p><div class="opts">${opts.map((o,j)=>{let c="opt";if(pk!==null){if(o===m[f])c+=" right";else if(o===pk)c+=" wrong";}return `<button class="${c}" data-j="${j}" ${pk!==null?'disabled':''}>${esc(o)}</button>`}).join("")}</div>`;
+    if(pk===null){ const t=tipFor(f,m); if(t) h+=`<details style="margin-top:10px"><summary style="cursor:pointer;color:var(--muted);font-size:.88rem">💡 Подсказка</summary><div class="hintbox">${esc(t)}</div></details>`; }
+    else {
+      const ok=pk===m[f];
+      h+=`<div class="fb ${ok?'ok':'no'}">${ok?"✓ Верно!":"✗ Неверно. Правильно: <b>"+esc(m[f])+"</b>"}</div>`;
+      const t=tipFor(f,m); if(t) h+=`<div class="hintbox">💡 ${esc(t)}</div>`;
+      h+=`<div style="margin-top:12px"><button class="btn p" id="sn" style="width:100%">${sd.s+1<sd.fields.length?"Следующий шаг →":"Итог по мышце →"}</button></div>`;
+    }
+  } else {
+    h+=`<div class="fb ${sd.res.every(Boolean)?'ok':'no'}">${sd.res.every(Boolean)?"Все шаги верно!":"Есть ошибки — запомни правильные ответы:"}</div>${rows(m)}<div style="margin-top:12px"><button class="btn p" id="nm" style="width:100%">Следующая мышца →</button></div>`;
+  }
+  h+=`</div>`;
+  $("#view").innerHTML=h;
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const f=sd.fields[sd.s][0];sd.picked=sd.opts[sd.s][+b.dataset.j];const ok=sd.picked===m[f];sd.res.push(ok);sd.total++;if(ok)sd.score++;steps();});
+  if($("#sn")) $("#sn").onclick=()=>{sd.s++;sd.picked=null;steps();window.scrollTo({top:0});};
+  if($("#nm")) $("#nm").onclick=()=>{sd.k++;startMuscle();steps();window.scrollTo({top:0});};
+}
+/* NERVES */
+function ntab(t,rows){return `<div class="card"><h3 style="margin-top:0">${t}</h3><table><tr><th>Группа / мышца</th><th>Нерв</th></tr>${rows.map(r=>`<tr><td>${r[0]}</td><td><b>${r[1]}</b></td></tr>`).join("")}</table></div>`}
+function nerves(){
+  let h="";
+  if(region!=="le") h+=ntab("Верхняя конечность",UNERVES);
+  if(region!=="ul") h+=ntab("Нижняя конечность",LNERVES)+`<div class="tip">Голень: <b>каждый отдел — свой нерв</b> (передний — deep fibular, латеральный — superficial fibular, задний — tibial).</div>`;
+  $("#view").innerHTML=h+`<div class="tip">Выучи эти таблицы первыми: они закрывают нерв почти у всех мышц.</div>`;
+}
+/* WHAT TO LEARN */
+function what(){
+  const gs=Object.keys(GROUPS).filter(g=>(region==="all"||GROUPS[g].r===region)&&(group==="all"||g===group));
+  const ms=M.filter(m=>gs.includes(m.g)); const kn=ms.filter(m=>known.has(m.id)).length;
+  let h=`<div class="tip"><b>Что выучить к oral quiz:</b> по каждой мышце ниже — название (лат./англ.) и 4 пункта в этом порядке: <b>Origin → Insertion → Action → Nerve</b>. У мышц кисти и стопы origin/insertion добавлены по стандартному курсу — главное в них Action и Nerve. Отмечай галочкой, когда отвечаешь вслух без ошибок.</div>
+  <div class="prog"><span>Выучено: ${kn} из ${ms.length}</span><span>${Math.round(kn/ms.length*100)}%</span></div><div class="track"><div class="fill" style="width:${kn/ms.length*100}%"></div></div>`;
+  let lastR=null;
+  gs.forEach(g=>{
+    const G=GROUPS[g];
+    if(G.r!==lastR){lastR=G.r;h+=`<h2 style="margin:22px 0 0">${G.r==="ul"?"Верхняя конечность — "+M.filter(m=>m.r==="ul").length+" мышц":"Нижняя конечность — "+M.filter(m=>m.r==="le").length+" мышц"}</h2>`;}
+    const gm=M.filter(m=>m.g===g);
+    h+=`<div class="card"><h3 style="margin:0 0 6px">${G.en} / ${G.ru} · ${gm.length}</h3>${GTIP[g]?`<div class="tip" style="margin-top:4px">${GTIP[g]}</div>`:""}<table class="wl"><thead><tr><th></th><th>Мышца</th><th>O</th><th>I</th><th>A</th><th>N</th></tr></thead><tbody>${gm.map(m=>`<tr class="${known.has(m.id)?"k":""}"><td><input type="checkbox" data-k="${m.id}" ${known.has(m.id)?"checked":""} aria-label="выучил"></td><td><b>${esc(m.n)}</b><br><span style="color:var(--muted)">${esc(m.ru)}</span></td><td data-l="O">${esc(m.o||"—")}</td><td data-l="I">${esc(m.i||"—")}</td><td data-l="A">${esc(m.a)}</td><td data-l="N"><b>${esc(m.nv)}</b></td></tr>`).join("")}</tbody></table></div>`;
+  });
+  $("#view").innerHTML=h;
+  document.querySelectorAll("[data-k]").forEach(c=>c.onchange=()=>{const id=+c.dataset.k;if(c.checked)known.add(id);else known.delete(id);store.set("allm-known",[...known]);const y=scrollY;what();scrollTo(0,y);});
+}
+function render(){
+  document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v===view));
+  chips();
+  if(view==="saq") saq();
+  else if(view==="id") idV();
+  else if(view==="learn") learn();
+  else if(view==="steps") steps();
+  else if(view==="cards"){ if(deck._g!==group+region) newDeck(); cards(); }
+  else if(view==="what") what();
+  else if(view==="quiz") quizV();
+  else nerves();
+  window.scrollTo({top:0});
+}
+const VIEWS=["what","saq","id","learn","steps","cards","quiz","nerves"];
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{view=b.dataset.v;try{history.replaceState(null,"","#"+view)}catch(e){}render();});
+const h0=location.hash.slice(1); if(VIEWS.includes(h0)) view=h0;
+window.addEventListener("hashchange",()=>{const h=location.hash.slice(1);if(VIEWS.includes(h)&&h!==view){view=h;render();}});
+render();
+</script>
+</body>
+</html>
