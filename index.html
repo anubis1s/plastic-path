@@ -98,7 +98,7 @@ select,input{min-height:44px;font:16px Manrope,sans-serif;padding:0 12px;border-
 /* prep */
 .dstrip{display:flex;gap:6px;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:none;scroll-snap-type:x proximity}.dstrip::-webkit-scrollbar{display:none}
 .db{flex:none;width:54px;border:0;background:var(--card);box-shadow:var(--sh);border-radius:16px;padding:8px 0 7px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;scroll-snap-align:center;transition:all .3s var(--ease)}
-.db span{font-size:11px;color:var(--mute);font-weight:700}.db b{font:700 17px/1 Unbounded,sans-serif}.db i{display:block;width:28px;height:4px;border-radius:2px;background:var(--g2);overflow:hidden}.db i u{display:block;height:100%;background:var(--g)}
+.db span{font-size:11px;color:var(--mute);font-weight:700}.db b{font:700 17px/1 Unbounded,sans-serif}.db i{display:block;width:28px;height:4px;border-radius:2px;background:var(--g2);overflow:hidden}.db i u{display:block;height:100%;background:var(--coral)}.db em{font-style:normal;font-size:10.5px;font-weight:800;color:var(--coral)}.db.sel i{background:rgb(255 255 255/.3)}.db.sel i u{background:#ffd166}.db.sel em{color:#ffd166}.db{padding-bottom:6px}
 .db.sel{background:var(--g);color:#fff;transform:translateY(-3px)}.db.sel span{color:#d8f5e5}.db.td b{color:var(--coral)}.db.sel.td b{color:#fff}.db.ex{outline:2px dashed var(--coral);outline-offset:-2px}
 .task{background:var(--card);border-radius:22px;box-shadow:var(--sh);margin-bottom:12px;overflow:hidden;position:relative}
 .task::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}
@@ -154,15 +154,15 @@ select,input{min-height:44px;font:16px Manrope,sans-serif;padding:0 12px;border-
 .nav button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;border-radius:18px;font-size:11.5px;font-weight:700;color:var(--mute);cursor:pointer;transition:color .3s;min-height:52px;position:relative;z-index:1}
 .nav button.on{color:var(--g)}.nav button.on .i{animation:pop .45s var(--spring)}
 .view{display:none}.view.on{display:block}
-.view.on.fwd{animation:inR .32s var(--ease) both}.view.on.back{animation:inL .32s var(--ease) both}
+.view.on.fwd,.view.on.back{animation:viewIn .42s cubic-bezier(.25,.8,.25,1) both}
 /* flow feed */
-.flow{position:fixed;inset:0;z-index:40;background:#0b1a13;color:#eef6f1;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;animation:fade .35s var(--ease) both}
+.flow{position:fixed;inset:0;z-index:40;background:#0b1a13;color:#eef6f1;overflow-y:auto;overflow-x:hidden;touch-action:pan-y;overscroll-behavior-x:none;scroll-snap-type:y mandatory;overscroll-behavior:contain;animation:fade .35s var(--ease) both}
 .flow[hidden]{display:none}
 .ftop{position:fixed;top:0;left:0;right:0;z-index:41;padding:calc(12px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:center;gap:12px;background:linear-gradient(#0b1a13,rgb(11 26 19/0))}
 .ftop .pb{flex:1;height:6px;border-radius:4px;background:rgb(255 255 255/.15);overflow:hidden}.ftop .pb i{display:block;height:100%;background:#7fe0ad;border-radius:4px;transition:width .6s var(--ease)}
 .ftop .ib{background:rgb(255 255 255/.1);color:#fff;box-shadow:none}.ftop span{font-weight:800;font-size:14px;white-space:nowrap}
-.fc{height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;flex-direction:column;justify-content:center;padding:90px 24px calc(40px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto;position:relative}
-.fc .glow{position:absolute;inset:20% -20% auto;height:300px;background:radial-gradient(circle,color-mix(in srgb,var(--c) 45%,transparent),transparent 65%);filter:blur(30px);opacity:.6;pointer-events:none}
+.fc{width:100%;overflow:hidden;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;flex-direction:column;justify-content:center;padding:90px 24px calc(40px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto;position:relative}
+.fc .glow{position:absolute;inset:20% 0 auto;height:300px;background:radial-gradient(circle,color-mix(in srgb,var(--c) 45%,transparent),transparent 65%);filter:blur(30px);opacity:.6;pointer-events:none}
 .fc .lab{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:14px;color:color-mix(in srgb,var(--c) 60%,#fff)}
 .fc h2{font-size:clamp(24px,6.5vw,32px);margin:14px 0 10px;position:relative}.fc p{font-size:17px;opacity:.85;margin:0 0 6px;position:relative}
 .fc .acts{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap;position:relative}
@@ -234,7 +234,7 @@ textarea{width:100%;margin-top:4px;font:15px Manrope,sans-serif;padding:10px 12p
 .wd span{font-size:11px;color:var(--mute)}.wd svg{width:30px;height:30px;transform:rotate(-90deg)}.wd circle{fill:none;stroke-width:4}.wd .b{stroke:var(--g2)}.wd .f{stroke:var(--g);stroke-linecap:round;transition:stroke-dashoffset .8s var(--ease)}
 .wd b{font-size:12px}.wd.td{outline:2px solid var(--coral);outline-offset:-2px}.wd.sel{background:var(--g);color:#fff}.wd.sel span{color:#d8f5e5}.wd.sel .b{stroke:rgb(255 255 255/.25)}.wd.sel .f{stroke:#fff}.wd.fut{opacity:.45;cursor:default}
 body.deep{background:#0b1a13;color:#eaf5ee;transition:background .8s}
-body.deep .nav,body.deep .side,body.deep .bar,body.deep #tseg{opacity:.12;transition:opacity .8s}body.deep #t-focus>.stats,body.deep #t-focus>.sec,body.deep #fby,body.deep #pre,body.deep .frow{display:none}
+body.deep .nav,body.deep .side,body.deep .bar,body.deep #tseg{opacity:.12;transition:opacity .8s}body.deep #t-focus>.stats,body.deep #t-focus>.sec,body.deep #fby,body.deep #pre,body.deep .frow,body.deep .sbj,body.deep #fauto{display:none}
 body.deep .nav:hover,body.deep .side:hover{opacity:1}
 body.deep #t-focus>.card{background:transparent;box-shadow:none}body.deep .fring .bgc{stroke:#183126}body.deep .fring small{color:#90a599}
 .help{position:fixed;inset:0;z-index:48;background:var(--bg);overflow-y:auto;animation:fade .35s both}.help[hidden]{display:none}
@@ -271,6 +271,15 @@ button,a,[role=button]{touch-action:manipulation}
 .gst{border:0;border-radius:10px;padding:4px 8px;font-size:12px;font-weight:800;cursor:pointer;background:var(--g2);white-space:nowrap}.gst.s1{background:#fff3d6;color:#8a6200}.gst.s2{background:var(--g);color:#fff}
 .gact{grid-column:2/-1;display:flex;gap:6px;flex-wrap:wrap}
 @media(max-width:420px){#sync{display:none}.logo h1{font-size:17px;white-space:nowrap}.bar .ib{width:38px;height:38px}}
+
+.pdsum{display:flex;align-items:center;gap:14px;padding:14px 16px}.psr{position:relative;width:56px;height:56px;flex:none}.psr svg{width:100%;height:100%;transform:rotate(-90deg)}.psr circle{fill:none;stroke-width:5}.psr .b{stroke:var(--g2)}.psr .f{stroke:var(--coral);stroke-linecap:round;transition:stroke-dashoffset .8s var(--ease)}
+.psr b{position:absolute;inset:0;display:grid;place-items:center;font:700 13px Unbounded,sans-serif}.psi{flex:1;display:flex;flex-direction:column;gap:1px}.psi .muted{font-size:13px}.pnx{font-size:13px;font-weight:700;color:var(--g)}
+.task.collapsed .step,.task.collapsed .tact{display:none}.task.collapsed .th{cursor:pointer;padding-bottom:14px}.task.collapsed h3::after{content:" · выполнено";font-weight:600;color:var(--g);text-decoration:none;display:inline}
+.task{transition:opacity .4s}
+
+.sbj{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.sb{display:flex;align-items:center;gap:7px;justify-content:center;min-height:42px;padding:0 8px;border-radius:14px;border:1.5px solid color-mix(in srgb,var(--c) 30%,transparent);background:color-mix(in srgb,var(--c) 8%,var(--card));font-weight:700;font-size:13px;cursor:pointer;transition:all .3s var(--spring);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb .dt{width:8px;height:8px;border-radius:50%;background:var(--c);flex:none}.sb.on{background:var(--c);color:#fff;border-color:var(--c);transform:translateY(-2px);box-shadow:0 6px 16px color-mix(in srgb,var(--c) 35%,transparent)}.sb.on .dt{background:#fff}
 /* sidebar (desktop) */
 .side{display:none}
 .wide-grid{display:flex;flex-direction:column}.wide-grid>div{display:contents}.wide-grid>div>*{order:3}.wide-grid #tw{order:1}.wide-grid #pet{order:0}.wide-grid .qcol>*{order:2}.wide-grid .qcol>.sec{margin-top:22px}
@@ -294,7 +303,7 @@ button,a,[role=button]{touch-action:manipulation}
 }
 @keyframes rise{from{opacity:0;transform:translateY(14px)}}
 @keyframes fade{from{opacity:0}}
-@keyframes inR{from{opacity:0;transform:translateX(26px)}}@keyframes inL{from{opacity:0;transform:translateX(-26px)}}
+@keyframes viewIn{from{opacity:0;transform:translateY(8px) scale(.995)}}@keyframes inR{from{opacity:0;transform:translateX(26px)}}@keyframes inL{from{opacity:0;transform:translateX(-26px)}}
 @keyframes pop{40%{transform:scale(1.28)}}
 @keyframes popin{from{opacity:0;transform:scale(.7) translateY(20px)}}
 @keyframes spin{from{transform:rotate(-200deg) scale(.3)}}
@@ -401,7 +410,7 @@ button,a,[role=button]{touch-action:manipulation}
         <button class="btn big" id="fplay" aria-label="Старт"></button>
         <button class="btn round" id="fskip" aria-label="Пропустить"><svg class="i" viewBox="0 0 24 24"><path d="M5 4l10 8-10 8zM19 5v14"/></svg></button>
       </div>
-      <div class="frow"><span class="muted">Предмет</span><select id="fsubj" aria-label="Предмет"></select></div>
+      <div class="sbj" id="fsubj" role="group" aria-label="Предмет"></div><p class="muted" id="fauto" style="text-align:center;margin:6px 0 0;font-size:13px"></p>
       <div class="frow"><a class="btn" href="shortcuts://run-shortcut?name=Plastic%20Focus" id="iphf"><svg class="i" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>Фокус на iPhone</a><button class="btn" type="button" id="iphh">Как настроить</button></div>
     </div>
     <div class="stats" id="fstats"></div>
@@ -497,10 +506,13 @@ button,a,[role=button]{touch-action:manipulation}
 <li><b>«Финалы» → «Подготовка».</b> Лента дней сверху, под ней задачи дня с шагами. «Открыть» ведёт в материал предмета. Карандаш у задачи: переименовать, перенести на другой день (поле даты) или удалить. Внизу дня: «Добавить свою задачу» — предмет, минуты и шаги, каждый с новой строки. Мелкие правки делайте сами; если нужно перестроить весь план — напишите Ари.</li>
 <li><b>«Финалы» → «Экзамены» и «Распорядок».</b> Отсчёт до экзаменов и расписание дня с отметкой «сейчас». Предмет каждой пары выбирается один раз для дня недели. Разовые замены (например, «Анатомия вместо латыни») показываются оранжевой меткой только на свою дату.</li>
 <li><b>«Учёба».</b> Все предметы и «Мышцы конечностей» внутри сайта. Прогресс по карточкам, вопросам и мышцам сохраняется в общей базе. Кнопка «Назад» возвращает в приложение.</li>
-<li><b>«Инструменты».</b> Фокус — помодоро по предмету (во время работы экран затемняется, всё лишнее гаснет). Дыхание — 3 техники перед учёбой или сном. Детокс — таймер «телефон в сторону». Обзор — раз в неделю (лучше в воскресенье) 3 вопроса о неделе.</li>
+<li><b>«Инструменты».</b> Фокус — помодоро по предмету (предмет выбирается сам по вашему плану на сейчас; нажмите другой, если нужно) (во время работы экран затемняется, всё лишнее гаснет). Дыхание — 3 техники перед учёбой или сном. Детокс — таймер «телефон в сторону». Обзор — раз в неделю (лучше в воскресенье) 3 вопроса о неделе.</li>
 <li><b>Фокус на iPhone.</b> Настройки → Фокусирование → «+» → создайте режим «Учёба» (разрешите только нужные приложения). Затем приложение «Команды» → «+» → действие «Задать фокусирование» → «Учёба», «Вкл.», «До выключения» → назовите команду <b>Plastic Focus</b>. Теперь кнопка «Фокус на iPhone» во вкладке «Инструменты» включает его. Обратная связка: «Команды» → «Автоматизация» → «Фокусирование» → «Учёба» → «При включении» → действие «Открыть URL» с адресом этого сайта. Если кнопка не срабатывает внутри приложения Claude, откройте сайт в Safari.</li>
 <li><b>Награды и наказания.</b> XP за квесты, шаги, фокус, дыхание, детокс и обзоры; уровни и звания от Абитуриента до Профессора; 15 достижений. Невыполненный день: −1 сердце, −30 XP, путь +1 день. Нет сердец: −150 XP. Заморозка серии спасает один пропуск, новая даётся за каждые 7 дней. Полный сброс — только вручную на вкладке «Путь».</li>
 <li><b>Если тяжело.</b> После 3 слабых дней приложение предложит лёгкий режим на 3 дня. После 5 почти идеальных — новую привычку. Привычки меняются во вкладке «Путь» → «Изменить».</li>
+<li><b>Мои цели и график привычек.</b> «Путь» → «Мои будущие цели»: идеи, которых ещё нет в плане (ординатура, немецкий, зал…). Статус меняется нажатием: идея → в работе → готово. «Сделать привычкой» переносит цель в квесты. В «Мои привычки» → «Изменить» у каждой привычки можно выбрать дни недели — в остальные дни она не считается.</li>
+<li><b>Связь с Ари.</b> Пишите в любом чате с Claude: «Ари, добавь в Plastic Path…» или «перестрой план по химии». Задачи появятся в «Финалах» с пометкой «от Ари», сообщения — на «Сегодня». Время любой задачи меняется карандашом.</li>
+<li><b>Данные в безопасности.</b> Всё сохраняется сразу на устройстве и в облаке (зелёная точка вверху). «Путь» → «Резервная копия» — сохранить всё одним текстом. Сброс 66 дней спрашивает трижды и 7 дней даёт кнопку «Вернуть всё как было».</li>
 </ol></div></div>
 <div class="toast" id="toast" role="status"></div>
 
@@ -870,20 +882,26 @@ function toggleStep(key,date,el){const on=!S.prep[key];if(on)S.prep[key]=1;else 
     if(t&&t.st.list.every((x,i)=>S.prep[pkey(t,i)]))setTimeout(()=>{toast('Задача закрыта: +15 XP');tone(988,.25,'triangle')},200)}
   autoPrep(date);save();return on}
 function renderPrep(){
-  $('dstrip').innerHTML=PDATES.map(d=>{const p=prepDay(d),ex=EXAMS.some(e=>e[1]===d);return`<button class="db${d===pSel?' sel':''}${d===today?' td':''}${ex?' ex':''}" data-pd="${d}"><span>${esc(fmt(d,{weekday:'short'}))}</span><b>${new Date(d+'T12:00').getDate()}</b><i><u style="width:${p.n?p.k/p.n*100:0}%"></u></i></button>`}).join('');
+  $('dstrip').innerHTML=PDATES.map(d=>{const p=prepDay(d),ex=EXAMS.some(e=>e[1]===d);return`<button class="db${d===pSel?' sel':''}${d===today?' td':''}${ex?' ex':''}" data-pd="${d}"><span>${esc(fmt(d,{weekday:'short'}))}</span><b>${new Date(d+'T12:00').getDate()}</b><i><u style="width:${p.n?p.k/p.n*100:0}%"></u></i><em>${p.n?Math.round(p.k/p.n*100):0}%</em></button>`}).join('');
   const s=$('dstrip').querySelector('.sel');if(s)requestAnimationFrame(()=>s.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'}));
   renderPrepDay();renderPrepSubj()}
 let pEdit=null,pAdd=false;
+const pOpen=new Set();
+function renderPsum(){const el=$('pdsum');if(!el)return;const ts=PDAYS[pSel]||[],p=prepDay(pSel),pc=p.n?Math.round(p.k/p.n*100):0;
+  let left=0;ts.forEach(t=>t.st.list.forEach((x,i)=>{if(!S.prep[pkey(t,i)])left+=x[1]}));const nx=ts.find(t=>t.st.list.some((x,i)=>!S.prep[pkey(t,i)]));
+  el.innerHTML=`<div class="psr"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" class="b"/><circle cx="22" cy="22" r="18" class="f" stroke-dasharray="113" stroke-dashoffset="${113*(1-pc/100)}"/></svg><b>${pc}%</b></div>
+   <div class="psi"><b>${p.k} из ${p.n} шагов</b><span class="muted">${left?'осталось ≈ '+(left>=60?Math.floor(left/60)+' ч ':'')+left%60+' мин':'день закрыт'}</span>${nx?`<span class="pnx">Дальше: ${nx.time?esc(nx.time)+' · ':''}${esc(nx.title)}</span>`:''}</div>
+   ${pSel===today&&nx?`<button class="btn pri sm" id="pflow">${ic('play','width:16px;height:16px')}Поток</button>`:''}`}
 function renderPrepDay(){const ts=PDAYS[pSel]||[],p=prepDay(pSel),mins=ts.reduce((m,t)=>m+t.st.min,0);
   $('ptitle').textContent=fmt(pSel,{weekday:'long',day:'numeric',month:'long'})+(pSel===today?' · сегодня':'');
   $('psum').textContent=p.k+'/'+p.n+' · ≈'+Math.floor(mins/60)+' ч '+mins%60+' мин';
   const subjO=PORDER.map(k=>`<option value="${k}">${esc(PS[k].name)}</option>`).join('');
-  $('ptasks').innerHTML=ts.map(t=>{const s=PS[t.k],dn=t.st.list.every((x,i)=>S.prep[pkey(t,i)]),ed=pEdit===t.okey;
-    return`<article class="task${dn?' done':''}" style="--c:var(--${t.k})"><div class="th"><div><div class="subj">${t.time?`<span class="tchip">${ic('timer','width:13px;height:13px')}${esc(t.time)}</span>`:''}${esc(s.name)}${t.ari?' · от Ари':t.added?' · своя задача':''}</div><h3>${esc(t.title)}</h3><span class="muted">≈ ${t.st.min} мин</span></div><div class="tact">${t.st.url?`<button class="btn sm" data-u="${esc(t.st.url)}">${ic('ext','width:16px;height:16px')}Открыть</button>`:''}<button class="ib" data-ed="${esc(t.okey)}" aria-label="Изменить задачу">${ic('edit')}</button></div></div>
+  $('ptasks').innerHTML='<div class="card pdsum" id="pdsum"></div>'+ts.map(t=>{const s=PS[t.k],dn=t.st.list.every((x,i)=>S.prep[pkey(t,i)]),ed=pEdit===t.okey,col=dn&&!pOpen.has(t.okey)&&!ed;
+    return`<article class="task${dn?' done':''}${col?' collapsed':''}" style="--c:var(--${t.k})"><div class="th"${col?` data-tog="${esc(t.okey)}" role="button" tabindex="0"`:''}><div><div class="subj">${t.time?`<span class="tchip">${ic('timer','width:13px;height:13px')}${esc(t.time)}</span>`:''}${esc(s.name)}${t.ari?' · от Ари':t.added?' · своя задача':''}</div><h3>${esc(t.title)}</h3><span class="muted">≈ ${t.st.min} мин</span></div><div class="tact">${t.st.url?`<button class="btn sm" data-u="${esc(t.st.url)}">${ic('ext','width:16px;height:16px')}Открыть</button>`:''}<button class="ib" data-ed="${esc(t.okey)}" aria-label="Изменить задачу">${ic('edit')}</button></div></div>
     ${ed?`<div class="tedit"><input data-tt value="${esc(t.title)}" aria-label="Название задачи"><div class="row2"><label class="muted">Перенести на <input type="date" data-td value="${t.date}" min="2026-11-20" max="2026-12-31"></label><label class="muted">Время <input data-tm value="${esc(t.time||'')}" placeholder="13:00–14:00" maxlength="11" style="width:130px;min-height:40px;margin-left:6px"></label></div><div class="row2"><button class="btn pri sm" data-tsave="${esc(t.okey)}">Сохранить</button><button class="btn warn sm" data-tdel="${esc(t.okey)}">${ic('trash','width:16px;height:16px')}Удалить</button><button class="btn sm" data-tx>Отмена</button></div></div>`:''}
     ${t.st.list.map((x,i)=>{const k=pkey(t,i),on=!!S.prep[k];return`<button class="step${on?' on':''}" data-k="${esc(k)}" aria-pressed="${on}"><span class="box">${ic('check')}</span><span class="tx">${esc(x[0])}</span><span class="mn">${x[1]} мин</span></button>`}).join('')}</article>`}).join('')+(ts.length?'':'<div class="card muted">Свободный день: повторите карточки любого предмета.</div>')
    +(pAdd?`<form class="card add" id="padd"><b>Новая задача на ${esc(fmt(pSel))}</b><div class="row2"><select id="pak" aria-label="Предмет">${subjO}</select><input id="pam" type="number" min="5" max="600" value="60" aria-label="Минут" style="width:110px"></div><input id="pat" placeholder="Название, например «Мышцы бедра: повтор»" maxlength="90" required aria-label="Название"><textarea id="pas" rows="3" placeholder="Шаги, каждый с новой строки (необязательно)" aria-label="Шаги"></textarea><div class="row2"><button class="btn pri">Добавить</button><button type="button" class="btn" id="pax">Отмена</button></div></form>`
-     :`<button class="btn" id="paddb" style="width:100%">${ic('star','width:18px;height:18px')}Добавить свою задачу на этот день</button>`)}
+     :`<button class="btn" id="paddb" style="width:100%">${ic('star','width:18px;height:18px')}Добавить свою задачу на этот день</button>`);renderPsum()}
 function renderPrepSubj(){$('psubj').innerHTML=PORDER.map(k=>{let n=0,d=0;for(const dt of PDATES)for(const t of PDAYS[dt])if(t.k===k)t.st.list.forEach((x,i)=>{n++;if(S.prep[pkey(t,i)])d++});
   return`<div class="sbar" style="--c:var(--${k})"><a href="#" data-sub="${k}">${esc(PS[k].name)}</a><span class="tr"><i style="width:${n?d/n*100:0}%"></i></span><em>${d}/${n}</em></div>`}).join('')}
 function renderExams(){const nx=EXAMS.find(e=>diff(today,e[1])>=0);
@@ -919,7 +937,7 @@ function openFlow(){const d=today;FL=[];
   $('flow').hidden=false;$('flow').scrollTop=0;document.body.style.overflow='hidden';$('fcl').onclick=closeFlow;$('fcl2').onclick=closeFlow}
 function closeFlow(){$('flow').hidden=true;document.body.style.overflow='';renderAll()}
 $('flow').addEventListener('click',e=>{const u=e.target.closest('[data-u]');if(u){openUrl(u.dataset.u);return}const b=e.target.closest('[data-fd]');const f=e.target.closest('[data-ff]');
-  if(f){const it=FL[+f.dataset.ff];F.subj=SUBJ.find(s=>s.startsWith(PS[it.t.k].name.slice(0,4)))||F.subj;fsave();closeFlow();go('focus',true);return}
+  if(f){const it=FL[+f.dataset.ff];F.subj=KS[it.t.k]||F.subj;F.manualDay=today;fsave();closeFlow();go('focus',true);return}
   if(!b||b.disabled)return;const it=FL[+b.dataset.fd];b.disabled=true;
   if(it.type==='s')toggleStep(it.k,today,b);else toggleHabit(it.h.id,today,b);
   b.closest('.fc').classList.add('dn');b.innerHTML=ic('check')+'Готово';flDone++;$('fpb').style.width=flDone/FL.length*100+'%';$('fct').textContent=flDone+' / '+FL.length;
@@ -949,7 +967,13 @@ function fDone(){F.run=false;clearInterval(fi);vib([200,100,200]);chime();
 function fTick(){clearInterval(fi);if(F.run)fi=setInterval(fDraw,250)}
 function renderFocus(){
   $('pre').innerHTML=[[25,5],[50,10],[15,3]].map(([a,b])=>`<button class="chip${F.len===a?' on':''}" data-p="${a},${b}">${a}/${b}</button>`).join('');
-  $('fsubj').innerHTML=SUBJ.map(s=>`<option${s===F.subj?' selected':''}>${s}</option>`).join('');fDraw();renderFocusStats()}
+  const au=autoSubj();if(!F.run&&au&&F.manualDay!==today)F.subj=au.s;
+  $('fsubj').innerHTML=SUBJ.map(s=>{const k=SK[s];return`<button class="sb${s===F.subj?' on':''}" data-s="${esc(s)}" style="--c:var(--${k})"><span class="dt"></span>${esc(s==='ИИ и биостатистика'?'AI и биостат':s)}</button>`}).join('');
+  $('fauto').textContent=au?(F.manualDay===today&&F.subj!==au.s?'Выбрано вручную. По расписанию сейчас: '+au.s:'По расписанию: '+au.why):'';fDraw();renderFocusStats()}
+const SK={'Анатомия':'anat','Биология':'bio','Химия':'chem','Латынь':'latin','Биофизика':'phys','ИИ и биостатистика':'ai'};
+const KS={anat:'Анатомия',bio:'Биология',chem:'Химия',latin:'Латынь',phys:'Биофизика',ai:'ИИ и биостатистика'};
+function autoSubj(){const n=nowTask();if(n)return{s:KS[n.k],why:(n.time||'')+' · '+n.title};
+  const t=(PDAYS[today]||[]).find(t=>!/^Anki/.test(t.title)&&t.st.list.some((x,i)=>!S.prep[pkey(t,i)]));return t?{s:KS[t.k],why:'следующая задача — '+t.title}:null}
 function renderFocusStats(){
   const f=S.focus[today]||{min:0,by:{}},tot=Object.values(S.focus).reduce((a,b)=>a+(b.min||0),0);
   let wk=0;for(let i=0;i<7;i++)wk+=fmin(addD(today,-i));
@@ -1223,7 +1247,7 @@ function go(v,push){if(!VIEWS.includes(v))v='today';const dir=VIEWS.indexOf(v)>=
     document.querySelectorAll('#nav button,#side [data-v]').forEach(b=>{b.classList.toggle('on',b.dataset.v===v);b.setAttribute('aria-current',b.dataset.v===v?'page':'false')});
     $('navk').style.transform=`translateX(${VIEWS.indexOf(v)*100}%)`;
     if(v==='plan')setPane(pane);if(v==='path')renderPath();if(v==='focus'){renderFocus();setTool(tool)}if(v==='study')renderStudy();if(v==='today'){renderHero();renderQuests()}};
-  swap();if(push&&location.hash!=='#'+v)history.replaceState(null,'','#'+v);if(!same)window.scrollTo({top:0,behavior:'smooth'})}
+  swap();if(push&&location.hash!=='#'+v)history.replaceState(null,'','#'+v);if(!same)window.scrollTo({top:0,behavior:'instant'})}
 function renderAll(){if(typeof renderSide==='function')renderSide();renderHero();renderQuests();if(cur==='plan')setPane(pane);renderFocus();if(cur==='path')renderPath()}
 /* ---------- events ---------- */
 $('nav').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(b){vib(8);closeViewer(true);go(b.dataset.v,true)}});
@@ -1244,7 +1268,8 @@ function planSave(msg){S.plan=S.plan||{add:[],del:{},mv:{},ren:{}};buildPlan();i
 $('ptasks').addEventListener('submit',e=>{if(e.target.id!=='padd')return;e.preventDefault();const k=$('pak').value,m=Math.max(5,+$('pam').value||60),t=$('pat').value.trim();if(!t)return;
   const lines=$('pas').value.split('\n').map(x=>x.trim()).filter(Boolean),steps=lines.length?lines.map(x=>[x,Math.round(m/lines.length)]):[[t,m]];
   S.plan.add.push({id:Date.now().toString(36),date:pSel,k,title:t,min:m,steps});pAdd=false;planSave('Задача добавлена')});
-$('ptasks').addEventListener('click',e=>{const u=e.target.closest('[data-u]');if(u){openUrl(u.dataset.u);return}
+$('ptasks').addEventListener('click',e=>{const u=e.target.closest('[data-u]');if(u){openUrl(u.dataset.u);return}if(e.target.closest('#pflow')){openFlow();return}
+  const tg=e.target.closest('[data-tog]');if(tg&&!e.target.closest('button')){pOpen.add(tg.dataset.tog);renderPrepDay();return}
   if(e.target.closest('#paddb')){pAdd=true;renderPrepDay();setTimeout(()=>$('pat')&&$('pat').focus(),50);return}if(e.target.closest('#pax')){pAdd=false;renderPrepDay();return}
   const ed=e.target.closest('[data-ed]');if(ed){pEdit=pEdit===ed.dataset.ed?null:ed.dataset.ed;renderPrepDay();return}
   if(e.target.closest('[data-tx]')){pEdit=null;renderPrepDay();return}
@@ -1256,12 +1281,12 @@ $('ptasks').addEventListener('click',e=>{const u=e.target.closest('[data-u]');if
   const b=e.target.closest('[data-k]');if(!b)return;const on=toggleStep(b.dataset.k,pSel,b.querySelector('.box'));b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);
   const art=b.closest('.task');const all=[...art.querySelectorAll('.step')].every(x=>x.classList.contains('on'));art.classList.toggle('done',all);
   const p=prepDay(pSel);$('psum').textContent=p.k+'/'+p.n+$('psum').textContent.replace(/^\d+\/\d+/,'');
-  const db=$('dstrip').querySelector('.sel u');if(db)db.style.width=(p.n?p.k/p.n*100:0)+'%';renderPrepSubj()});
+  const db=$('dstrip').querySelector('.sel u');if(db)db.style.width=(p.n?p.k/p.n*100:0)+'%';const de=$('dstrip').querySelector('.sel em');if(de)de.textContent=(p.n?Math.round(p.k/p.n*100):0)+'%';renderPsum();if(all&&!art.classList.contains('collapsed'))setTimeout(()=>renderPrepDay(),700);renderPrepSubj()});
 $('psubj').addEventListener('click',e=>{const s=e.target.closest('[data-sub]');if(s){e.preventDefault();openSubject(s.dataset.sub)}});
 $('days').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(b){planDay=+b.dataset.d;renderDayPlan()}});
 $('tl').addEventListener('change',e=>{const s=e.target.dataset.s;if(s===undefined)return;const a=S.sched[planDay]=S.sched[planDay]||['','',''];a[+s]=e.target.value;save();renderDayPlan()});
 $('pre').addEventListener('click',e=>{const b=e.target.closest('[data-p]');if(!b||F.run)return;const [a,c]=b.dataset.p.split(',').map(Number);F.len=a;F.brk=c;F.mode='w';F.left=a*60;fsave();renderFocus()});
-$('fsubj').onchange=e=>{F.subj=e.target.value;fsave();fDraw()};
+$('fsubj').addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(!b||F.run)return;F.subj=b.dataset.s;F.manualDay=today;fsave();renderFocus()});
 $('fplay').onclick=()=>{if(F.run){F.left=fLeft();F.run=false}else{F.end=Date.now()+fLeft()*1000;F.run=true;vib(10);tone(520,.12)}fsave();fTick();fDraw()};
 $('freset').onclick=()=>{F.run=false;F.left=(F.mode==='w'?F.len:F.brk)*60;fsave();fTick();fDraw()};
 $('fskip').onclick=()=>{F.run=false;clearInterval(fi);F.mode=F.mode==='w'?'b':'w';F.left=(F.mode==='w'?F.len:F.brk)*60;fsave();fDraw()};
