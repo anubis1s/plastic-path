@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Plastic Path</title>
+<meta name="apple-mobile-web-app-title" content="Plastic Path">
+<meta name="application-name" content="Plastic Path">
+<meta name="theme-color" content="#0f4a33">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<style>
+:root{color-scheme:light dark}
+body{margin:0;min-height:100dvh;display:grid;place-items:center;background:linear-gradient(160deg,#1a6b49,#0b2e22);color:#eef6f1;font:16px/1.5 -apple-system,system-ui,sans-serif;text-align:center;padding:24px}
+.box{max-width:380px}
+img{width:96px;height:96px;border-radius:22px;box-shadow:0 12px 30px rgb(0 0 0/.3)}
+h1{font-size:26px;margin:16px 0 4px}
+p{opacity:.85;margin:6px 0}
+a.go,button{display:inline-block;margin-top:18px;padding:14px 26px;border-radius:16px;border:0;background:#4cc38a;color:#06140d;font-weight:700;font-size:17px;text-decoration:none;cursor:pointer}
+button{background:rgb(255 255 255/.14);color:#fff;font-size:15px}
+ol{text-align:left;opacity:.9;padding-left:22px}
+</style>
+</head>
+<body>
+<div class="box">
+  <img src="apple-touch-icon.png" alt="">
+  <h1>Plastic Path</h1>
+  <p id="msg">Открываю…</p>
+  <div id="setup" hidden>
+    <ol>
+      <li>Нажмите «Поделиться» внизу Safari.</li>
+      <li>Выберите «На экран „Домой“» → «Добавить».</li>
+      <li>Нажмите кнопку ниже — дальше иконка будет сразу открывать приложение.</li>
+    </ol>
+    <button id="done">Готово, я добавил</button>
+  </div>
+  <a class="go" id="go" href="https://claude.ai/artifact/1zX9VCQ1NwSxX1oiF6xAKy">Открыть Plastic Path</a>
+</div>
+<script>
+{
+const URL_APP='https://claude.ai/artifact/1zX9VCQ1NwSxX1oiF6xAKy';
+let ready=false;try{ready=localStorage.getItem('pp-launcher')==='1'}catch(e){}
+const target=URL_APP+(location.hash&&/^#[a-z]+$/.test(location.hash)?location.hash:'');
+document.getElementById('go').href=target;
+if(ready){location.replace(target)}
+else{document.getElementById('msg').textContent='Сначала добавьте эту страницу на экран «Домой»:';document.getElementById('setup').hidden=false}
+document.getElementById('done').onclick=()=>{try{localStorage.setItem('pp-launcher','1')}catch(e){}location.replace(target)};
+}
+</script>
+</body>
+</html>
