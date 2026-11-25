@@ -739,8 +739,8 @@ async function ghPutState(){const mk=()=>({message:'sync '+new Date().toISOStrin
 async function ghFeed(){try{const f=await ghGet('feed.json');if(f.data&&JSON.stringify(f.data)!==JSON.stringify(FEED))feedApply(f.data)}catch(e){}}
 async function initGh(){ghErr=null;if(!ghTok()){setSync('local');bridgeResolve();renderGh();return}
   try{setSync('save');const g=await ghGet('state.json');ghSha=g.sha;ref='gh';
-    if(g.data&&g.data.s){S=migrate(mergeState(S,migrate(g.data.s)));mergeApps(g.data.apps);buildPlan();local();daily();renderAll()}
-    remoteOK=true;bridgeResolve();renderStudyQuiet();await push();ghFeed();if(!window._ghF)window._ghF=setInterval(ghFeed,300000);
+    if(g.data&&g.data.s){const R=migrate(g.data.s);let first=false;try{first=!localStorage.getItem('pp-gh-joined')}catch(x){}S=migrate(mergeState(S,R));if(first){if(R.pet)S.pet=clone(R.pet);if(R.start)S.start=R.start;if(R.habits)S.habits=clone(R.habits)}mergeApps(g.data.apps);buildPlan();local();daily();renderAll()}
+    remoteOK=true;try{localStorage.setItem('pp-gh-joined','1')}catch(x){}bridgeResolve();renderStudyQuiet();await push();ghFeed();if(!window._ghF)window._ghF=setInterval(ghFeed,300000);
     document.addEventListener('visibilitychange',()=>{if(!document.hidden&&remoteOK)ghFeed()})}
   catch(e){ghErr=e&&e.code;setSync('local');bridgeResolve()}renderGh()}
 function renderGh(){const el=$('ghc');if(!el)return;
