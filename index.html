@@ -561,7 +561,7 @@ const MUSC='https://claude.ai/artifact/5krhnTVboB7jMYUaYrEcrk';
 const mus=(grp,min)=>({min,url:MUSC,steps:[['Приложение «Мышцы»: регион «'+grp+'» → «Учить»: анимация + вслух по-английски O, I, A, N.',Math.round(min*0.45)],['«SAQ»: подписать картинки этих групп.',Math.round(min*0.2)],['Anki: подколоды этих групп (новые + повторения).',Math.round(min*0.25)],['«Тест» по этим группам, ошибки выписать.',Math.round(min*0.1)]]});
 const chem=(t,min,extra)=>({min,url:PS.chem.url+'#notes',steps:[['Конспект в приложении: '+t+'.',15],['Решить по памяти: '+extra,Math.round(min*0.55)],['Сверить, ошибки выписать в «список ошибок».',10],['«Вопросы» по теме (MCQ-стиль): 5–10 штук.',Math.round(min*0.15)]]});
 const EXD=m=>({min:20,url:null,steps:[['Утром: только список ошибок и формулы/ключевые таблицы, ничего нового.',15],['Взять: ID, ручки, калькулятор (если можно). Прийти заранее.',5]]});
-const NB=(k,min,steps)=>({min,url:k==='latin'?'https://claude.ai/artifact/HTxT4nBMm6G4zbsSWwNZrd':PS[k].url,steps});
+const NB=(k,min,steps)=>({min,url:k==='latin'?'latnb:':PS[k].url,steps});
 const TASKS=[
  ['2026-11-23','anat','Мышцы: спина, лопаточная группа, плечо (13)','custom',mus('Верхняя: спина, лопаточная, плечо',50)],
  ['2026-11-23','anat','Мышцы: предплечье и кисть (30)','custom',mus('Верхняя: предплечье, кисть',60)],
@@ -1032,6 +1032,7 @@ const SUBS={musc:{name:'Мышцы конечностей',sub:'85 мышц: у�
  anat:{name:'Анатомия',sub:'Конспект, вопросы, случаи, карточки',src:'s/anat.html',key:'anat-final-v2',c:'var(--anat)',icon:'heart',ex:'2026-12-14'},
  ai:{name:'AI и биостатистика',sub:'AI in Medicine + Biostat',src:'s/ai.html',key:'ai-final-v2',c:'var(--ai)',icon:'star',ex:'2026-12-16'},
  latin:{name:'Латынь',sub:'Термины, грамматика, рецепты',src:'s/latin.html',key:'latin-final-v2',c:'var(--latin)',icon:'chat',ex:'2026-12-18'},
+ latnb:{name:'Тетрадь по латыни',sub:'Можно на экзамене: суффиксы, корни, 200 готовых терминов, 19 рецептов, поиск',src:'s/latnb.html',key:'latnb',c:'var(--latin)',icon:'cards',ex:'2026-12-18'},
  phys:{name:'Биофизика',sub:'Medical Biophysics',src:'s/phys.html',key:'phys-final-v2',c:'var(--phys)',icon:'bolt',ex:'2026-12-21'},
  chem:{name:'Химия',sub:'Medical Chemistry',src:'s/chem.html',key:'chem-final-v2',c:'var(--chem)',icon:'drop',ex:'2026-12-22'},
  bio:{name:'Биология',sub:'Medical Biology & Genetics',src:'s/bio.html',key:'bio-final-v2',c:'var(--bio)',icon:'walk',ex:'2026-12-23'}};
@@ -1050,7 +1051,7 @@ async function loadApps(db,uid){appCol=db.collection('data/users/'+uid);
     const l=APPS[s.key];if(r&&(!l||(r._u||0)>(l._u||0))){APPS[s.key]=clone(r);try{localStorage.setItem('pp-app-'+s.key,JSON.stringify(r))}catch(e){}}
     else if(l&&(!r||(l._u||0)>(r._u||0)))appPush(s.key)}catch(e){}}));
   bridgeResolve();renderStudyQuiet()}
-function subProg(k){const s=SUBS[k],a=APPS[s.key];if(k==='musc'){const n=a&&a.v?a.v.length:0;return{t:n+' из 85 мышц выучено',p:n/85}}
+function subProg(k){const s=SUBS[k],a=APPS[s.key];if(k==='latnb'){const w=S.prep||{},n=['★ Тетрадь по латыни, часть 1','★ Тетрадь по латыни, часть 2','★ Тетрадь по латыни, часть 3'].filter(t=>Object.keys(w).some(x=>x.includes(t)&&w[x])).length;return{t:'переписано частей: '+n+' из 3',p:n/3}}if(k==='musc'){const n=a&&a.v?a.v.length:0;return{t:n+' из 85 мышц выучено',p:n/85}}
   if(!a)return{t:'ещё не открывали',p:0};const d=Object.keys(a.days||{}).length,q=Object.keys(a.quiz||{}).length,c=Object.keys(a.cards||{}).length;
   return{t:`дней: ${d} · вопросов: ${q} · карточек: ${c}`,p:Math.min(1,(d+q/4+c/8)/40)}}
 function renderStudy(){
@@ -1068,7 +1069,7 @@ async function openSubject(k,hash){const s=SUBS[k];if(!s)return;vSub=k;renderSid
   await bridgeReady;const f=$('vframe');f.onload=()=>{$('vload').style.opacity=0;try{const t=document.documentElement.dataset.theme;if(t)f.contentDocument.documentElement.dataset.theme=t}catch(e){}};f.src=s.src+(hash?'#'+hash:'');
   if(!S.subOpen)S.subOpen={};S.subOpen[k]=today}
 function closeViewer(silent){if($('viewer').hidden)return;$('viewer').hidden=true;$('vframe').src='about:blank';vSub=null;document.body.style.overflow='';renderSide();if(!silent)renderStudyQuiet()}
-function openUrl(u){if(u.startsWith(MUSC)){openSubject('musc');return}for(const k of PORDER)if(u.startsWith(PS[k].url)){const hs=u.split('#')[1]||'';openSubject(k,hs);return}window.open(u,'_blank')}
+function openUrl(u){if(u==='latnb:'){openSubject('latnb');return}if(u.startsWith(MUSC)){openSubject('musc');return}for(const k of PORDER)if(u.startsWith(PS[k].url)){const hs=u.split('#')[1]||'';openSubject(k,hs);return}window.open(u,'_blank')}
 $('vback').onclick=()=>closeViewer();
 $('sgrid').addEventListener('click',e=>{const b=e.target.closest('[data-sub]');if(b)openSubject(b.dataset.sub)});
 addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('viewer').hidden)closeViewer()});
