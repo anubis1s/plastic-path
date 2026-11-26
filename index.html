@@ -1336,7 +1336,10 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden){const t=i
 setInterval(()=>{if(cur==='plan'&&pane==='day')renderDayPlan();if(cur==='today')renderHero()},60000);
 drawSnd();daily();renderSide();renderAll();fTick();setSync('local');go(location.hash.slice(1)||'today');$('xpt').dataset.lv=Math.floor(xpAll()/150)+1;
 initDb();
-if(GH_MODE&&'serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+if(GH_MODE&&'serviceWorker' in navigator){const had=!!navigator.serviceWorker.controller;let rl=false;
+ navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(reg=>{const up=()=>reg.update().catch(()=>{});up();
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)up()});setInterval(up,15*60e3)}).catch(()=>{});
+ navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!had||rl)return;rl=true;try{if(typeof flush==='function')flush()}catch(e){}setTimeout(()=>location.reload(),300)})}
 window.__pp={get S(){return S},get PDAYS(){return PDAYS},mergeState,clone};
 }
 </script>
