@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Биофизика — тетрадь для финала</title><link rel="stylesheet" href="../theme.css">
+<style>
+:root{--bg:#f2f0ea;--card:#fff;--ink:#14231b;--mute:#5d6b63;--line:#e3e0d6;--g:#1f7a52;--g2:#e4f1ea}
+:root[data-theme=dark]{--bg:#0c1712;--card:#14221b;--ink:#e8efe9;--mute:#9aaba1;--line:#25362d;--g:#4cc38a;--g2:#173126}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0c1712;--card:#14221b;--ink:#e8efe9;--mute:#9aaba1;--line:#25362d;--g:#4cc38a;--g2:#173126}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Manrope,system-ui,sans-serif}
+.top{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 16px 8px;border-bottom:1px solid var(--line)}
+h1{font:800 20px Unbounded,Manrope,sans-serif;margin:0 0 8px}
+.nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}
+.nav a{flex:none;padding:6px 12px;border-radius:999px;background:var(--card);color:var(--ink);text-decoration:none;font-weight:700;font-size:13px;border:1px solid var(--line);transition:transform .2s,background .2s}
+.nav a:active{transform:scale(.94)}
+.bar{display:flex;gap:8px;margin-top:6px}
+#q{flex:1;padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+#pr{padding:10px 14px;border-radius:14px;border:0;background:var(--g);color:#fff;font-weight:700;cursor:pointer}
+main{max-width:900px;margin:0 auto;padding:8px 16px 80px}
+h2{font:800 17px Unbounded,Manrope,sans-serif;margin:28px 0 10px;scroll-margin-top:140px;color:var(--g)}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;margin:8px 0 14px;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{background:var(--g2);font-weight:800}
+td:first-child{font-weight:700}
+pre{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;overflow-x:auto;font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace}
+code{font-family:ui-monospace,Menlo,Consolas,monospace}
+ul,ol{padding-left:22px}li{margin:3px 0}
+.hide{display:none}mark{background:#ffe58a;color:#111;border-radius:3px}
+@media print{.top{position:static}.bar,.nav{display:none}body{background:#fff;color:#000}h2{color:#000;break-after:avoid}table,pre{break-inside:avoid}}
+</style></head><body>
+<div class="top"><h1>Биофизика — тетрадь для финала</h1><div class="nav"><a href="#s0">Как пользоваться</a><a href="#s1">ЕДИН</a><a href="#s2">МЕХ</a><a href="#s3">ВРАЩ</a><a href="#s4">ПРОЧ</a><a href="#s5">ЖИДК</a><a href="#s6">ПОТОК</a><a href="#s7">МОЛ</a><a href="#s8">ТЕРМО</a><a href="#s9">ЗВУК</a><a href="#s10">ЭЛЕКТ</a><a href="#s11">ЭКГ</a></div>
+<div class="bar"><input id="q" placeholder="Поиск: формула, термин…" autocomplete="off"><button id="pr">Печать</button></div></div>
+<main><h2 id="s0">Как пользоваться</h2>
+<p>Тетрадь разрешена на экзамене. По главе на полстраницы: формулы с единицами, ключевые числа и один решённый пример. Подпишите края: <strong>ЕДИН</strong>, <strong>МЕХ</strong>, <strong>ВРАЩ</strong>, <strong>ПРОЧ</strong>, <strong>ЖИДК</strong>, <strong>ПОТОК</strong>, <strong>МОЛ</strong>, <strong>ТЕРМО</strong>, <strong>ЗВУК</strong>, <strong>ЭЛЕКТ</strong>, <strong>ЭКГ</strong>. Алгоритм задачи: выписать «дано» в СИ → найти формулу здесь → подставить → проверить единицы.</p>
+<h2 id="s1">ЕДИН — единицы и константы</h2>
+<table>
+<thead>
+<tr>
+<th>Величина</th>
+<th>Единица</th>
+<th>Перевод</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Сила</td>
+<td>N = kg·m/s²</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Энергия</td>
+<td>J</td>
+<td>1 Cal (ккал) = 4,184 kJ</td>
+</tr>
+<tr>
+<td>Давление</td>
+<td>Pa = N/m²</td>
+<td>1 mmHg = 1 torr = 133 Pa = 13,5 mm H₂O</td>
+</tr>
+<tr>
+<td>Мощность</td>
+<td>W = J/s</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Вязкость</td>
+<td>Pa·s</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Заряд</td>
+<td>C</td>
+<td>e = 1,60 × 10⁻¹⁹ C</td>
+</tr>
+</tbody>
+</table>
+<p>g = 9,8 m/s²; k (Кулон) = 8,99 × 10⁹ N·m²/C²; I₀ = 10⁻¹² W/m²; v звука: воздух ≈ 343 m/s, ткани и вода ≈ 1500 m/s.</p>
+<h2 id="s2">МЕХ — Ch. 1–3: векторы, статика, движение</h2>
+<ul>
+<li>sin θ = прот./гип.; cos θ = прил./гип.; tan θ = прот./прил. Aₓ = A cos θ, Aᵧ = A sin θ.</li>
+<li><strong>v = v₀ + at; x = v₀t + ½at²; v² − v₀² = 2ax.</strong></li>
+<li>F = ma; w = mg; W = Fd cos θ; KE = ½mv²; PE = mgh; P = W/Δt.</li>
+<li>Равновесие: <strong>ΣF = 0 и Στ = 0</strong>; τ = F·d (d — плечо).</li>
+<li>Рычаги: 1-го рода — ось посередине (голова на атланте); 2-го — груз посередине (на носки); <strong>3-го — сила посередине (бицепс), самый частый в теле</strong>.</li>
+<li>Локоть: F_мышцы·d_мышцы = W_груза·d_груза + W_предпл·d_цм.</li>
+<li>Трение F = μN; μₛ &gt; μₖ; в суставах μ ≈ 0,003–0,01.</li>
+<li>Прыжок вверх: h = v²/2g. Прыжок в длину: R = v² sin2θ / g, максимум при 45°: R = v²/g.</li>
+<li>Бег: энергия на шаг E = mv²; КПД мышц ≈ 20%. Толкать стену — работа = 0.</li>
+</ul>
+<p><strong>Пример (локоть):</strong> груз 50 N на 0,35 m, бицепс на 0,04 m, предплечье не учитываем → F = 50·0,35/0,04 = 437,5 N (в 8,75 раза больше груза).</p>
+<h2 id="s3">ВРАЩ — Ch. 4: вращение и маятник</h2>
+<ul>
+<li>ω = Δθ/Δt; v = ωr; a = v²/r = ω²r.</li>
+<li>τ = Iα; I = Σmr²; стержень вокруг конца <strong>I = ml²/3</strong>; E_вращ = ½Iω²; L = Iω.</li>
+<li>Поворот: F = mv²/R; наклон tan θ = v²/(gR).</li>
+<li>Маятник: <strong>T = 2π√(L/g)</strong>; нога (стержень): <strong>T = 2π√(2L/3g)</strong>; f = 1/T.</li>
+<li>Гармоника: x = A sin ωt; v_max = Aω; a_max = Aω².</li>
+</ul>
+<p><strong>Пример:</strong> нога L = 0,9 m → T = 2π√(2·0,9/(3·9,8)) = 2π·0,247 = 1,55 s.</p>
+<h2 id="s4">ПРОЧ — Ch. 5: упругость, удар</h2>
+<ul>
+<li>Напряжение <strong>S = F/A</strong> (Pa); деформация St = Δl/l; <strong>Гук: S = Y·St</strong>; k = YA/l; F = kΔl.</li>
+<li>Энергия деформации E = ½kΔl².</li>
+<li>Удар: <strong>F = Δp/Δt = m(v_f − v_i)/Δt</strong> — чем дольше удар, тем меньше сила.</li>
+<li>Падение: v = √(2gh); F = m√(2gh)/Δt. Подушка: F = mv²/(2s).</li>
+<li>Кость вязкоупругая: быстрая нагрузка — прочнее. Сухожилия: «toe region».</li>
+</ul>
+<p><strong>Пример:</strong> 70 kg падает с 0,5 m, остановка за 0,01 s → v = √(2·9,8·0,5) = 3,13 m/s; F = 70·3,13/0,01 ≈ 21 900 N.</p>
+<h2 id="s5">ЖИДК — Ch. 7: жидкости в покое</h2>
+<ul>
+<li><strong>P = F/A; P₂ − P₁ = ρgh.</strong></li>
+<li>Паскаль: F₁/A₁ = F₂/A₂; выигрыш M = A₂/A₁.</li>
+<li><strong>Архимед: F_B = ρ_ж·g·V</strong>; плавает, если средняя плотность &lt; ρ воды.</li>
+<li>Поверхностное натяжение T = F/L (N/m); капилляр <strong>h = 2T cos θ / (Rρg)</strong>.</li>
+<li><strong>Лаплас: ΔP = 2T/R</strong> (альвеола) — сурфактант снижает T, мелкие альвеолы не спадаются.</li>
+</ul>
+<p><strong>Пример:</strong> разница давлений между головой и стопами (h = 1,7 m, ρ = 1060 kg/m³): ΔP = 1060·9,8·1,7 = 17 660 Pa ≈ 133 mmHg.</p>
+<h2 id="s6">ПОТОК — Ch. 8: кровоток</h2>
+<ul>
+<li>Непрерывность: <strong>Q = A·v = const</strong> — в сужении v растёт.</li>
+<li><strong>Бернулли:</strong> P + ½ρv² + ρgh = const — в стенозе давление на стенку падает.</li>
+<li><strong>Пуазёйль:</strong> Q = πR⁴ΔP / (8ηL); сопротивление Re = 8ηL / (πR⁴). Радиус вдвое меньше → поток в <strong>16 раз</strong> меньше.</li>
+<li><strong>Рейнольдс:</strong> Rₙ = ρvR/η (для сосуда — диаметр); &gt; ~2000 — турбулентность, шумы.</li>
+<li>BP = Q × сопротивление; <strong>CO = HR × SV</strong>; норма 120/80 mmHg.</li>
+<li>Мощность сердца P = Q·(ΔP + ½ρv²).</li>
+</ul>
+<p><strong>Пример:</strong> HR 70/мин, SV 70 ml → CO = 4,9 l/min.</p>
+<h2 id="s7">МОЛ — Ch. 9: молекулы и диффузия</h2>
+<ul>
+<li>Кулон F = k·q₁q₂/r². Нековалентные связи: электростатические, водородные, ван-дер-ваальсовы (лондоновские), гидрофобные.</li>
+<li>Лёд — сетка H-связей с полостями, поэтому легче воды.</li>
+<li><strong>Диффузия:</strong> ⟨x²⟩ = 2Dt (1D), ⟨r²⟩ = 4Dt (2D), <strong>6Dt (3D)</strong>.</li>
+<li>Стокс ξ = 6πηR; <strong>Эйнштейн: D = k_B T / (6πηR)</strong> — мелкие молекулы быстрее.</li>
+</ul>
+<h2 id="s8">ТЕРМО — Ch. 10–11: тепло и энергия</h2>
+<ul>
+<li><strong>1-й закон: ΔU = Q − W.</strong> Q = cmΔT. КПД = 1 − T₂/T₁.</li>
+<li>2-й закон: ΔS &gt; 0; живое держит порядок за счёт энергии пищи.</li>
+<li>Информация I = log₂Ω бит; Больцман S = k_B ln Ω; Шеннон H = −KΣPᵢ ln Pᵢ.</li>
+<li>Фрактальная размерность D = log N / log S (Кох 1,26; лёгкие 2,97; мозг 2,79).</li>
+<li>Площадь тела = 0,202·M^0,425·H^0,725; <strong>основной обмен ∝ M^3/4 (Клайбер)</strong>.</li>
+</ul>
+<h2 id="s9">ЗВУК — Ch. 12: звук и слух</h2>
+<ul>
+<li>f = 1/T; <strong>v = fλ</strong>; ω = 2πf; k = 2π/λ; v = √(B/ρ).</li>
+<li>I = P/A (W/m²); <strong>β = 10 log(I/I₀) dB</strong>, I₀ = 10⁻¹² W/m².</li>
+<li>Резонанс fₙ = nv/2L; слуховой проход ~3000 Hz. Биения f_b = |f₁ − f₂|.</li>
+<li>Импеданс <strong>z = ρv</strong>; воздух/вода — 99,9% отражается → гель при УЗИ.</li>
+<li>Слух 20–20 000 Hz; усиление: проход ×2, перепонка ×30, косточки ×2. Эхолокация d = vt/2.</li>
+</ul>
+<p><strong>Пример:</strong> I = 10⁻⁶ W/m² → β = 10 log(10⁶) = 60 dB. Удвоение I → +3 dB.</p>
+<h2 id="s10">ЭЛЕКТ — Ch. 13: электричество и нервы</h2>
+<ul>
+<li>E = F/q; V = W/q; <strong>Ом: V = IR</strong>; R = ρL/A; P = IV = I²R; <strong>C = Q/V = ε₀A/d</strong>; E = ½CV².</li>
+<li>Покой <strong>≈ −70 mV</strong>; внутри больше K⁺, снаружи Na⁺. <strong>Нернст: ΔV = (k_B T/q) ln(c₁/c₂)</strong>.</li>
+<li>ПД: Na⁺ внутрь (деполяризация) → K⁺ наружу (реполяризация); до 100 m/s.</li>
+<li>Ходжкин–Хаксли: I = C_m dV/dt + g_K(V − V_K) + g_Na(V − V_Na) + g_L(V − V_L).</li>
+<li>Кабель: <strong>V = V₀ e^(−x/λ)</strong>; без миелина λ ≈ 0,8 mm, с миелином ≈ 16 mm; сальтаторное проведение в перехватах Ранвье.</li>
+</ul>
+<h2 id="s11">ЭКГ</h2>
+<ul>
+<li>Водители ритма: SA 60–80/мин → AV 40–60 → His–Purkinje 20–40.</li>
+<li>Путь: SA → тракты Бахмана → AV → пучок Гиса → ножки → Пуркинье.</li>
+<li>Отведения: I (L+ R−), II (F+ R−), III (F+ L−); aVR, aVL, aVF; V1–V6. Чёрный — правая нога.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Элемент</th>
+<th>Что</th>
+<th>Норма</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P</td>
+<td>деполяризация предсердий</td>
+<td>≤ 0,10 s</td>
+</tr>
+<tr>
+<td>PQ</td>
+<td>предсердия → желудочки</td>
+<td>0,12–0,20 s</td>
+</tr>
+<tr>
+<td>QRS</td>
+<td>деполяризация желудочков</td>
+<td>≤ 0,10 s</td>
+</tr>
+<tr>
+<td>ST</td>
+<td>желудочки возбуждены</td>
+<td>изолиния ± 0,5 mm</td>
+</tr>
+<tr>
+<td>T</td>
+<td>реполяризация желудочков</td>
+<td>в aVR отрицательный</td>
+</tr>
+<tr>
+<td>QT</td>
+<td>электрическая систола</td>
+<td>0,36–0,45 s</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ЧСС = 60 / RR (s).</strong> Пример: RR = 0,8 s → 75/мин.</p>
+<p>Источник: конспект биофизики в Plastic Path (Ch. 1–13, ЭКГ). Решённые примеры составлены для тренировки — сверьте с задачами семинара.</p></main>
+<script>
+const q=document.getElementById('q');
+q.addEventListener('input',()=>{const v=q.value.trim().toLowerCase();
+ document.querySelectorAll('main tr').forEach(tr=>{if(tr.querySelector('th'))return;tr.classList.toggle('hide',!!v&&!tr.textContent.toLowerCase().includes(v))});
+ document.querySelectorAll('main li,main pre,main p').forEach(el=>el.classList.toggle('hide',!!v&&!el.textContent.toLowerCase().includes(v)));
+ if(v){const f=[...document.querySelectorAll('main tr,main li,main pre,main p')].find(e=>!e.classList.contains('hide')&&!e.querySelector('th'));if(f)f.scrollIntoView({block:'center'})}});
+document.getElementById('pr').onclick=()=>{q.value='';q.dispatchEvent(new Event('input'));print()};
+</script></body></html>

@@ -180,7 +180,7 @@ Rp.: Extracti Frangulae fluidi 25 ml
 const q=document.getElementById('q');
 q.addEventListener('input',()=>{const v=q.value.trim().toLowerCase();
  document.querySelectorAll('main tr').forEach(tr=>{if(tr.querySelector('th'))return;tr.classList.toggle('hide',!!v&&!tr.textContent.toLowerCase().includes(v))});
- document.querySelectorAll('main li,main pre').forEach(el=>el.classList.toggle('hide',!!v&&!el.textContent.toLowerCase().includes(v)));
- if(v){const f=[...document.querySelectorAll('main tr,main li,main pre')].find(e=>!e.classList.contains('hide')&&!e.querySelector('th'));if(f)f.scrollIntoView({block:'center'})}});
+ document.querySelectorAll('main li,main pre,main p').forEach(el=>el.classList.toggle('hide',!!v&&!el.textContent.toLowerCase().includes(v)));
+ if(v){const f=[...document.querySelectorAll('main tr,main li,main pre,main p')].find(e=>!e.classList.contains('hide')&&!e.querySelector('th'));if(f)f.scrollIntoView({block:'center'})}});
 document.getElementById('pr').onclick=()=>{q.value='';q.dispatchEvent(new Event('input'));print()};
 </script></body></html>

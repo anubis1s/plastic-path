@@ -562,7 +562,7 @@ const MUSC='https://claude.ai/artifact/5krhnTVboB7jMYUaYrEcrk';
 const mus=(grp,min)=>({min,url:MUSC,steps:[['Приложение «Мышцы»: регион «'+grp+'» → «Учить»: анимация + вслух по-английски O, I, A, N.',Math.round(min*0.45)],['«SAQ»: подписать картинки этих групп.',Math.round(min*0.2)],['Anki: подколоды этих групп (новые + повторения).',Math.round(min*0.25)],['«Тест» по этим группам, ошибки выписать.',Math.round(min*0.1)]]});
 const chem=(t,min,extra)=>({min,url:PS.chem.url+'#notes',steps:[['Конспект в приложении: '+t+'.',15],['Решить по памяти: '+extra,Math.round(min*0.55)],['Сверить, ошибки выписать в «список ошибок».',10],['«Вопросы» по теме (MCQ-стиль): 5–10 штук.',Math.round(min*0.15)]]});
 const EXD=m=>({min:20,url:null,steps:[['Утром: только список ошибок и формулы/ключевые таблицы, ничего нового.',15],['Взять: ID, ручки, калькулятор (если можно). Прийти заранее.',5]]});
-const NB=(k,min,steps)=>({min,url:k==='latin'?'latnb:':PS[k].url,steps});
+const NB=(k,min,steps)=>({min,url:k+'nb:',steps});
 const TASKS=[
  ['2026-11-23','anat','Мышцы: спина, лопаточная группа, плечо (13)','custom',mus('Верхняя: спина, лопаточная, плечо',50)],
  ['2026-11-23','anat','Мышцы: предплечье и кисть (30)','custom',mus('Верхняя: предплечье, кисть',60)],
@@ -620,7 +620,7 @@ const TASKS=[
  ['2026-12-06','anat','Мышцы живота, задняя брюшная стенка, паховый канал','notes'],
  ['2026-12-06','ai','Lec 3: выживаемость — Kaplan–Meier, hazard, log-rank','notes'],
  ['2026-12-06','phys','Ch. 7: давление, Паскаль, Архимед, поверхностное натяжение','notes'],
- ['2026-12-06','ai','★ Тетрадь по биостатистике: формулы и схемы расчётов','custom',NB('ai',60,[['Формулы: mean/SD, z, CI, 2×2 (sens, spec, PPV, NPV), RR, OR, NNT.',30],['Схемы: Kaplan–Meier по шагам, матрица ошибок, accuracy/precision/recall/F1, Gini.',20],['По одному решённому примеру на каждую формулу.',10]])],
+ ['2026-12-06','ai','★ Тетрадь по биостатистике, часть 1: описательная, тесты, 2×2, регрессия','custom',NB('ai',60,[['Откройте «Тетрадь по биостатистике» (в «Учёбе»). Подпишите края: ОПИС, ТЕСТЫ, 2×2, РЕГР, KM, ВАЛИД, AI, БИО.',5],['Перепишите ОПИС и ТЕСТЫ: формулы + решённые примеры.',25],['Перепишите 2×2 и РЕГР: таблица, RR, OR, NNT, регрессия.',25],['Проверка: решите пример RR/OR без подсказки.',5]])],
  ['2026-12-07','anat','Мышцы спины: поверхностные, промежуточные, глубокие','notes'],
  ['2026-12-07','bio','Week 4: ферменты, АТФ, гликолиз, Кребс, ETC, брожение','notes'],
  ['2026-12-07','chem','Topic 5: степени окисления, ОВР, метод полуреакций','notes'],
@@ -632,7 +632,7 @@ const TASKS=[
  ['2026-12-09','anat','Мышцы нижней конечности: ягодичная, бедро, голень, стопа','custom',mus('Нижняя: ягодичная, бедро, голень, стопа',60)],
  ['2026-12-09','bio','Самотест по неделям 1–4','quiz'],
  ['2026-12-09','chem','Термохимия: q = mcΔT, калориметрия, закон Гесса, ΔHf','notes'],
- ['2026-12-09','phys','★ Тетрадь по биофизике: все формулы по главам','custom',NB('phys',60,[['Формулы Ch. 1–13 с единицами — по главе на полстраницы.',40],['К каждой главе — один решённый пример.',20]])],
+ ['2026-12-09','phys','★ Тетрадь по биофизике, часть 1: единицы, механика, прочность, жидкости, кровоток','custom',NB('phys',60,[['Откройте «Тетрадь по биофизике» (в «Учёбе»). Подпишите края: ЕДИН, МЕХ, ВРАЩ, ПРОЧ, ЖИДК, ПОТОК, МОЛ, ТЕРМО, ЗВУК, ЭЛЕКТ, ЭКГ.',5],['Перепишите ЕДИН, МЕХ, ВРАЩ, ПРОЧ — формулы с единицами + примеры.',30],['Перепишите ЖИДК и ПОТОК.',25]])],
  ['2026-12-10','anat','Мышцы головы и шеи, мимические (часть 1)','notes'],
  ['2026-12-10','ai','Lec 1: уровни AI, промпт-инжиниринг (RAG, CoT, 3C, RTCC)','notes'],
  ['2026-12-09','latin','Кислоты, соли, оксиды по-латыни; патология, микробиология','notes'],
@@ -642,6 +642,7 @@ const TASKS=[
  ['2026-12-11','anat','Клинические кейсы по всему курсу','cases'],
  ['2026-12-11','ai','Lec 5–6: биоинформатика, выравнивание (NW, SW, BLAST)','notes'],
  ['2026-12-11','chem','Кинетика: закон скорости, порядок, период полураспада','notes'],
+ ['2026-12-11','ai','★ Тетрадь по биостатистике, часть 2: Kaplan–Meier, валидация, AI, биоинформатика','custom',NB('ai',50,[['Перепишите KM: таблицу Kaplan–Meier по шагам.',15],['Перепишите ВАЛИД: матрицу и все метрики с примером.',20],['Кратко AI и БИО: методы, Gini/IG, базы, выравнивание.',15]])],
  ['2026-12-12','anat','Пробный экзамен SAQ № 1 на время','quiz'],
  ['2026-12-12','anat','Слабые темы по итогам пробника','quiz'],
  ['2026-12-12','ai','Lec 7–8: множественное выравнивание, PSSM, HMM, UPGMA; структура белка','notes'],
@@ -667,6 +668,7 @@ const TASKS=[
  ['2026-12-18','latin','ЭКЗАМЕН: латынь (с тетрадью)','custom',EXD()],
  ['2026-12-18','phys','Вечер: Ch. 10–11 — законы термодинамики, энтропия, обмен веществ','notes'],
  ['2026-12-18','phys','Вечер: Ch. 12 — звук, децибелы, слух, ультразвук','notes'],
+ ['2026-12-18','phys','★ Тетрадь по биофизике, часть 2: молекулы, термо, звук, электричество, ЭКГ','custom',NB('phys',50,[['Перепишите МОЛ, ТЕРМО, ЗВУК.',25],['Перепишите ЭЛЕКТ и таблицу ЭКГ.',25]])],
  ['2026-12-19','phys','Ch. 13: мембранный потенциал, потенциал действия, миелин','notes'],
  ['2026-12-19','phys','ЭКГ: проводящая система, отведения, зубцы и интервалы','notes'],
  ['2026-12-19','phys','Все расчётные задачи на бумаге','cases'],
@@ -689,7 +691,7 @@ const TASKS=[
 
 (()=>{const d=new Date('2026-11-22T12:00:00'),end=new Date('2026-12-22T12:00:00');
  for(;d<=end;d.setDate(d.getDate()+1)){const iso=d.toISOString().slice(0,10),wd=d.getDay();
-  if(iso>='2026-11-27'&&iso<='2026-12-15'&&iso!=='2026-12-14'&&iso!=='2026-12-10')TASKS.push([iso,'latin','Латынь 15 минут: 10 терминов + 1 рецепт с тетрадью','custom',{min:15,url:'latnb:',steps:[['10 терминов из «Вопросов» или «Билета» на странице латыни: собрать по тетради (суффикс → префикс → корень), сверить с ключом.',10],['1 рецепт по образцу из тетради: поменять названия и дозы, проверить по чек-листу.',5]]}]);
+  if(iso>='2026-11-27'&&iso<='2026-12-15'&&iso!=='2026-12-14'&&iso!=='2026-12-10')TASKS.push([iso,'latin','Латынь 15 минут: 10 терминов + 1 рецепт с тетрадью','custom',{min:15,url:'latinnb:',steps:[['10 терминов из «Вопросов» или «Билета» на странице латыни: собрать по тетради (суффикс → префикс → корень), сверить с ключом.',10],['1 рецепт по образцу из тетради: поменять названия и дозы, проверить по чек-листу.',5]]}]);
   TASKS.push([iso,'anat','Anki: все повторения + новые по пройденным темам','custom',{min:30,url:null,steps:[['Anki: сначала все повторения (Review).',20],['Новые карточки — только из тем, которые уже прошли.',10]]}]);
   if((wd===0||wd===6)&&iso<'2026-11-26')TASKS.push([iso,'anat',wd===0&&iso>'2026-11-22'?'Запас: догнать пропущенное за неделю':'Выходной: повтор слабых тем недели','custom',wd===0&&iso>'2026-11-22'?{min:90,url:null,steps:[['Посмотрите в «Подготовке», какие шаги недели не отмечены.',5],['Сделайте их по порядку (сначала анатомия).',75],['Если всё сделано — повтор слабых тем по списку ошибок.',10]]}:{min:45,url:null,steps:[['Откройте «список ошибок» за неделю.',5],['Повторите 2–3 самые слабые темы в их приложениях.',30],['Вопросы по ним — письменно по-английски.',10]]}]);
  }})();
@@ -1064,9 +1066,11 @@ function renderEdit(){$('edb').textContent=editing?'Готово':'Измени�
 const SUBS={musc:{name:'Мышцы конечностей',sub:'85 мышц: учить, SAQ, карточки, тест, нервы',src:'m/index.html',key:'allm-known',c:'var(--anat)',icon:'dumbbell',ex:'2026-12-14'},
  anat:{name:'Анатомия',sub:'Конспект, вопросы, случаи, карточки',src:'s/anat.html',key:'anat-final-v2',c:'var(--anat)',icon:'heart',ex:'2026-12-14'},
  ai:{name:'AI и биостатистика',sub:'AI in Medicine + Biostat',src:'s/ai.html',key:'ai-final-v2',c:'var(--ai)',icon:'star',ex:'2026-12-16'},
+ ainb:{name:'Тетрадь по биостатистике',sub:'Можно на экзамене: все формулы, 2×2, Kaplan–Meier, метрики, решённые примеры',src:'s/ainb.html',key:'ainb',c:'var(--ai)',icon:'cards',ex:'2026-12-16'},
  latin:{name:'Латынь',sub:'Термины, грамматика, рецепты',src:'s/latin.html',key:'latin-final-v2',c:'var(--latin)',icon:'chat',ex:'2026-12-18'},
  latnb:{name:'Тетрадь по латыни',sub:'Можно на экзамене: суффиксы, корни, 200 готовых терминов, 19 рецептов, поиск',src:'s/latnb.html',key:'latnb',c:'var(--latin)',icon:'cards',ex:'2026-12-18'},
  phys:{name:'Биофизика',sub:'Medical Biophysics',src:'s/phys.html',key:'phys-final-v2',c:'var(--phys)',icon:'bolt',ex:'2026-12-21'},
+ physnb:{name:'Тетрадь по биофизике',sub:'Можно на экзамене: формулы Ch. 1–13 с единицами, ЭКГ, решённые примеры',src:'s/physnb.html',key:'physnb',c:'var(--phys)',icon:'cards',ex:'2026-12-21'},
  chem:{name:'Химия',sub:'Medical Chemistry',src:'s/chem.html',key:'chem-final-v2',c:'var(--chem)',icon:'drop',ex:'2026-12-22'},
  bio:{name:'Биология',sub:'Medical Biology & Genetics',src:'s/bio.html',key:'bio-final-v2',c:'var(--bio)',icon:'walk',ex:'2026-12-23'}};
 const EXTRA=[['Экзаменатор голосом (мышцы)','https://claude.ai/artifact/5vmaMNbNmC1EHHKzu8Z9Te'],['Клиника: нижняя конечность','https://claude.ai/artifact/1fwQmfDXYNwfKhaCoFH4Xb'],['Final prep — все материалы и темы','https://claude.ai/artifact/A8sxZs7Mr2hk8qawv5oULJ'],['Мышцы для срисовки','https://claude.ai/artifact/9Z5KcPnzCU23suppr5LTax']];
@@ -1084,7 +1088,7 @@ async function loadApps(db,uid){appCol=db.collection('data/users/'+uid);
     const l=APPS[s.key];if(r&&(!l||(r._u||0)>(l._u||0))){APPS[s.key]=clone(r);try{localStorage.setItem('pp-app-'+s.key,JSON.stringify(r))}catch(e){}}
     else if(l&&(!r||(l._u||0)>(r._u||0)))appPush(s.key)}catch(e){}}));
   bridgeResolve();renderStudyQuiet()}
-function subProg(k){const s=SUBS[k],a=APPS[s.key];if(k==='latnb'){const w=S.prep||{},n=['★ Тетрадь по латыни, часть 1','★ Тетрадь по латыни, часть 2','★ Тетрадь по латыни, часть 3'].filter(t=>Object.keys(w).some(x=>x.includes(t)&&w[x])).length;return{t:'переписано частей: '+n+' из 3',p:n/3}}if(k==='musc'){const n=a&&a.v?a.v.length:0;return{t:n+' из 85 мышц выучено',p:n/85}}
+function subProg(k){const s=SUBS[k],a=APPS[s.key];const NBP={latnb:['★ Тетрадь по латыни, часть 1','★ Тетрадь по латыни, часть 2','★ Тетрадь по латыни, часть 3'],ainb:['★ Тетрадь по биостатистике, часть 1','★ Тетрадь по биостатистике, часть 2'],physnb:['★ Тетрадь по биофизике, часть 1','★ Тетрадь по биофизике, часть 2']};if(NBP[k]){const w=S.prep||{},L=NBP[k],n=L.filter(t=>Object.keys(w).some(x=>x.includes(t)&&w[x])).length;return{t:'переписано частей: '+n+' из '+L.length,p:n/L.length}}if(k==='musc'){const n=a&&a.v?a.v.length:0;return{t:n+' из 85 мышц выучено',p:n/85}}
   if(!a)return{t:'ещё не открывали',p:0};const d=Object.keys(a.days||{}).length,q=Object.keys(a.quiz||{}).length,c=Object.keys(a.cards||{}).length;
   return{t:`дней: ${d} · вопросов: ${q} · карточек: ${c}`,p:Math.min(1,(d+q/4+c/8)/40)}}
 function renderStudy(){
@@ -1102,7 +1106,7 @@ async function openSubject(k,hash){const s=SUBS[k];if(!s)return;vSub=k;renderSid
   await bridgeReady;const f=$('vframe');f.onload=()=>{$('vload').style.opacity=0;try{const t=document.documentElement.dataset.theme;if(t)f.contentDocument.documentElement.dataset.theme=t}catch(e){}};f.src=s.src+(hash?'#'+hash:'');
   if(!S.subOpen)S.subOpen={};S.subOpen[k]=today}
 function closeViewer(silent){if($('viewer').hidden)return;$('viewer').hidden=true;$('vframe').src='about:blank';vSub=null;document.body.style.overflow='';renderSide();if(!silent)renderStudyQuiet()}
-function openUrl(u){if(u==='latnb:'){openSubject('latnb');return}if(u.startsWith(MUSC)){openSubject('musc');return}for(const k of PORDER)if(u.startsWith(PS[k].url)){const hs=u.split('#')[1]||'';openSubject(k,hs);return}window.open(u,'_blank')}
+function openUrl(u){const nbm=/^(\w+nb):$/.exec(u);if(nbm){openSubject(nbm[1]==='latinnb'?'latnb':nbm[1]);return}if(u.startsWith(MUSC)){openSubject('musc');return}for(const k of PORDER)if(u.startsWith(PS[k].url)){const hs=u.split('#')[1]||'';openSubject(k,hs);return}window.open(u,'_blank')}
 $('vback').onclick=()=>closeViewer();
 $('sgrid').addEventListener('click',e=>{const b=e.target.closest('[data-sub]');if(b)openSubject(b.dataset.sub)});
 addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('viewer').hidden)closeViewer()});
