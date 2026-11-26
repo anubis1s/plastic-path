@@ -477,6 +477,7 @@ button,a,[role=button]{touch-action:manipulation}
         <button class="btn pri"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Добавить привычку</button>
       </form>
     </div>
+    <button class="btn" id="updb" style="width:100%;margin:4px 0 14px">Обновить приложение до последней версии</button>
     <div class="sec"><h2>Тема</h2></div>
     <div class="seg" id="thseg"><span class="knob"></span><button data-th="dark">Тёмная</button><button data-th="light">Светлая</button><button data-th="auto">Как в системе</button></div>
     <p class="muted" style="margin:-6px 4px 14px;font-size:13px">Тема общая для всех устройств: выберите один раз, и телефон, планшет и ноутбук будут выглядеть одинаково.</p>
@@ -1299,6 +1300,9 @@ function applyTheme(){const t=S.theme||'auto',r=document.documentElement;if(t===
   const dk=t==='dark'||(t==='auto'&&matchMedia('(prefers-color-scheme:dark)').matches),m=document.querySelector('meta[name=theme-color]');if(m)m.content=dk?'#0c1712':'#f2f0ea';
   const f=$('vframe');try{if(f&&f.contentDocument){const d=f.contentDocument.documentElement;if(t==='auto')delete d.dataset.theme;else d.dataset.theme=t}}catch(e){}}
 document.addEventListener('click',e=>{const b=e.target.closest('#thseg button');if(!b)return;S.theme=b.dataset.th;S.updated=Date.now();applyTheme();if(typeof save==='function')save();else{local();push()}});
+$('updb').onclick=async()=>{const b=$('updb');b.disabled=true;b.textContent='Обновляю…';try{if(typeof flush==='function')flush()}catch(e){}
+  try{if('serviceWorker' in navigator){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}if(window.caches){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}}catch(e){}
+  setTimeout(()=>location.replace(location.pathname+'?u='+Date.now()+location.hash),600)};
 function renderAll(){applyTheme();if(typeof renderSide==='function')renderSide();renderHero();renderQuests();if(cur==='plan')setPane(pane);renderFocus();if(cur==='path')renderPath()}
 /* ---------- events ---------- */
 $('nav').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(b){vib(8);closeViewer(true);go(b.dataset.v,true)}});
