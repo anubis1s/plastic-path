@@ -169,6 +169,19 @@ select,input{min-height:44px;font:16px Manrope,sans-serif;padding:0 12px;border-
 .fc .btn.pri{background:#4cc38a;color:#06140d;min-height:56px;padding:0 26px;font-size:17px;border-radius:18px}.fc .btn{background:rgb(255 255 255/.1);color:#fff}
 .fc.dn .btn.pri{background:#fff}.fc .hint{position:absolute;bottom:calc(18px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;font-size:13px;opacity:.55;animation:bob 2s infinite}
 .fc.endc{text-align:center;align-items:center}
+.fc .ftm{display:flex;align-items:center;gap:14px;margin-top:18px;position:relative;background:rgb(255 255 255/.06);border-radius:18px;padding:12px 14px}
+.fc .ftm b{font:800 28px/1 Unbounded,Manrope,sans-serif;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.fc .fbar{height:6px;border-radius:4px;background:rgb(255 255 255/.12);margin-top:8px;overflow:hidden}.fc .fbar i{display:block;height:100%;width:0;background:var(--c);background:color-mix(in srgb,var(--c) 70%,#fff);border-radius:4px;transition:width .3s linear}
+.fc .fplay{width:54px;height:54px;border-radius:50%;border:0;background:#4cc38a;color:#06140d;display:grid;place-items:center;cursor:pointer;flex:none;transition:transform .2s var(--spring)}.fc .fplay:active{transform:scale(.9)}.fc .fplay svg{width:24px;height:24px}
+.fc.tup .btn.pri,.fc .btn.pulse{animation:pulseG 1.2s ease-in-out infinite}
+@keyframes pulseG{0%,100%{box-shadow:0 0 0 0 rgb(76 195 138/.6)}50%{box-shadow:0 0 0 14px rgb(76 195 138/0)}}
+.fc.later{opacity:.4;transition:opacity .25s}
+.fc .r3{margin:10px 0 6px;padding-left:22px;position:relative}.fc .r3 li{margin:6px 0}.fc .r3 input{width:100%;background:rgb(255 255 255/.08);border:1px solid rgb(255 255 255/.15);border-radius:12px;color:#fff;padding:10px 12px;font:inherit}
+.fc .rk.sel{background:#fff;color:#06140d}.fc .rk[data-v=y]{border:1px solid rgb(127 224 173/.5)}.fc .rk[data-v=n]{border:1px solid rgb(255 140 120/.5)}
+.flow.lock{overflow-y:hidden}
+.fsum{display:flex;gap:10px;justify-content:center;margin:14px 0 8px}.fsum div{background:rgb(255 255 255/.08);border-radius:16px;padding:12px 14px;min-width:92px}.fsum b{display:block;font:800 26px Unbounded,Manrope,sans-serif}.fsum span{font-size:12px;opacity:.75}
+#fend p{font-size:15px}
+
 /* modal + fx */
 .modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgb(5 15 10/.55);backdrop-filter:blur(6px);animation:fade .3s both;padding:24px}
 .modal[hidden]{display:none}
@@ -529,7 +542,7 @@ button,a,[role=button]{touch-action:manipulation}
 {
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const I={edit:'M4 20h4L19 9l-4-4L4 16z',sun:'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
+const I={redo:'M4 12h13M13 6l6 6-6 6',wind:'M3 8h11a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h8',edit:'M4 20h4L19 9l-4-4L4 16z',sun:'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
 moon:'M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z',book:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5zM4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5',
 cards:'M3 8h13v13H3zM8 3h13v13',chat:'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',dumbbell:'M6 7v10M18 7v10M3 9v6M21 9v6M6 12h12',
 heart:'M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z',phone:'M7 2h10a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zM11 18h2',
@@ -709,6 +722,7 @@ function buildPlan(){const P=Object.assign({add:[],del:{},mv:{},ren:{}},(typeof 
  TASKS.forEach((t,ix)=>{const o={date:t[0],k:t[1],title:t[2],view:t[3],x:t[4]||null,ix,okey:t[0]+'|'+t[2]};o.st=tsteps(o);push(o)});
  (P.add||[]).forEach((a,j)=>{const o={date:a.date,k:a.k,title:a.title,view:'custom',x:{min:a.min,url:a.k==='anat'?MUSC:(PS[a.k]?PS[a.k].url:null),steps:a.steps},ix:'a'+j,okey:'add:'+a.id,added:true};o.st=tsteps(o);push(o,a.first)});
  const F=(typeof FEED!=='undefined'&&FEED)||null;((F&&F.tasks)||[]).forEach((a,j)=>{const o={date:a.date,k:PS[a.k]?a.k:'anat',title:String(a.title||''),view:'custom',x:{min:+a.min||30,url:a.k==='musc'?MUSC:(PS[a.k]?PS[a.k].url:null),steps:(a.steps||[[a.title,a.min||30]]).map(x=>[String(x[0]),+x[1]||10])},ix:'f'+j,okey:'ari:'+a.id,added:true,ari:true};o.st=tsteps(o);push(o,a.first)});
+ ((typeof S!=='undefined'&&S&&S.rev)||[]).forEach(r=>r.dates.forEach(d=>{const o={date:d,k:PS[r.k]?r.k:'anat',title:'Повторение: '+r.title,view:'custom',x:{min:15,url:r.url,steps:[['Закройте материал и вспомните 3 главные вещи вслух.',5],['Откройте материал, сверьте, допишите пропущенное.',10]]},ix:'r'+r.id+d,okey:'rev:'+r.id+'|'+d,added:true,rev:true};o.st=tsteps(o);push(o)}));
  const TM=Object.assign({},(F&&F.times)||{},P.time||{});const st=o=>o.time?o.time.slice(0,5):'99:99';
  for(const d in PDAYS){PDAYS[d].forEach(o=>{if(TM[o.okey])o.time=TM[o.okey]});PDAYS[d].sort((a,b)=>st(a)<st(b)?-1:st(a)>st(b)?1:0)}
  PDATES=Object.keys(PDAYS).sort()}
@@ -770,7 +784,7 @@ function mergeState(A,B){const N=clone((A.updated||0)>=(B.updated||0)?A:B),O=N==
   N.prep=U(N.prep,O.prep);N.notes=U(N.notes,O.notes);N.badges=U(N.badges,O.badges);N.chest=U(N.chest,O.chest);N.reviews=U(N.reviews,O.reviews);
   N.focus=Object.assign({},O.focus||{});for(const d in ((N===A?A:B).focus||{})){const a=(N===A?A:B).focus[d],b=N.focus[d];N.focus[d]=!b||(a.min||0)>=(b.min||0)?a:b}
   if(O.goals&&N.goals){const ids=new Set(N.goals.map(g=>g.id));O.goals.forEach(g=>{if(!ids.has(g.id))N.goals.push(g)})}
-  if(!N.start||(O.start&&O.start<N.start))N.start=O.start||N.start;if(!N.pet&&O.pet)N.pet=O.pet;if(!N.theme&&O.theme)N.theme=O.theme;N.updated=Math.max(A.updated||0,B.updated||0);return N}
+  if(!N.start||(O.start&&O.start<N.start))N.start=O.start||N.start;if(!N.pet&&O.pet)N.pet=O.pet;if(!N.theme&&O.theme)N.theme=O.theme;N.recall=U(N.recall,O.recall);if(O.rev){N.rev=N.rev||[];const ri=new Set(N.rev.map(r=>r.id));O.rev.forEach(r=>{if(!ri.has(r.id))N.rev.push(r)})}N.updated=Math.max(A.updated||0,B.updated||0);return N}
 /* ---------- GitHub mode (standalone app on github.io) ---------- */
 const GH_MODE=/github\.io$/.test(location.hostname)||/[?&]gh\b/.test(location.search);
 const GH_API='https://api.github.com/repos/anubis1s/plastic-path-data/contents/';
@@ -974,26 +988,84 @@ function setPane(p){pane=p;const ix=['prep','exams','day'].indexOf(p);$('segk').
   document.querySelectorAll('.pane').forEach(e=>{const on=e.id==='p-'+p;e.classList.toggle('on',on);if(on){e.classList.remove('in-anim');void e.offsetWidth;e.classList.add('in-anim')}});
   if(p==='prep')renderPrep();if(p==='exams')renderExams();if(p==='day')renderDayPlan()}
 /* ---------- flow feed ---------- */
-let FL=[],flDone=0;
-function openFlow(){const d=today;FL=[];
-  for(const t of PDAYS[d]||[])t.st.list.forEach((x,i)=>{const k=pkey(t,i);if(!S.prep[k])FL.push({type:'s',k,t,x,i})});
+let FL=[],flDone=0,flWork=0,flSince=0,flXp0=0,flRec={y:0,p:0,n:0},flRev=0,flLock=false;
+const FRANK={anat:0,latin:1,bio:2,phys:3,chem:4,ai:5};
+let FT={ix:-1,end:0,left:0,run:false,iv:null,used:0};
+function fOrder(L){return L.slice().sort((a,b)=>{const ta=a.time?a.time.slice(0,5):'',tb=b.time?b.time.slice(0,5):'';if(ta&&tb&&ta!==tb)return ta<tb?-1:1;if(ta&&!tb)return-1;if(tb&&!ta)return 1;
+  const aa=/^Anki/.test(a.title)?1:0,ab=/^Anki/.test(b.title)?1:0;if(aa!==ab)return aa-ab;return(FRANK[a.k]??9)-(FRANK[b.k]??9)})}
+const recallable=t=>!/^Anki|ЭКЗАМЕН|^Вечер: только|Тетрадь|15 минут/.test(t.title)&&!t.rev;
+function fcStep(it,ix){const s=PS[it.t.k];return`<section class="fc" style="--c:var(--${it.t.k})" data-ix="${ix}"><div class="glow"></div><span class="lab">${ic('book')}${it.t.time?esc(it.t.time)+' · ':''}${esc(s.name)} · шаг ${it.i+1} из ${it.t.st.list.length}</span>
+  <h2>${esc(it.x[0])}</h2><p>${esc(it.t.title)}</p>
+  <div class="ftm" data-ftw="${ix}"><button class="fplay" data-ft="${ix}" aria-label="Таймер">${ic('play')}</button><div style="flex:1"><b data-ftt="${ix}">${String(it.x[1]).padStart(2,'0')}:00</b><div class="fbar"><i data-ftb="${ix}"></i></div></div></div>
+  <div class="acts"><button class="btn pri" data-fd="${ix}">${ic('check')}Сделано</button>${it.t.st.url?`<button class="btn" data-u="${esc(it.t.st.url)}">${ic('ext')}Материал</button>`:''}<button class="btn" data-fl="${ix}">${ic('redo')}Позже</button></div>${ix===0?'<div class="hint">листайте вверх</div>':''}</section>`}
+function fcHabit(it,ix){return`<section class="fc" style="--c:${CATS[it.h.cat]||CATS['Другое']}" data-ix="${ix}"><div class="glow"></div><span class="lab">${ic(it.h.icon)}Квест · ${esc(it.h.cat)}</span><h2>${esc(it.h.name)}</h2><p>+10 XP, шанс на крит ×2</p><div class="acts"><button class="btn pri" data-fd="${ix}">${ic('check')}Сделано</button><button class="btn" data-fl="${ix}">${ic('redo')}Позже</button></div>${ix===0?'<div class="hint">листайте вверх</div>':''}</section>`}
+function fcRecall(it,ix){return`<section class="fc rc" style="--c:var(--${it.t.k})" data-ix="${ix}"><div class="glow"></div><span class="lab">${ic('cards')}Проверка памяти · ${esc(PS[it.t.k].name)}</span>
+  <h2>Закройте материал. Вспомните 3 главные вещи</h2><p>${esc(it.t.title)}</p>
+  <ol class="r3"><li><input data-rn="${ix}" placeholder="1."></li><li><input data-rn="${ix}" placeholder="2."></li><li><input data-rn="${ix}" placeholder="3."></li></ol>
+  <p style="font-size:14px;opacity:.7">Можно вслух, писать необязательно. Потом откройте материал, сверьте и оцените честно:</p>
+  <div class="acts"><button class="btn rk" data-rr="${ix}" data-v="y">Знал</button><button class="btn rk" data-rr="${ix}" data-v="p">Частично</button><button class="btn rk" data-rr="${ix}" data-v="n">Не вспомнил</button>${it.t.st.url?`<button class="btn" data-u="${esc(it.t.st.url)}">${ic('ext')}Материал</button>`:''}</div>
+  <p class="rmsg" data-rm="${ix}" style="font-size:14px;margin-top:14px"></p></section>`}
+function fcBreak(){return`<section class="fc bk" style="--c:#7fb6ff" data-break="1"><div class="glow"></div><span class="lab">${ic('sun')}Перерыв</span>
+  <h2>10 минут отдыха</h2><p>Встаньте, попейте воды, посмотрите вдаль. Без телефона — мозг закрепляет выученное именно сейчас.</p>
+  <div class="ftm"><div style="flex:1"><b id="fbt">10:00</b><div class="fbar"><i id="fbb"></i></div></div></div>
+  <div class="acts"><button class="btn" id="fbbr">${ic('wind')}Дыхание 4-7-8</button><button class="btn pri" id="fbgo" disabled>${ic('play')}Продолжить</button></div>
+  <p id="fbbreath" style="font-size:22px;font-weight:800;margin-top:16px;min-height:30px"></p></section>`}
+function fSummary(){const xp=Math.max(0,xpAll()-flXp0),P=S.pet&&PETS[S.pet.type];
+  return`<div class="fsum"><div><b>${Math.round(flWork)}</b><span>минут работы</span></div><div><b>${flDone}</b><span>шагов и квестов</span></div><div><b>+${xp}</b><span>XP</span></div></div>
+  <p>Проверка памяти: знал ${flRec.y} · частично ${flRec.p} · не вспомнил ${flRec.n}</p>
+  ${flRev?`<p>В повторение ушло тем: ${flRev} — они появятся в «Финалах» через 1, 3 и 7 дней.</p>`:''}
+  ${S.pet?`<p>${esc(S.pet.name)}: ${xp?'растёт вместе с вами':'ждёт вас'} 💚</p>`:''}`}
+function fRefresh(){const real=FL.filter(x=>x.type==='s'||x.type==='h').length;$('fpb').style.width=(real?flDone/real*100:0)+'%';$('fct').textContent=flDone+' / '+real;const e=$('fend');if(e)e.innerHTML=fSummary()}
+function openFlow(){const d=today;FL=[];flDone=0;flWork=0;flSince=0;flXp0=xpAll();flRec={y:0,p:0,n:0};flRev=0;flLock=false;fStopT();
+  for(const t of fOrder(PDAYS[d]||[])){let any=false;t.st.list.forEach((x,i)=>{const k=pkey(t,i);if(!S.prep[k]){FL.push({type:'s',k,t,x,i});any=true}});
+    if(any&&recallable(t)&&!(S.recall&&S.recall[t.okey]))FL.push({type:'r',t})}
   for(const h of S.habits)if(!h.auto&&!(S.log[d]||[]).includes(h.id))FL.push({type:'h',h});
-  flDone=0;const tot=FL.length;
-  const card=(it,ix)=>{if(it.type==='s'){const s=PS[it.t.k];return`<section class="fc" style="--c:var(--${it.t.k})" data-ix="${ix}"><div class="glow"></div><span class="lab">${ic('book')}${it.t.time?esc(it.t.time)+' · ':''}${esc(s.name)} · шаг ${it.i+1} из ${it.t.st.list.length}</span>
-      <h2>${esc(it.x[0])}</h2><p>${esc(it.t.title)}</p><p>≈ ${it.x[1]} мин</p><div class="acts"><button class="btn pri" data-fd="${ix}">${ic('check')}Сделано</button>${it.t.st.url?`<button class="btn" data-u="${esc(it.t.st.url)}">${ic('ext')}Материал</button>`:''}<button class="btn" data-ff="${ix}">${ic('timer')}Фокус</button></div>${ix===0?'<div class="hint">листайте вверх</div>':''}</section>`}
-    return`<section class="fc" style="--c:${CATS[it.h.cat]||CATS['Другое']}" data-ix="${ix}"><div class="glow"></div><span class="lab">${ic(it.h.icon)}Квест · ${esc(it.h.cat)}</span><h2>${esc(it.h.name)}</h2><p>+10 XP, шанс на крит ×2</p><div class="acts"><button class="btn pri" data-fd="${ix}">${ic('check')}Сделано</button></div>${ix===0?'<div class="hint">листайте вверх</div>':''}</section>`};
+  const tot=FL.filter(x=>x.type!=='r').length;
+  const card=(it,ix)=>it.type==='s'?fcStep(it,ix):it.type==='r'?fcRecall(it,ix):fcHabit(it,ix);
   $('flow').innerHTML=`<div class="ftop"><button class="ib" id="fcl" aria-label="Закрыть">${ic('x')}</button><div class="pb"><i id="fpb" style="width:0"></i></div><span id="fct">0 / ${tot}</span></div>`
-    +FL.map(card).join('')+`<section class="fc endc" style="--c:#4cc38a"><div class="glow"></div><div class="tile" style="--c:#4cc38a;width:84px;height:84px;border-radius:50%;margin:0 auto">${ic('trophy','width:40px;height:40px')}</div><h2>${tot?'Лента закончилась':'Всё на сегодня сделано'}</h2><p id="fend">${tot?'Вы прошли поток. Возвращайтесь к плану завтра.':'Отличная работа. Отдыхайте.'}</p><div class="acts" style="justify-content:center"><button class="btn pri" id="fcl2">Готово</button></div></section>`;
-  $('flow').hidden=false;$('flow').scrollTop=0;document.body.style.overflow='hidden';$('fcl').onclick=closeFlow;$('fcl2').onclick=closeFlow}
-function closeFlow(){$('flow').hidden=true;document.body.style.overflow='';renderAll()}
-$('flow').addEventListener('click',e=>{const u=e.target.closest('[data-u]');if(u){openUrl(u.dataset.u);return}const b=e.target.closest('[data-fd]');const f=e.target.closest('[data-ff]');
-  if(f){const it=FL[+f.dataset.ff];F.subj=KS[it.t.k]||F.subj;F.manualDay=today;fsave();closeFlow();go('focus',true);return}
-  if(!b||b.disabled)return;const it=FL[+b.dataset.fd];b.disabled=true;
-  if(it.type==='s')toggleStep(it.k,today,b);else toggleHabit(it.h.id,today,b);
-  b.closest('.fc').classList.add('dn');b.innerHTML=ic('check')+'Готово';flDone++;$('fpb').style.width=flDone/FL.length*100+'%';$('fct').textContent=flDone+' / '+FL.length;
-  const next=b.closest('.fc').nextElementSibling;setTimeout(()=>next&&next.scrollIntoView({behavior:'smooth'}),550);
-  if(flDone===FL.length){setTimeout(()=>{confetti();chime()},700)}});
+    +FL.map(card).join('')+`<section class="fc endc" id="fendc" style="--c:#4cc38a"><div class="glow"></div><div class="tile" style="--c:#4cc38a;width:84px;height:84px;border-radius:50%;margin:0 auto">${ic('trophy','width:40px;height:40px')}</div><h2>${tot?'Итог сессии':'Всё на сегодня сделано'}</h2><div id="fend">${fSummary()}</div><div class="acts" style="justify-content:center"><button class="btn pri" id="fcl2">Готово</button></div></section>`;
+  $('flow').hidden=false;$('flow').scrollTop=0;$('flow').classList.remove('lock');document.body.style.overflow='hidden';$('fcl').onclick=closeFlow;$('fcl2').onclick=closeFlow}
+function closeFlow(){fStopT();clearInterval(fBk.iv);clearInterval(fBk.bi);flLock=false;$('flow').hidden=true;$('flow').classList.remove('lock');document.body.style.overflow='';renderAll()}
+function fStopT(){clearInterval(FT.iv);FT={ix:-1,end:0,left:0,run:false,iv:null,used:0}}
+function fLog(min){if(min<=0)return;const it=FT.ix>=0?FL[FT.ix]:null,f=S.focus[today]=S.focus[today]||{min:0,by:{}};const m=Math.round(min);f.min+=m;const sb=it&&it.t?KS[it.t.k]:null;if(sb)f.by[sb]=(f.by[sb]||0)+m;if(!S.start)S.start=today;save()}
+function fTimerDraw(){const ix=FT.ix;if(ix<0)return;const it=FL[ix],tot=it.x[1]*60,left=FT.run?Math.max(0,(FT.end-Date.now())/1000):FT.left,L=Math.ceil(left);
+  const tt=document.querySelector(`[data-ftt="${ix}"]`),tb=document.querySelector(`[data-ftb="${ix}"]`);if(tt)tt.textContent=String(Math.floor(L/60)).padStart(2,'0')+':'+String(L%60).padStart(2,'0');if(tb)tb.style.width=(1-left/tot)*100+'%';
+  if(FT.run&&left<=0){clearInterval(FT.iv);FT.run=false;FT.left=0;const sec=document.querySelector(`.fc[data-ix="${ix}"]`);if(sec){sec.classList.add('tup');const p=sec.querySelector('[data-ft]');if(p)p.innerHTML=ic('check');const h=sec.querySelector('p');}
+    chime();try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}toast('Время шага вышло — отметьте «Сделано»')}}
+function fToggleT(ix){const it=FL[ix];if(FT.ix!==ix){if(FT.ix>=0&&FT.run){FT.left=Math.max(0,(FT.end-Date.now())/1000);const p=document.querySelector(`[data-ft="${FT.ix}"]`);if(p)p.innerHTML=ic('play')}clearInterval(FT.iv);FT={ix,end:0,left:it.x[1]*60,run:false,iv:null,used:0}}
+  const btn=document.querySelector(`[data-ft="${ix}"]`);
+  if(FT.run){FT.left=Math.max(0,(FT.end-Date.now())/1000);FT.run=false;clearInterval(FT.iv);btn.innerHTML=ic('play')}
+  else{if(FT.left<=0)FT.left=it.x[1]*60;FT.end=Date.now()+FT.left*1000;FT.run=true;FT.started=FT.started||Date.now();clearInterval(FT.iv);FT.iv=setInterval(fTimerDraw,250);btn.innerHTML=ic('pause');tone(700,.08)}
+  fTimerDraw()}
+function fElapsedMin(ix){if(FT.ix!==ix)return null;const it=FL[ix],tot=it.x[1]*60,left=FT.run?Math.max(0,(FT.end-Date.now())/1000):FT.left;return(tot-left)/60}
+let fBk={iv:null,bi:null,end:0};
+function fInsertBreak(after){const sec=document.createElement('div');sec.innerHTML=fcBreak();const el=sec.firstElementChild;after.after(el);
+  setTimeout(()=>{el.scrollIntoView({behavior:'smooth'});flLock=true;setTimeout(()=>$('flow').classList.add('lock'),700);fBk.end=Date.now()+600e3;clearInterval(fBk.iv);
+    fBk.iv=setInterval(()=>{const L=Math.max(0,Math.ceil((fBk.end-Date.now())/1000));$('fbt').textContent=String(Math.floor(L/60)).padStart(2,'0')+':'+String(L%60).padStart(2,'0');$('fbb').style.width=(1-L/600)*100+'%';
+      if(L<=0){clearInterval(fBk.iv);clearInterval(fBk.bi);$('fbbreath').textContent='';const g=$('fbgo');g.disabled=false;g.classList.add('pulse');chime();try{navigator.vibrate&&navigator.vibrate(200)}catch(e){}}},500)},500);
+  el.querySelector('#fbbr').onclick=()=>{clearInterval(fBk.bi);const ph=[['Вдох',4],['Задержка',7],['Выдох',8]];let i=0,n=0;const step=()=>{const[l,s]=ph[i%3];$('fbbreath').textContent=l+' · '+s;i++;if(i>=12){clearInterval(fBk.bi);$('fbbreath').textContent='Готово';return}clearInterval(fBk.bi);fBk.bi=setTimeout(step,s*1000)};step()};
+  el.querySelector('#fbgo').onclick=()=>{flLock=false;$('flow').classList.remove('lock');flSince=0;el.classList.add('dn');const nx=el.nextElementSibling;nx&&nx.scrollIntoView({behavior:'smooth'})}}
+function fAddReview(t,v){S.rev=S.rev||[];const offs=v==='n'?[1,3,7]:v==='p'?[3,7]:[7];const id=Date.now().toString(36);
+  S.rev.push({id,k:t.k,title:t.title,url:t.st.url||null,dates:offs.map(o=>addD(today,o))});return offs.length}
+$('flow').addEventListener('click',e=>{if(e.target.closest('input'))return;const u=e.target.closest('[data-u]');if(u){openUrl(u.dataset.u);return}
+  const ft=e.target.closest('[data-ft]');if(ft){fToggleT(+ft.dataset.ft);return}
+  const lt=e.target.closest('[data-fl]');if(lt){const ix=+lt.dataset.fl,sec=lt.closest('.fc');if(FT.ix===ix&&FT.run)fToggleT(ix);let nx=sec.nextElementSibling;
+    const hint=sec.querySelector('.hint');if(hint)hint.remove();$('fendc').before(sec);if(!nx||nx===$('fendc'))nx=sec;
+    toast('Шаг перенесён в конец ленты');tone(440,.08);setTimeout(()=>nx.scrollIntoView({behavior:'smooth'}),120);return}
+  const rr=e.target.closest('[data-rr]');if(rr&&!rr.disabled){const ix=+rr.dataset.rr,it=FL[ix],v=rr.dataset.v,sec=rr.closest('.fc');
+    const notes=[...sec.querySelectorAll('[data-rn]')].map(x=>x.value.trim()).filter(Boolean);S.recall=S.recall||{};S.recall[it.t.okey]={d:today,r:v,n:notes};
+    flRec[v]++;fAddReview(it.t,v);flRev++;save();buildPlan();sec.querySelectorAll('[data-rr]').forEach(b=>{b.disabled=true;b.classList.toggle('sel',b===rr)});
+    sec.querySelector('[data-rm]').textContent=v==='y'?'Отлично. Контрольное повторение — через 7 дней.':v==='p'?'Повторение через 3 и 7 дней уже в «Финалах».':'Ничего страшного — так и учат. Повторение через 1, 3 и 7 дней.';
+    sec.classList.add('dn');fRefresh();tone(v==='n'?392:660,.12);const nx=sec.nextElementSibling;setTimeout(()=>nx&&nx.scrollIntoView({behavior:'smooth'}),900);return}
+  const b=e.target.closest('[data-fd]');if(!b||b.disabled)return;const ix=+b.dataset.fd,it=FL[ix];b.disabled=true;
+  if(it.type==='s'){const el=fElapsedMin(ix);const w=el!=null&&el>0.5?el:it.x[1];if(FT.ix===ix){if(el>0.5)fLog(el);fStopT()}flWork+=w;flSince+=w;toggleStep(it.k,today,b)}else toggleHabit(it.h.id,today,b);
+  const sec=b.closest('.fc');sec.classList.add('dn');b.innerHTML=ic('check')+'Готово';const lb=sec.querySelector('[data-fl]');if(lb)lb.remove();flDone++;fRefresh();
+  const real=FL.filter(x=>x.type!=='r').length;
+  if(flSince>=50&&sec.nextElementSibling&&sec.nextElementSibling.id!=='fendc'){fInsertBreak(sec);return}
+  const next=sec.nextElementSibling;setTimeout(()=>next&&next.scrollIntoView({behavior:'smooth'}),550);
+  if(flDone===real){setTimeout(()=>{confetti();chime()},700)}});
 $('flow').addEventListener('keydown',e=>{if(e.key==='Escape')closeFlow()});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&FT.run)fTimerDraw()});
 /* ---------- focus ---------- */
 let F={mode:'w',len:25,brk:5,run:false,end:0,left:25*60,subj:SUBJ[0]};
 try{const L=JSON.parse(localStorage.getItem('pp-focus')||'null');if(L)F=Object.assign(F,L)}catch(e){}
