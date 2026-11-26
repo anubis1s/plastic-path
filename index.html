@@ -699,9 +699,9 @@ function tsteps(t){const s=PS[t.k];
  if(t.view==='cases')return{url:u,min:45,list:[['Решите на бумаге без подсказки.',25],['Сверьте с ключом ход и ответ.',10],['Разберите ошибки: какое правило было нужно.',10]]};
  return{url:u,min:25,list:[['Все невыученные карточки.',15],['Второй круг — только «повторить».',10]]}}
 let FEED=null;try{FEED=JSON.parse(localStorage.getItem('pp-feed')||'null')}catch(e){}
-let PDAYS={},PDATES=[];
+const PLAN_FROM='2026-11-26';let PDAYS={},PDATES=[];
 function buildPlan(){const P=Object.assign({add:[],del:{},mv:{},ren:{}},(typeof S!=='undefined'&&S&&S.plan)||{});PDAYS={};
- const push=(o,first)=>{if(P.del[o.okey])return;if(P.mv[o.okey])o.date=P.mv[o.okey];if(P.ren[o.okey])o.title=P.ren[o.okey];const L=(PDAYS[o.date]=PDAYS[o.date]||[]);if(first)L.unshift(o);else L.push(o)};
+ const push=(o,first)=>{if(P.del[o.okey])return;if(P.mv[o.okey])o.date=P.mv[o.okey];if(o.date<PLAN_FROM)return;if(P.mv[o.okey])o.date=P.mv[o.okey];if(P.ren[o.okey])o.title=P.ren[o.okey];const L=(PDAYS[o.date]=PDAYS[o.date]||[]);if(first)L.unshift(o);else L.push(o)};
  TASKS.forEach((t,ix)=>{const o={date:t[0],k:t[1],title:t[2],view:t[3],x:t[4]||null,ix,okey:t[0]+'|'+t[2]};o.st=tsteps(o);push(o)});
  (P.add||[]).forEach((a,j)=>{const o={date:a.date,k:a.k,title:a.title,view:'custom',x:{min:a.min,url:a.k==='anat'?MUSC:(PS[a.k]?PS[a.k].url:null),steps:a.steps},ix:'a'+j,okey:'add:'+a.id,added:true};o.st=tsteps(o);push(o,a.first)});
  const F=(typeof FEED!=='undefined'&&FEED)||null;((F&&F.tasks)||[]).forEach((a,j)=>{const o={date:a.date,k:PS[a.k]?a.k:'anat',title:String(a.title||''),view:'custom',x:{min:+a.min||30,url:a.k==='musc'?MUSC:(PS[a.k]?PS[a.k].url:null),steps:(a.steps||[[a.title,a.min||30]]).map(x=>[String(x[0]),+x[1]||10])},ix:'f'+j,okey:'ari:'+a.id,added:true,ari:true};o.st=tsteps(o);push(o,a.first)});
